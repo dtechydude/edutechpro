@@ -2,24 +2,24 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, StudentEnrollmentForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 
-@login_required
-def register(request):
+# Enrollment of new student
+def user_registration(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'New user account has been created' )
-            return redirect('users:student_staff')
+            messages.success(request, f'New user account has been created!' )
+            return redirect('/')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/user_registration.html', {'form': form})
 
 
 @login_required
@@ -71,11 +71,6 @@ def user_logout(request):
 
 @login_required
 def users_home(request):
-    return render(request, 'portal/portal-home.html')
+    return render(request, 'pages/portal_home.html')
 
-
-
-@login_required
-def student_staff(request):
-    return render(request, 'users/student_staff_register.html')
 

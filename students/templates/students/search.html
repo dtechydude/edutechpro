@@ -1,0 +1,39 @@
+
+<html>
+<head>
+   <title>Search Result</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+   
+    {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+<br/></br/>
+<div class="container">
+   <div class="col-md-8 offset-md-2">
+{% if query %}
+           <h5>
+           {% with results.count as total_results %}
+           Found {{ total_results }} result{{ total_results|pluralize }}
+           {% endwith %}
+           </h5>
+   {% for c in results %}
+  <a href="{{c.get_absolute_url}}"><h6>{{c.full_name}} {{c.full_name}} </h6></a>
+ 
+  <p> <span style="color:rgba(43, 43, 207, 0.753)">Current Class : </span> <strong>{{ c.class_id }} </strong><span style="color:rgba(43, 43, 207, 0.753)"> Class Teacher :</span> <strong>{{ c.class_id }} </strong></span></p>
+  
+
+   {% empty %}
+   <h3>No results found.</h3>
+   {% endfor %}
+  {% endif %}
+        <form action="{% url 'students:student_search_list' %}" class="form-inline" method="get">
+        <button type="submit" class="btn btn-primary btn-sm mb-2">Back</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+</body>
+
+<html>

@@ -1,14 +1,13 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .utils import generate_ref_code
+from users.utils import generate_ref_code
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     phone = models.CharField(max_length=11, blank=True)
-    address = models.CharField(max_length=40, blank=True, null=True)
 
     select = 'Select'
     abia = 'Abia'
@@ -90,23 +89,26 @@ class Profile(models.Model):
         
     ]
     state_of_origin = models.CharField(max_length=15, choices=states, default=select)
+    address = models.CharField(max_length=20, blank=True, null=True)
+    bio = models.TextField(max_length=150, blank=True)
 
     staff_academic = 'staff_academic'
     staff_non_academic = 'staff_non_academic'
     student = 'student'
-    parent = 'parent'    
+    parent = 'parent'  
+    admin = 'admin'      
  
 
     user_types = [
         (staff_academic, 'staff_academic'),
         (staff_non_academic, 'staff_non_academic'),
         (student, 'student'),
-        (parent, 'parent'),       
+        (parent, 'parent'),
+        (admin, 'admin'),           
              
     ]
 
-    user_type = models.CharField(max_length=20, choices=user_types, default=student)
-    bio = models.TextField(max_length=150, blank=True)
+    user_type = models.CharField(max_length=20, choices=user_types, default=student, blank=True, null=True)
     code = models.CharField(max_length=6, blank=True) 
     activate = models.BooleanField(default=False, blank=True)   
     updated = models.DateTimeField(auto_now=True)

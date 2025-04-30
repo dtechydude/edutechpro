@@ -43,7 +43,11 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'students.apps.StudentsConfig',
     'staff.apps.StaffConfig',
+    'attendance.apps.AttendanceConfig',
     'curriculum.apps.CurriculumConfig',
+    'payments.apps.PaymentsConfig',
+    'results.apps.ResultsConfig',
+    'inventory.apps.InventoryConfig',
 
     # Installed Apps
     'django_ckeditor_5',
@@ -54,6 +58,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'wkhtmltopdf',
     'bootstrap_datepicker_plus',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Student ID CARD</title>
+    
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="col-sm-12" style="padding-top:10px; text-align:center; width:100%; white-space:nowrap;">
+        <img src="{% static 'pages/school_id_header.png' %} " width="100%" height="auto">
+       </div>
+   
+    <div style="padding-top:10px; text-align:center;"></div>
+   
+    </div>
+    <div class=" col-sm-8" style="margin: 0 auto; text-align:center;">
+    <table class="table table-noborder">
+      <thead>
+        <tr>
+          <th scope="col">Authorized by the School</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {{ student_detail.user.studentdetail.student_username}} - {{ student_detail.user.studentdetail.first_name}}
+          
+          <img src="{{ student_detail.user.profile.image.path}}" width="100%"  height="100%">
+       
+          <td>
+        <span><p>This Document is a property of -----name----of---my---- Schools If found, 
+          please return to the school authority<br> Contact details as stated below;</p>
+            <p>Hon. Abiodun Oni str. Off kuforiji Olubi drive,<br>
+              Adigbe, Abeokuta, Ogun State, Nigeria.<br>
+              Phone: +234 8030000000</p></span>
+                <img src="{% static 'pages/qr_code.png' %}" width="100px" height="100px"></td>
+          
+        </tr>
+       
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-10 " style="padding-top:20px; margin: 0 auto;">
+    
+    <img src="{% static 'pages/barcode2.jpg' %}" width="100%" height="60">
+    
+
+    </div>
+ 
+  </div>
+
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

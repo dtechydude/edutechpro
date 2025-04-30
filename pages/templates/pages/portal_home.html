@@ -1,42 +1,53 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% block htmlhead %}
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="keywords" content="" />
 	<meta name="author" content="" />
 	<meta name="robots" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Travl : Hotel Admin Dashboard Bootstrap 5 Template" />
-	<meta property="og:title" content="Travl : Hotel Admin Dashboard Bootstrap 5 Template" />
-	<meta property="og:description" content="Travl : Hotel Admin Dashboard Bootstrap 5 Template" />
-	<meta property="og:image" content="https://travl.dexignlab.com/xhtml/social-image.png" />
+	<meta name="description" content="SchoollyEdTech : SchoollyEdTech Management Software" />
+	<meta property="og:title" content="SchoollyEdTech : SchoollyEdTech Management Software" />
+	<meta property="og:description" content="SchoollyEdTech : SchoollyEdTech Management Software" />
+	<!-- <meta property="og:image" content="https://travl.dexignlab.com/xhtml/social-image.png" /> -->
 	<meta name="format-detection" content="telephone=no">
+	{% endblock htmlhead %}
 	
 	<!-- PAGE TITLE HERE -->
-	<title>Travl Hotel Admin Dashboard</title>
+	{% block title %}
+	<title>SchoollyEdTech Users Dashboard</title>
+	{% endblock title %}
 	
 	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
-	<link href="./vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-	<link href="./vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
-	<link href="./vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+	{% block favicon %}
+	<link rel="shortcut icon" type="image/png" href="{% static 'pages/images/favicon.png' %}" />
+	<link href="{% static 'pages/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+	<link href="{% static 'pages/vendor/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+	<link href="{% static 'pages/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
 	
+	{% endblock favicon %}
+
 	<!-- Style css -->
-	<link href="./css/style.css" rel="stylesheet">
-	
+	{% block style %}
+	<link href="{% static 'pages/css/style.css' %}" rel="stylesheet">
+	{% endblock style %}
 </head>
 <body>
 
 	<!--*******************
 		Preloader start
 	********************-->
+	{% block preloader %}
 	<div id="preloader">
 		<div class="lds-ripple">
 			<div></div>
 			<div></div>
 		</div>
 	</div>
+	{% endblock preloader %}
 	<!--*******************
 		Preloader end
 	********************-->
@@ -49,20 +60,12 @@
 		<!--**********************************
 			Nav header start
 		***********************************-->
+		{% block navheader %}
 		<div class="nav-header">
-			<a href="index.html" class="brand-logo">
-				<svg class="logo-abbr" xmlns="http://www.w3.org/2000/svg" width="47.426" height="56.91" viewBox="0 0 47.426 56.91">
-				  <g id="Group_25" data-name="Group 25" transform="translate(-56 -32)">
-					<path id="hotel" d="M49.737,55.935a.948.948,0,0,1-.948.976h-5A3.794,3.794,0,0,1,40,53.116V34.146a3.794,3.794,0,0,1,3.794-3.794h4.98a.949.949,0,0,1,.949.949C49.717,49.164,49.687,54.3,49.737,55.935Zm-3.22-16.1a.949.949,0,1,0-1.9,0v4.031a.949.949,0,0,0,1.9,0Zm40.9-5.691v18.97a3.794,3.794,0,0,1-3.794,3.794h-5a.948.948,0,0,1-.948-.976c.05-1.634.019-6.76.018-24.633a.949.949,0,0,1,.949-.949h4.98A3.794,3.794,0,0,1,87.422,34.146ZM82.8,39.837a.949.949,0,1,0-1.9,0v4.031a.949.949,0,0,0,1.9,0ZM61.338,56.91H66.08a.949.949,0,0,0,.949-.949V47.07a.949.949,0,0,0-.949-.949H61.338a.949.949,0,0,0-.949.949v8.892A.949.949,0,0,0,61.338,56.91ZM75.8,20.63V55.962a.949.949,0,0,1-.949.949h-4.98a.949.949,0,0,1-.949-.949V45.172a.949.949,0,0,0-.949-.949H59.441a.949.949,0,0,0-.949.949V55.962a.949.949,0,0,1-.949.949h-4.98a.949.949,0,0,1-.949-.949V20.63a3.794,3.794,0,0,1,3.794-3.794h16.6A3.794,3.794,0,0,1,75.8,20.63ZM68.452,36.517a.949.949,0,0,0-.949-.949H59.915a.949.949,0,0,0,0,1.9H67.5A.948.948,0,0,0,68.452,36.517Zm1.66-9.129a.949.949,0,0,0-.949-.949H58.255a.949.949,0,1,0,0,1.9H69.163A.948.948,0,0,0,70.111,27.388Z" transform="translate(16.004 32)" fill="#135846"/>
-					<path id="hotel-2" data-name="hotel" d="M70.2,5.874l-2.557,2.5.6,3.533a.949.949,0,0,1-.935,1.109c-.321,0-.154.043-3.6-1.776l-3.159,1.667a.95.95,0,0,1-1.378-1l.6-3.533-2.557-2.5a.949.949,0,0,1,.526-1.617l3.531-.515L62.858.529a.949.949,0,0,1,1.7,0l1.58,3.213,3.531.515A.949.949,0,0,1,70.2,5.874ZM53.812,10.728l-.112-.653c.439-.428.93-.772.715-1.435s-.82-.653-1.422-.741L52.7,7.3a.949.949,0,0,0-1.7,0l-.293.594c-.606.088-1.206.078-1.422.741s.279,1.011.715,1.435l-.112.653a.949.949,0,0,0,1.376,1l.587-.309c.6.316.732.417,1.028.417A.949.949,0,0,0,53.812,10.728Zm-8.3,4.743-.112-.653c.439-.428.93-.772.715-1.435s-.82-.653-1.422-.741l-.293-.594a.949.949,0,0,0-1.7,0l-.293.594c-.606.088-1.206.078-1.422.741s.279,1.011.715,1.435l-.112.653a.949.949,0,0,0,1.376,1l.587-.309c.6.316.732.417,1.028.417a.949.949,0,0,0,.935-1.109Zm32.02-4.743-.112-.653c.439-.428.93-.772.715-1.435s-.82-.653-1.422-.741c-.271-.55-.447-1.123-1.144-1.123s-.875.578-1.144,1.123l-.656.1a.949.949,0,0,0-.526,1.618l.475.463c-.1.6-.3,1.171.265,1.581s1.047.047,1.586-.236c.6.316.732.417,1.028.417a.949.949,0,0,0,.935-1.109Zm8.3,4.743-.112-.653c.439-.428.93-.772.715-1.435s-.82-.653-1.422-.741c-.271-.55-.447-1.123-1.144-1.123s-.875.578-1.144,1.123l-.656.1a.949.949,0,0,0-.526,1.618l.475.463c-.1.6-.3,1.171.265,1.581s1.047.047,1.586-.236c.6.316.732.417,1.028.417A.949.949,0,0,0,85.831,15.471Z" transform="translate(16.004 32)" fill="var(--primary)"/>
-				  </g>
-				</svg>
-				<svg class="brand-title" xmlns="http://www.w3.org/2000/svg" width="143" height="46.359" viewBox="0 0 143 46.359">
-				  <g id="Group_26" data-name="Group 26" transform="translate(-134 -40.641)">
-					<text id="Hotel_Admin_Dashboard" data-name="Hotel Admin Dashboard" transform="translate(134 83)" fill="#5d5449" font-size="12" font-family="Poppins-Light, Poppins" font-weight="300"><tspan x="0" y="0">Hotel Admin Dashboard</tspan></text>
-					<path id="Path_1948" data-name="Path 1948" d="M9.836,4.961a8.554,8.554,0,0,0,2.78-.574V8.579a11.32,11.32,0,0,1-2.214.713,12.526,12.526,0,0,1-2.464.213A5.382,5.382,0,0,1,3.761,8.087a6.357,6.357,0,0,1-1.28-4.361V-3.144H.466V-5.483L3.025-7.292l1.486-3.5H8.276v3.339h4.089v4.31H8.276V3.343Q8.276,4.961,9.836,4.961ZM25.589-7.748a8.321,8.321,0,0,1,1.427.118l.324.059-.515,5.428a8.461,8.461,0,0,0-1.956-.177,3.728,3.728,0,0,0-2.736.86,3.372,3.372,0,0,0-.853,2.479V9.212H15.528V-7.454h4.28l.9,2.662h.279a5.759,5.759,0,0,1,2.008-2.14A4.806,4.806,0,0,1,25.589-7.748ZM40.534,9.212l-1.1-2.206h-.118a6.55,6.55,0,0,1-2.368,1.971,7.822,7.822,0,0,1-3.118.53A4.892,4.892,0,0,1,30.12,8.094a5.508,5.508,0,0,1-1.353-3.972A4.518,4.518,0,0,1,30.62.158a10.133,10.133,0,0,1,5.369-1.464l2.78-.088v-.235a1.807,1.807,0,0,0-2.03-2.059,12.139,12.139,0,0,0-4.633,1.236l-1.662-3.8a15.987,15.987,0,0,1,7.355-1.5,7.146,7.146,0,0,1,4.964,1.589A5.682,5.682,0,0,1,44.52-1.717V9.212ZM36.268,5.446a2.594,2.594,0,0,0,1.787-.662A2.2,2.2,0,0,0,38.8,3.063V1.769l-1.324.059q-2.839.1-2.839,2.089Q34.636,5.446,36.268,5.446ZM52.8,9.212,46.447-7.454h6L55.273,2.4q.015.074.059.25t.088.419q.044.243.081.515a3.8,3.8,0,0,1,.037.507h.1a5.9,5.9,0,0,1,.265-1.662l2.957-9.885h5.987L58.494,9.212Zm19.784,0H66.834V-13.676h5.751Z" transform="translate(134 54.316)" fill="#212121"/>
-				  </g>
-				</svg>
+			<a href="/" class="brand-logo">
+				
+				<img src="{% static 'pages/images/logo-full1.png' %}" alt="Schoolly">
+				
 			</a>
 			<div class="nav-control">
 				<div class="hamburger">
@@ -70,13 +73,16 @@
 				</div>
 			</div>
 		</div>
-		<!--**********************************
+		{% endblock navheader %}
+		<!-- 
+		**********************************
 			Nav header end
-		***********************************-->
+		*********************************** -->
 		
 		<!--**********************************
 			Chat box start
 		***********************************-->
+		{% block chatbox %}
 		<div class="chatbox">
 			<div class="chatbox-close"></div>
 			<div class="custom-tab-1">
@@ -105,30 +111,7 @@
 							<div class="card-body contacts_body p-0 dlab-scroll  " id="DLAB_W_Contacts_Body">
 								<ul class="contacts">
 									<li class="name-first-letter">A</li>
-									<li class="active dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon"></span>
-											</div>
-											<div class="user_info">
-												<span>Archie Parker</span>
-												<p>Kalid is online</p>
-											</div>
-										</div>
-									</li>
-									<li class="dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon offline"></span>
-											</div>
-											<div class="user_info">
-												<span>Alfie Mason</span>
-												<p>Taherah left 7 mins ago</p>
-											</div>
-										</div>
-									</li>
+									
 									<li class="dlab-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
@@ -153,43 +136,7 @@
 											</div>
 										</div>
 									</li>
-									<li class="name-first-letter">B</li>
-									<li class="dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon offline"></span>
-											</div>
-											<div class="user_info">
-												<span>Bashid Samim</span>
-												<p>Rashid left 50 mins ago</p>
-											</div>
-										</div>
-									</li>
-									<li class="dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon"></span>
-											</div>
-											<div class="user_info">
-												<span>Breddie Ronan</span>
-												<p>Kalid is online</p>
-											</div>
-										</div>
-									</li>
-									<li class="dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon offline"></span>
-											</div>
-											<div class="user_info">
-												<span>Ceorge Carson</span>
-												<p>Taherah left 7 mins ago</p>
-											</div>
-										</div>
-									</li>
+									
 									<li class="name-first-letter">D</li>
 									<li class="dlab-chat-user">
 										<div class="d-flex bd-highlight">
@@ -216,30 +163,7 @@
 										</div>
 									</li>
 									<li class="name-first-letter">J</li>
-									<li class="dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon offline"></span>
-											</div>
-											<div class="user_info">
-												<span>Jack Ronan</span>
-												<p>Rashid left 50 mins ago</p>
-											</div>
-										</div>
-									</li>
-									<li class="dlab-chat-user">
-										<div class="d-flex bd-highlight">
-											<div class="img_cont">
-												<img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
-												<span class="online_icon"></span>
-											</div>
-											<div class="user_info">
-												<span>Jacob Tucker</span>
-												<p>Kalid is online</p>
-											</div>
-										</div>
-									</li>
+									
 									<li class="dlab-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
@@ -572,6 +496,7 @@
 				</div>
 			</div>
 		</div>
+		{% endblock chatbox %}
 		<!--**********************************
 			Chat box End
 		***********************************-->
@@ -579,6 +504,7 @@
 		<!--**********************************
 			Header start
 		***********************************-->
+		{% block header %}
 		<div class="header">
 			<div class="header-content">
 				<nav class="navbar navbar-expand">
@@ -680,17 +606,7 @@
 													</div>
 												</div>
 											</li>
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2 media-primary">
-														<i class="fa fa-home"></i>
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Reminder : Treatment Time!</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
+											
 										</ul>
 									</div>
 									<a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
@@ -784,6 +700,7 @@
 				</nav>
 			</div>
 		</div>
+		{% endblock header %}
 		<!--**********************************
 			Header end ti-comment-alt
 		***********************************-->
@@ -791,6 +708,7 @@
 		<!--**********************************
 			Sidebar start
 		***********************************-->
+		{% block sidebar %}
 		<div class="dlabnav">
 			<div class="dlabnav-scroll">
 				<ul class="metismenu" id="menu">
@@ -799,93 +717,58 @@
 							<span class="nav-text">Dashboard</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="index.html">Dashboard Light</a></li>
-							<li><a href="index-2.html">Dashboard Dark</a></li>
-							<li><a href="guest-list.html">Guest List</a></li>
-							<li><a href="guest-details.html">Guest Details</a></li>
-							<li><a href="concierge-list.html">Concierge List</a></li>
-							<li><a href="room-list.html">Room List</a></li>
-							<li><a href="reviews.html">Reviews</a></li>	
+							<li><a href="/admin/">Admin Settings</a></li>
+							<li><a href="index.html">Search Students</a></li>
+							<li><a href="index-2.html">Search Payments</a></li>
+							
 						</ul>
 
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-						<i class="flaticon-050-info"></i>
-							<span class="nav-text">Apps</span>
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Student Mgt.</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./app-profile.html">Profile</a></li>
-							<li><a href="./post-details.html">Post Details</a></li>
-							<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
-								<ul aria-expanded="false">
-									<li><a href="./email-compose.html">Compose</a></li>
-									<li><a href="./email-inbox.html">Inbox</a></li>
-									<li><a href="./email-read.html">Read</a></li>
-								</ul>
-							</li>
-							<li><a href="./app-calender.html">Calendar</a></li>
-							<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Shop</a>
-								<ul aria-expanded="false">
-									<li><a href="./ecom-product-grid.html">Product Grid</a></li>
-									<li><a href="./ecom-product-list.html">Product List</a></li>
-									<li><a href="./ecom-product-detail.html">Product Details</a></li>
-									<li><a href="./ecom-product-order.html">Order</a></li>
-									<li><a href="./ecom-checkout.html">Checkout</a></li>
-									<li><a href="./ecom-invoice.html">Invoice</a></li>
-									<li><a href="./ecom-customers.html">Customers</a></li>
-								</ul>
-							</li>
+							<li><a href="{% url 'students:student-list' %}">All Students</a></li>	
+							<li><a href="./app-profile.html">My ID Card</a></li>
+							<li><a href="./post-details.html">Post Details</a></li>							
+							<li><a href="./app-calender.html">Calendar</a></li>							
 						</ul>
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-041-graph"></i>
-							<span class="nav-text">Charts</span>
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Staff Mgt/Tools</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./chart-flot.html">Flot</a></li>
-							<li><a href="./chart-morris.html">Morris</a></li>
-							<li><a href="./chart-chartjs.html">Chartjs</a></li>
-							<li><a href="./chart-chartist.html">Chartist</a></li>
-							<li><a href="./chart-sparkline.html">Sparkline</a></li>
-							<li><a href="./chart-peity.html">Peity</a></li>
+							<li><a href="{% url 'staff:staff-list' %}">Staff List</a></li>
+							<li><a href="{% url 'staff:teacher-list' %}">Teachers List</a></li>
+							<li><a href="./chart-chartjs.html">Assign List</a></li>
+					
 						</ul>
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-086-star"></i>
-							<span class="nav-text">Bootstrap</span>
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Results</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./ui-accordion.html">Accordion</a></li>
-							<li><a href="./ui-alert.html">Alert</a></li>
-							<li><a href="./ui-badge.html">Badge</a></li>
-							<li><a href="./ui-button.html">Button</a></li>
-							<li><a href="./ui-modal.html">Modal</a></li>
-							<li><a href="./ui-button-group.html">Button Group</a></li>
-							<li><a href="./ui-list-group.html">List Group</a></li>
-							<li><a href="./ui-card.html">Cards</a></li>
-							<li><a href="./ui-carousel.html">Carousel</a></li>
-							<li><a href="./ui-dropdown.html">Dropdown</a></li>
-							<li><a href="./ui-popover.html">Popover</a></li>
-							<li><a href="./ui-progressbar.html">Progressbar</a></li>
-							<li><a href="./ui-tab.html">Tab</a></li>
-							<li><a href="./ui-typography.html">Typography</a></li>
-							<li><a href="./ui-pagination.html">Pagination</a></li>
-							<li><a href="./ui-grid.html">Grid</a></li>
+							<li><a href="./ui-accordion.html">1st. Term Results</a></li>
+							<li><a href="./ui-alert.html">2nd. Term Results</a></li>
+							<li><a href="./ui-badge.html">3rd. Term Results</a></li>
+						
 
 						</ul>
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-045-heart"></i>
-							<span class="nav-text">Plugins</span>
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Payments/Bills</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./uc-select2.html">Select 2</a></li>
-							<li><a href="./uc-nestable.html">Nestedable</a></li>
-							<li><a href="./uc-noui-slider.html">Noui Slider</a></li>
-							<li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
-							<li><a href="./uc-toastr.html">Toastr</a></li>
-							<li><a href="./map-jqvmap.html">Jqv Map</a></li>
-							<li><a href="./uc-lightgallery.html">Light Gallery</a></li>
+							<li><a href="./uc-select2.html">Make Payment</a></li>
+							<li><a href="./uc-nestable.html">Payment Chart</a></li>
+							<li><a href="./uc-noui-slider.html">All Payments</a></li>
+							<li><a href="./uc-sweetalert.html">My Payments</a></li>
+							<li><a href="./uc-toastr.html">Debtors List</a></li>
+							<li><a href="./map-jqvmap.html">Online Payment</a></li>
 						</ul>
 					</li>
 					<li><a href="widget-basic.html" class="" aria-expanded="false">
@@ -895,19 +778,17 @@
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-072-printer"></i>
-							<span class="nav-text">Forms</span>
+							<span class="nav-text">Attendance</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./form-element.html">Form Elements</a></li>
-							<li><a href="./form-wizard.html">Wizard</a></li>
-							<li><a href="./form-ckeditor.html">CkEditor</a></li>
-							<li><a href="form-pickers.html">Pickers</a></li>
-							<li><a href="form-validation.html">Form Validate</a></li>
+							<li><a href="./form-element.html">Take Attendance</a></li>
+							<li><a href="./form-wizard.html">Attendance Report</a></li>
+							
 						</ul>
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-043-menu"></i>
-							<span class="nav-text">Table</span>
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">E-Learning</span>
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
@@ -915,23 +796,13 @@
 						</ul>
 					</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-022-copy"></i>
-							<span class="nav-text">Pages</span>
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Settings</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./page-login.html">Login</a></li>
-							<li><a href="./page-register.html">Register</a></li>
-							<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-								<ul aria-expanded="false">
-									<li><a href="./page-error-400.html">Error 400</a></li>
-									<li><a href="./page-error-403.html">Error 403</a></li>
-									<li><a href="./page-error-404.html">Error 404</a></li>
-									<li><a href="./page-error-500.html">Error 500</a></li>
-									<li><a href="./page-error-503.html">Error 503</a></li>
-								</ul>
-							</li>
-							<li><a href="./page-lock-screen.html">Lock Screen</a></li>
-							<li><a href="./empty-page.html">Empty Page</a></li>
+							<li><a href="./page-login.html">Reset Password</a></li>
+							<li><a href="./page-register.html">Update Profile</a></li>							
+							<li><a href="./page-lock-screen.html">Log Out</a></li>				
 						</ul>
 					</li>
 				</ul>
@@ -950,11 +821,12 @@
 					</div>
 				</div>
 				<div class="copyright">
-					<p class="text-center"><strong>Travl Hotel Admin Dashboard</strong> © 2021 All Rights Reserved</p>
-					<p class="fs-12 text-center">Made with <span class="heart"></span> by DexignLab</p>
+					<p class="text-center"><strong>Schoolly EdTech</strong> © 2025 All Rights Reserved</p>
+					<p class="fs-12 text-center">By: Fizcos Infotech</p>
 				</div>
 			</div>
 		</div>
+		{% endblock sidebar %}
 		<!--**********************************
 			Sidebar end
 		***********************************-->
@@ -962,6 +834,7 @@
 		<!--**********************************
 			Content body start
 		***********************************-->
+		{% block content_body %}
 		<div class="content-body">
 			<!-- row -->
 			<div class="container-fluid">
@@ -975,12 +848,12 @@
 											<div class="card-body">
 												<div class="booking-status d-flex align-items-center">
 													<span>
-														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20">
-														  <path  d="M27,14V7a1,1,0,0,0-1-1H6A1,1,0,0,0,5,7v7a3,3,0,0,0-3,3v8a1,1,0,0,0,2,0V24H28v1a1,1,0,0,0,2,0V17A3,3,0,0,0,27,14ZM7,8H25v6H24V12a2,2,0,0,0-2-2H19a2,2,0,0,0-2,2v2H15V12a2,2,0,0,0-2-2H10a2,2,0,0,0-2,2v2H7Zm12,6V12h3v2Zm-9,0V12h3v2ZM4,17a1,1,0,0,1,1-1H27a1,1,0,0,1,1,1v5H4Z" transform="translate(-2 -6)" fill="var(--primary)"/>
-														</svg>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+															<path  data-name="Path 1957" d="M129.035,178.842v2.8a5.6,5.6,0,0,0,5.6,5.6h14a5.6,5.6,0,0,0,5.6-5.6v-16.8a5.6,5.6,0,0,0-5.6-5.6h-14a5.6,5.6,0,0,0-5.6,5.6v2.8a1.4,1.4,0,0,0,2.8,0v-2.8a2.8,2.8,0,0,1,2.8-2.8h14a2.8,2.8,0,0,1,2.8,2.8v16.8a2.8,2.8,0,0,1-2.8,2.8h-14a2.8,2.8,0,0,1-2.8-2.8v-2.8a1.4,1.4,0,0,0-2.8,0Zm10.62-7-1.81-1.809a1.4,1.4,0,1,1,1.98-1.981l4.2,4.2a1.4,1.4,0,0,1,0,1.981l-4.2,4.2a1.4,1.4,0,1,1-1.98-1.981l1.81-1.81h-12.02a1.4,1.4,0,1,1,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														  </svg>
 													</span>
 													<div class="ms-4">
-														<h2 class="mb-0 font-w600">8,461</h2>
+														<h3 class="mb-0 font-w600">8,461</h3>
 														<p class="mb-0 text-nowrap">New Booking</p>
 													</div>
 												</div>
@@ -992,12 +865,12 @@
 											<div class="card-body">
 												<div class="booking-status d-flex align-items-center">
 													<span>
-														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20">
-														  <path  d="M27,14V7a1,1,0,0,0-1-1H6A1,1,0,0,0,5,7v7a3,3,0,0,0-3,3v8a1,1,0,0,0,2,0V24H28v1a1,1,0,0,0,2,0V17A3,3,0,0,0,27,14ZM7,8H25v6H24V12a2,2,0,0,0-2-2H19a2,2,0,0,0-2,2v2H15V12a2,2,0,0,0-2-2H10a2,2,0,0,0-2,2v2H7Zm12,6V12h3v2Zm-9,0V12h3v2ZM4,17a1,1,0,0,1,1-1H27a1,1,0,0,1,1,1v5H4Z" transform="translate(-2 -6)" fill="var(--primary)"/>
-														</svg>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+															<path  data-name="Path 1957" d="M129.035,178.842v2.8a5.6,5.6,0,0,0,5.6,5.6h14a5.6,5.6,0,0,0,5.6-5.6v-16.8a5.6,5.6,0,0,0-5.6-5.6h-14a5.6,5.6,0,0,0-5.6,5.6v2.8a1.4,1.4,0,0,0,2.8,0v-2.8a2.8,2.8,0,0,1,2.8-2.8h14a2.8,2.8,0,0,1,2.8,2.8v16.8a2.8,2.8,0,0,1-2.8,2.8h-14a2.8,2.8,0,0,1-2.8-2.8v-2.8a1.4,1.4,0,0,0-2.8,0Zm10.62-7-1.81-1.809a1.4,1.4,0,1,1,1.98-1.981l4.2,4.2a1.4,1.4,0,0,1,0,1.981l-4.2,4.2a1.4,1.4,0,1,1-1.98-1.981l1.81-1.81h-12.02a1.4,1.4,0,1,1,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														  </svg>
 													</span>
 													<div class="ms-4">
-														<h2 class="mb-0 font-w600">8,461</h2>
+														<h3 class="mb-0 font-w600">8,461</h3>
 														<p class="mb-0 text-nowrap ">New Booking</p>
 													</div>
 												</div>
@@ -1014,7 +887,7 @@
 														</svg>
 													</span>
 													<div class="ms-4">
-														<h2 class="mb-0 font-w600">753</h2>
+														<h3 class="mb-0 font-w600">753</h3>
 														<p class="mb-0">Check In</p>
 													</div>
 												</div>
@@ -1026,13 +899,13 @@
 											<div class="card-body">
 												<div class="booking-status d-flex align-items-center">
 													<span>
-														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
-														</svg>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+															<path  data-name="Path 1957" d="M129.035,178.842v2.8a5.6,5.6,0,0,0,5.6,5.6h14a5.6,5.6,0,0,0,5.6-5.6v-16.8a5.6,5.6,0,0,0-5.6-5.6h-14a5.6,5.6,0,0,0-5.6,5.6v2.8a1.4,1.4,0,0,0,2.8,0v-2.8a2.8,2.8,0,0,1,2.8-2.8h14a2.8,2.8,0,0,1,2.8,2.8v16.8a2.8,2.8,0,0,1-2.8,2.8h-14a2.8,2.8,0,0,1-2.8-2.8v-2.8a1.4,1.4,0,0,0-2.8,0Zm10.62-7-1.81-1.809a1.4,1.4,0,1,1,1.98-1.981l4.2,4.2a1.4,1.4,0,0,1,0,1.981l-4.2,4.2a1.4,1.4,0,1,1-1.98-1.981l1.81-1.81h-12.02a1.4,1.4,0,1,1,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														  </svg>
 
 													</span>
 													<div class="ms-4">
-														<h2 class="mb-0 font-w600">516</h2>
+														<h3 class="mb-0 font-w600">516</h3>
 														<p class="mb-0">Check Out</p>
 													</div>
 												</div>
@@ -1046,7 +919,7 @@
 									<div class="col-xl-6">
 										<div class="card">
 											<div class="card-header border-0 pb-0">
-												<h4 class="fs-20">Recent Booking Schedule</h4>
+												<h4 class="fs-20">School Schedule</h4>
 											</div>
 											<div class="card-body pb-2 loadmore-content" id="BookingContent">
 												<div class="text-center event-calender border-bottom booking-calender">
@@ -1082,28 +955,13 @@
 															</div>
 														</div>
 													</div>
-													<span class="date2 bg-primary mb-3">16, 17, 18</span>
+													<!-- <span class="date2 bg-primary mb-3">16, 17, 18</span> -->
 												</div>
 												<div class="rooms mt-3 d-flex align-items-center justify-content-between flex-wrap">
-													<div class="d-flex align-items-center mb-3">
-														<img src="images/room/room3.jpg" alt="">
-														<div class="ms-4 bed-text">
-															<h4>King Big C-2445</h4>
-															<div class="users d-flex align-items-center">
-																<img src="images/users/user3.jpg" alt="">
-																<div >
-																	<span class="fs-16 font-w500 me-3">JGeovanny</span>
-																	<span>12min ago</span>
-																</div>
-															</div>
-														</div>
-													</div>
-													<span class="date bg-warning mb-3">3</span>
+													
 												</div>
 											</div>
-											<div class="card-footer border-0 m-auto pt-0">
-												<a href="javascript:void(0);" class="btn  btn-link m-auto dlab-load-more fs-16 font-w500 text-secondary" id="Booking" rel="ajax/booking.html">View more</a>
-											</div>
+											
 										</div>
 									</div>
 									<div class="col-xl-6">
@@ -1111,7 +969,7 @@
 											<div class="col-xl-12">
 												<div class="card">
 													<div class="card-header border-0 flex-wrap">
-														<h4 class="fs-20">Reservation Stats</h4>
+														<h4 class="fs-20">Report & Stats</h4>
 														<div class="card-action coin-tabs">
 															<ul class="nav nav-tabs" role="tablist">
 																<li class="nav-item">
@@ -1133,26 +991,32 @@
 																  <rect  width="13" height="13" fill="#135846"/>
 																</svg>
 
-																Check In
+																Active Std
 															</span>
 															<span class="fs-16 font-w600 me-4">23,451 <small class="text-success fs-12 font-w400">+0.4%</small></span>
 															<span class="me-sm-5 ms-0 font-w500">
 																<svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13">
 																  <rect  width="13" height="13" fill="#E23428"/>
 																</svg>
-																Check Out
+																InActive Std
 															</span>
 															<span class="fs-16 font-w600">20,441</span>
 														</div>	
 														<div class="tab-content">
 															<div class="tab-pane fade show active" id="Daily1">
-																<div id="chartBar" class="chartBar"></div>
+																<h1>Content Here...</h1>
+																<!-- <div id="chartBar" class="chartBar"></div> -->
 															</div>
 															<div class="tab-pane fade " id="weekly1">
-																<div id="chartBar1" class="chartBar"></div>
+																<h1>Second Content Here...</h1>
+																<!-- <div id="chartBar1" class="chartBar"></div> -->
 															</div>
 															<div class="tab-pane fade " id="monthly1">
-																<div id="chartBar2" class="chartBar"></div>
+																<h1> Third Content Here...</h1>
+																<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+																	Aliquam quos adipisci tenetur voluptates repudiandae placeat 
+																	nemo expedita numquam illum! Rerum perferendis provident totam error neque deleniti recusandae numquam, accusamus consectetur.</p>
+																<!-- <div id="chartBar2" class="chartBar"></div> -->
 															</div>
 														</div>
 													</div>
@@ -1234,22 +1098,24 @@
 									</div>
 								</div>
 							</div>
+							
 							<div class="col-xl-12">
 								<div class="card">
 									<div class="card-header border-0 pb-0">
-										<h4 class="fs-20">Latest Review by Customers</h4>
+										<h4 class="fs-20">Schoolly Info Corner</h4>
 									</div>
 									<div class="card-body pt-0">
 										<div class="front-view-slider owl-carousel owl-carousel owl-loaded owl-drag owl-dot">
 											<div class="items">
 												<div class="customers border">
-													<p class="fs-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+													<p class="fs-16"><b>Results Tracking, Fees Payment, Attendance...</b><br />
+														Both parents and teachers enjoy the flexibilities of the interface to performance tasks with easily accessible buttons. download features and perform query</p>
 													<div class="d-flex justify-content-between align-items-center mt-4">
 														<div class="customer-profile d-flex ">
-														<img src="images/users/user5.jpg" alt="">
+														<img src="{% static 'portal/images/users/user.jpg' %}" alt="">
 														<div class="ms-3">
-															<h5 class="mb-0"><a href="javascript:void(0);">Kusnaidi Anderson</a></h5>
-															<span>4m ago</span>
+															<h5 class="mb-0"><a href="javascript:void(0);">Schoolly EdTech</a></h5>
+															<span>45m ago</span>
 														</div>
 														</div>
 														<div class="customer-button text-nowrap">
@@ -1261,49 +1127,14 @@
 											</div>
 											<div class="items">
 												<div class="customers border">
-													<p class="fs-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+													<p class="fs-16"><b>Real Time School Management</b><br />
+														Features to manage and track the progress of your school from anywhere accross different device. View and download progress reports with nice reporting features.</p>
 													<div class="d-flex justify-content-between align-items-center mt-4">
 														<div class="customer-profile d-flex ">
-														<img src="images/users/user6.jpg" alt="">
+														<img src="{% static 'portal/images/users/user.jpg' %}" alt="">
 														<div class="ms-3">
-															<h5 class="mb-0"><a href="javascript:void(0);">Kusnaidi Anderson</a></h5>
-															<span>4m ago</span>
-														</div>
-														</div>
-														<div class="customer-button text-nowrap">
-															<a href="javascript:void(0);"><i class="far fa-check-circle text-success"></i></a>
-															<a href="javascript:void(0);"><i class="far fa-times-circle text-danger"></i></a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="items">
-												<div class="customers border">
-													<p class="fs-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-													<div class="d-flex justify-content-between align-items-center mt-4">
-														<div class="customer-profile d-flex ">
-														<img src="images/users/user7.jpg" alt="">
-														<div class="ms-3">
-															<h5 class="mb-0"><a href="javascript:void(0);">Kusnaidi Anderson</a></h5>
-															<span>4m ago</span>
-														</div>
-														</div>
-														<div class="customer-button text-nowrap">
-															<a href="javascript:void(0);"><i class="far fa-check-circle text-success"></i></a>
-															<a href="javascript:void(0);"><i class="far fa-times-circle text-danger"></i></a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="items">
-												<div class="customers border">
-													<p class="fs-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-													<div class="d-flex justify-content-between align-items-center mt-4">
-														<div class="customer-profile d-flex ">
-														<img src="images/users/user5.jpg" alt="">
-														<div class="ms-3">
-															<h5 class="mb-0"><a href="javascript:void(0);">Kusnaidi Anderson</a></h5>
-															<span>4m ago</span>
+															<h5 class="mb-0"><a href="javascript:void(0);">Schoolly EdTech</a></h5>
+															<span>3days ago</span>
 														</div>
 														</div>
 														<div class="customer-button text-nowrap">
@@ -1322,6 +1153,7 @@
 				</div>
 			</div>
 		</div>
+		{% endblock content_body %}
 		<!--**********************************
 			Content body end
 		***********************************-->
@@ -1331,11 +1163,13 @@
 		<!--**********************************
 			Footer start
 		***********************************-->
+		{% block footer %}
 		<div class="footer">
 			<div class="copyright">
-				<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2021</p>
+				<p>Copyright © Designed &amp; Developed by <a href="https://schoolly.com.ng/" target="_blank">SchoollyEdTech</a> 2025</p>
 			</div>
 		</div>
+		{% endblock footer %}
 		<!--**********************************
 			Footer end
 		***********************************-->
@@ -1357,30 +1191,30 @@
 	<!--**********************************
 		Scripts
 	***********************************-->
-	<!-- Required vendors -->
-	<script src="./vendor/global/global.min.js"></script>
+	{% block scripts %}
+	<script src="{% static 'pages/vendor/global/global.min.js' %}"></script>
 
-	<script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+	<script src="{% static 'pages/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
 	
 	<!-- Apex Chart -->
 	
-	<script src="./vendor/apexchart/apexchart.js"></script>
+	<script src="{% static 'pages/vendor/apexchart/apexchart.js' %}"></script>
 	
 	
 	<!-- Chart piety plugin files -->
 	
 	
 	<!-- Dashboard 1 -->
-	<script src="./js/dashboard/dashboard-1.js"></script>
+	<script src="{% static 'pages/js/dashboard/dashboard-1.js' %}"></script>
 	
-	<script src="./vendor/owl-carousel/owl.carousel.js"></script>
-	<script src="vendor/bootstrap-datetimepicker/js/moment.js"></script>
-	<script src="vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="{% static 'pages/vendor/owl-carousel/owl.carousel.js' %}"></script>
+	<script src="{% static 'pages/vendor/bootstrap-datetimepicker/js/moment.js' %}"></script>
+	<script src="{% static 'pages/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
 	
-	<script src="./js/custom.min.js"></script>
-	<script src="./js/dlabnav-init.js"></script>
-	<script src="./js/demo.js"></script>
-	<script src="./js/styleSwitcher.js"></script>
+	<script src="{% static 'pages/js/custom.min.js' %}"></script>
+	<script src="{% static 'pages/js/dlabnav-init.js' %}"></script>
+	<script src="{% static 'pages/js/demo.js' %}"></script>
+	<script src="{% static 'pages/js/styleSwitcher.js' %}"></script>
 	<script>
 		function TravlCarousel()
 			{
@@ -1439,6 +1273,6 @@
 			$(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
 		});
 	</script>
-
+	{% endblock scripts %}
 </body>
 </html>

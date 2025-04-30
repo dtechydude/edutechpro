@@ -1,0 +1,76 @@
+<html></html>
+<head>
+    <title>Student Search List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+  
+    {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+    <div class="container"><h1></h1></div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+          <span><strong>Search Students </strong></span>- Use the search form to filter for students by : <em>first name, last name, teacher's name or current class.</em>
+        </div>
+        <div class="card-body">
+ 
+    <form action="{% url 'students:search' %}" class="form-inline" method="get">
+       <div class="form-group mb-8">
+       
+            <h5>{% if full_name %}{{ class_id.name }}{% else %} Search All Student Record {% endif %}</h5>
+       </div>
+       <div class="form-group mx-sm-3 mb-2">
+        <label for="" class="sr-only">search</label>
+        <input name="search" type="" class="form-control" id="" placeholder="Keyword">
+        </div>
+        <button type="submit" class="btn btn-success btn-md mb-2">Search</button>
+   </form>
+   </div>
+   <!-- <div class="card-body"  style="padding-top:1px;"> -->
+    <!-- {% for x in student %} -->
+    <!-- <h6> <a href="{{ x.get_absolute_url }}">  -->
+        <!-- {{x.first_name}}  {{x.middle_name}}  {{x.last_name}} -->
+    <!-- </a></h6> -->
+    <!-- <p class="">Guardian Name :<strong> {{x.guardian_name}} </strong>  - Guardian Phone : <strong>{{x.guardian_phone}}</strong> </br>
+      Current Class:  <strong>{{x.current_class}} </strong>  -  <span>Class Teacher:  <strong>{{ x.class_teacher.first_name}} {{ x.class_teacher.last_name}}</strong></span></p> -->
+     <!-- <hr> -->
+    <!-- {% endfor %} -->
+    <!-- </div> -->
+<!-- Page Paginator start -->
+<div class="card-body">
+        {% if student.has_other_pages %}
+        {% if student.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ studentlist.previous_page_number }}">&laquo;</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+        {% endif %}
+        {% for i in student.paginator.page_range %}
+        {% if student.number == i %}
+
+        <a class="btn btn-info mb-4" href="">{{ i }}</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+        {% endif %}
+        {% endfor %}
+        {% if student.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ studentlist.next_page_number }}">&raquo;</a>
+        {% else %}
+
+        <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+        {% endif %}
+      										
+        {% endif %}
+    </div>
+        <!-- Page Paginator end -->
+
+
+</div>
+</div>
+{% endif %}
+
+</body>
+
+</html>
