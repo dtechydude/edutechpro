@@ -218,7 +218,7 @@ class Assign(models.Model):
         cl = Class.objects.get(id=self.class_id_id)
         cr = Subject.objects.get(id=self.subject_id)
         te = Teacher.objects.get(id=self.teacher_id)
-        return '%s : %s : %s' % (te.middle_name, cr.shortname, cl)
+        return '%s : %s : %s' % (te.full_name, cr.shortname, cl)
     
 
 class AssignTime(models.Model):

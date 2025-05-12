@@ -7,7 +7,7 @@
     
 	<!-- PAGE TITLE HERE -->
     {% block title %}
-	<title>Staff List</title>
+	<title>Teachers List</title>
 	{% endblock title %}
 	
 	<!-- FAVICONS ICON -->
@@ -97,43 +97,43 @@
 					<div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" style="color:red;">Staff Profile Datatable </h4>
+                                <h4 class="card-title" style="color:orangered;">Teachers Profile Datatable </h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example3" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>Img</th>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Dept</th>
-                                                <th>Gender</th>
-                                                <!-- <th>Position</th> -->
-                                                <th>Mobile</th>
-                                                <!-- <th>Email</th> -->
+                                                <th>S/N</th>
+                                                <th>Image</th>
+                                                <th>Full Name</th>
+                                                <th>Username</th>                                               
+                                                <th>Dept.</th>                                                
+                                                <th>Phone</th>
+                                                <th>Email</th>
                                                 <th>Emp.Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        
+                                            {% for ts in all_teachers %}
                                             <tr>
-												<td><img class="rounded-circle" width="35" src="{% static 'pages/images/profile/small/pic2.jpg' %}" alt=""></td>
-                                                <td>GCI67899</td>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Female</td>
-                                                <!-- <td>M.COM., P.H.D.</td> -->
-                                                <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a></td>
+                                                <td>{{ forloop.counter }}</td>
+												<td><a href="{% url 'staff:teacher-detail' ts.id %}"><img class="rounded-circle" width="35" src="{{ts.user.profile.image.url}}" alt=""></a></td>
+                                                <td>{{ ts.full_name }}</td>
+                                                <td>{{ ts.user.username }}</td>
+                                                <td>{{ ts.dept }}</td>
+                                                <td>{{ ts.user.profile.phone }}</td>
+                                                <td>{{ ts.user.email }}</td>
+                                                <td><a href="javascript:void(0);"><strong>{{ ts.date_employed }}</strong></a></td>
                                                 <!-- <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td> -->
-                                                <td>2011/07/25</td>
                                                 <td>
 													<div class="d-flex">
 														<a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
 														<a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
 													</div>
 												</td>
+                                                {% endfor %}
                                             </tr>
                                            
                                            

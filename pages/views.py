@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.contrib.auth.models import User
 from students.models import Student
-from staff.models import Staff, Teacher
+from staff.models import Staff, Teacher, Assign
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -23,10 +24,12 @@ def portal_home(request):
     active = Student.objects.filter(student_status='active').count()
     staff_num = Teacher.objects.count()
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))
-    students = Student.objects.filter().order_by('current_class').values('current_class__name').annotate(count=Count('current_class__name'))
-    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('student_username')
+    students = Student.objects.filter().order_by('class_id').values('class_id__section').annotate(count=Count('class_id__section'))
+    my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
+    no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
+
     try:
-        num_inclass = Student.objects.filter(current_class__name = request.user.studentdetail.current_class).count()
+        num_inclass = Student.objects.filter(class_id = request.user.student.class_id).count()
     except Student.DoesNotExist:
         num_inclass = Student.objects.filter()
     # Build a paginator with function based view
@@ -55,5 +58,6 @@ def portal_home(request):
         'events':events,
         'my_idcard':my_idcard,
         'my_students':my_students,
+        'no_inteacherclass': no_inteacherclass
     }
-    return render(request, 'pages/portal_home.html')
+    return render(request, 'pages/portal_home.html', context )

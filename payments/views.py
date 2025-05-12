@@ -566,3 +566,7 @@ def receipt_render_pdf_view(request, *args, **kwargs):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+
+def payment_instruction(request):
+    return render(request, 'payments/payment_instruction.html')

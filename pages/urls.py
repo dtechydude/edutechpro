@@ -6,7 +6,7 @@ app_name ='pages'
 
 urlpatterns = [
 
-     path('', page_views.schoolly_home, name='schoolly-home'),
-     path('dashboard/', page_views.portal_home, name='portal-home'),
+     # path('', page_views.schoolly_home, name='schoolly-home'),
+     path('', page_views.portal_home, name='portal-home'),
 
 ]

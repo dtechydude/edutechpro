@@ -66,8 +66,8 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('pages:schoolly_home'))
-
+    # return HttpResponseRedirect(reverse('users:user_logout'))
+    return render(request, 'users/logout.html')
 
 @login_required
 def users_home(request):

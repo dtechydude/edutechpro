@@ -90,10 +90,10 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter  = ['class_id__dept__name', 'gender', 'student_status']
 
 
-class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'dept')
-    search_fields = ('full_name', 'dept__name')
-    ordering = ['dept__name', 'full_name']
+# class TeacherAdmin(admin.ModelAdmin):
+#     list_display = ('full_name', 'dept')
+#     search_fields = ('full_name', 'dept__name')
+#     ordering = ['dept__name', 'full_name']
 
     
 
@@ -144,7 +144,7 @@ admin.site.register(Dept, DeptAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject, SubjectAdmin)
-admin.site.register(Teacher, TeacherAdmin)
+# admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Assign, AssignAdmin)
 admin.site.register(StudentSubject, StudentSubjectAdmin)
 admin.site.register(AttendanceClass, AttendanceClassAdmin)

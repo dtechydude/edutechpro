@@ -8,7 +8,8 @@ from . import views
 app_name = 'payments'
 
 urlpatterns = [
-    path('payment-form/', payment_views.payment_form, name="payment_form"),   
+    path('payment-form/', payment_views.payment_form, name="payment_form"),
+    path('payment-instruction/', payment_views.payment_instruction, name="payment_instruction"),      
     path('payment-report/', payment_views.payment_report, name="payment_report"),
     # path('summary-payment-report/', payment_views.summary_payment_report, name="summary_payment_report"),
     path('debtor-list/', payment_views.debtor_list, name="debtor_list"),      

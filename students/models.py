@@ -21,6 +21,46 @@ test_name = (
     ('Semester End Exam', 'Semester End Exam'),
 )
 
+# Blood Group
+A_Positive = 'A+'
+A_Negative = 'A-'
+B_Positive = 'B+'
+AB_Positive = 'AB+'
+AB_Negative = 'AB-'
+O_Positive = 'O+'
+O_Negative = 'O-'
+select = 'select'
+
+
+blood_group = [
+    (A_Positive, 'A+'),
+    (A_Negative, 'B-'),
+    (B_Positive, 'B+'),
+    (AB_Positive, 'AB+'),
+    (AB_Negative, 'AB-'),
+    (O_Positive, 'O+'),
+    (O_Negative, 'O-'),
+    (select, 'select'), 
+
+]
+
+# Genotype
+AA = 'AA'
+AS = 'AS'
+AC = 'AC'
+SS = 'SS'
+select = 'select'
+
+genotype = [
+    (AA, 'AA'),
+    (AS, 'AS'),
+    (AC, 'AC'),
+    (SS, 'SS'),
+    (select, 'select'),
+    
+]
+
+
 class Badge(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     desc = models.CharField(max_length=50, blank=True)
@@ -34,12 +74,27 @@ class Badge(models.Model):
         super().save(*args, **kwargs)
 
 
+class Hostel(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    desc = models.CharField(max_length=50, blank=True)
+    slug = models.SlugField(null=True, blank=True)
+    
+    def __str__ (self):
+        return f'{self.name}'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
+
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)    
     USN = models.CharField(primary_key='True', max_length=100, help_text='Unique Student Number')
     full_name = models.CharField(max_length=200, help_text='First_Name, Middle_name, Last_Name')
-    class_on_admission = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, related_name='class_on_admission', verbose_name='class_on_admission')
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE, default=1)
+    badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, null=True, default='not a prefect', verbose_name='Prefect Tittle (if is prefect)')
+
     
     female = 'female'
     male = 'male'
@@ -53,6 +108,10 @@ class Student(models.Model):
 
     gender= models.CharField(max_length=20, choices=gender_type, default= select_gender) 
     DOB = models.DateField(default='1998-01-01')
+    # medical information
+    blood_group = models.CharField(max_length=15, choices=blood_group, default=select)
+    genotype = models.CharField(max_length=15, choices=genotype, default=select)
+    health_remark = models.CharField(max_length=60, blank=False, null=True)    
 
     day_student = 'day_student'
     boarder = 'boarder'
@@ -64,8 +123,10 @@ class Student(models.Model):
     ]
 
     student_type = models.CharField(max_length=15, choices=student_types, default=day_student)
+    hostel_name = models.ForeignKey(Hostel, on_delete=models.CASCADE, blank=True, null=True, related_name='hostel_name', verbose_name='hostel')
     date_admitted = models.DateField(default='2020-01-01')
-    badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, null=True, default='not a prefect', verbose_name='Prefect Tittle (if is prefect)')
+    class_on_admission = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, related_name='class_on_admission', verbose_name='class_on_admission')
+
 
      # Guardian details here..
     guardian_name = models.CharField(max_length=60, blank=False)  
@@ -93,8 +154,7 @@ class Student(models.Model):
         (brother, 'brother'),
         (aunt, 'aunt'),
         (uncle, 'uncle'),
-        (other, 'other'), 
-         
+        (other, 'other'),          
 
     ]
 
