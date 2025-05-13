@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 # from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from students.models import Student, StudentSubject
+from students.models import Student, StudentSubject, MarksClass
 from staff.models import Assign
 from students.forms import StudentUpdateForm
 from users.forms import UserRegisterForm
@@ -152,7 +152,7 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
 
 
 
-
+# Students Marks
 @login_required()
 def marks_list(request, stud_id):
     stud = Student.objects.get(USN=stud_id, )
@@ -173,3 +173,67 @@ def marks_list(request, stud_id):
         sc_list.append(sc)
 
     return render(request, 'students/marks_list.html', {'sc_list': sc_list})
+
+
+# teacher marks
+
+@login_required()
+def t_marks_list(request, assign_id):
+    ass = get_object_or_404(Assign, id=assign_id)
+    m_list = MarksClass.objects.filter(assign=ass)
+    return render(request, 'students/t_marks_list.html', {'m_list': m_list})
+
+
+@login_required()
+def t_marks_entry(request, marks_c_id):
+    mc = get_object_or_404(MarksClass, id=marks_c_id)
+    ass = mc.assign
+    c = ass.class_id
+    context = {
+        'ass': ass,
+        'c': c,
+        'mc': mc,
+    }
+    return render(request, 'students/t_marks_entry.html', context)
+
+
+@login_required()
+def marks_confirm(request, marks_c_id):
+    mc = get_object_or_404(MarksClass, id=marks_c_id)
+    ass = mc.assign
+    cr = ass.subject
+    cl = ass.class_id
+    for s in cl.student_set.all():
+        mark = request.POST[s.USN]
+        sc = StudentSubject.objects.get(subject=cr, student=s)
+        m = sc.marks_set.get(name=mc.name)
+        m.marks1 = mark
+        m.save()
+    mc.status = True
+    mc.save()
+
+    return HttpResponseRedirect(reverse('students:t_marks_list', args=(ass.id,)))
+
+
+@login_required()
+def edit_marks(request, marks_c_id):
+    mc = get_object_or_404(MarksClass, id=marks_c_id)
+    cr = mc.assign.subject
+    stud_list = mc.assign.class_id.student_set.all()
+    m_list = []
+    for stud in stud_list:
+        sc = StudentSubject.objects.get(subject=cr, student=stud)
+        m = sc.marks_set.get(name=mc.name)
+        m_list.append(m)
+    context = {
+        'mc': mc,
+        'm_list': m_list,
+    }
+    return render(request, 'students/edit_marks.html', context)
+
+
+@login_required()
+def student_marks(request, assign_id):
+    ass = Assign.objects.get(id=assign_id)
+    sc_list = StudentSubject.objects.filter(student__in=ass.class_id.student_set.all(), subject=ass.subject)
+    return render(request, 'students/t_student_marks.html', {'sc_list': sc_list})

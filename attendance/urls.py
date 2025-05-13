@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from attendance import views as views
 
 
 
@@ -8,6 +8,7 @@ from . import views
 app_name ='attendance'
 
 urlpatterns = [
+    path('', views.att_index, name='att_index'),
     path('student/<slug:stud_id>/attendance/', views.attendance, name='attendance'),
     path('student/<slug:stud_id>/<slug:subject_id>/attendance/', views.attendance_detail, name='attendance_detail'),
 
@@ -21,7 +22,7 @@ urlpatterns = [
     path('teacher/<int:ass_c_id>/attendance/', views.t_attendance, name='t_attendance'),
     path('teacher/<int:ass_c_id>/Edit_att/', views.edit_att, name='edit_att'),
     path('teacher/<int:ass_c_id>/attendance/confirm/', views.confirm, name='confirm'),
-    path('teacher/<slug:stud_id>/<slug:course_id>/attendance/', views.t_attendance_detail, name='t_attendance_detail'),
+    path('teacher/<slug:stud_id>/<slug:subject_id>/attendance/', views.t_attendance_detail, name='t_attendance_detail'),
     path('teacher/<int:att_id>/change_attendance/', views.change_att, name='change_att'),
     path('teacher/<int:assign_id>/Extra_class/', views.t_extra_class, name='t_extra_class'),
     path('teacher/<slug:assign_id>/Extra_class/confirm/', views.e_confirm, name='e_confirm'),
@@ -30,12 +31,11 @@ urlpatterns = [
     path('teacher/<slug:teacher_id>/t_timetable/', views.t_timetable, name='t_timetable'),
     path('teacher/<int:asst_id>/Free_teachers/', views.free_teachers, name='free_teachers'),
 
-    path('teacher/<int:assign_id>/marks_list/', views.t_marks_list, name='t_marks_list'),
-    path('teacher/<int:assign_id>/Students/Marks/', views.student_marks, name='t_student_marks'),
-    path('teacher/<int:marks_c_id>/marks_entry/', views.t_marks_entry, name='t_marks_entry'),
-    path('teacher/<int:marks_c_id>/marks_entry/confirm/', views.marks_confirm, name='marks_confirm'),
-    path('teacher/<int:marks_c_id>/Edit_marks/', views.edit_marks, name='edit_marks'),
+    # path('teacher/<int:assign_id>/marks_list/', views.t_marks_list, name='t_marks_list'),
+    # path('teacher/<int:assign_id>/Students/Marks/', views.student_marks, name='t_student_marks'),
+    # path('teacher/<int:marks_c_id>/marks_entry/', views.t_marks_entry, name='t_marks_entry'),
+    # path('teacher/<int:marks_c_id>/marks_entry/confirm/', views.marks_confirm, name='marks_confirm'),
+    # path('teacher/<int:marks_c_id>/Edit_marks/', views.edit_marks, name='edit_marks'),
 
 ]
 
-]

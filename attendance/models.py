@@ -18,6 +18,27 @@ test_name = (
     ('Semester End Exam', 'Semester End Exam'),
 )
 
+time_slots = (
+    ('7:30 - 8:30', '7:30 - 8:30'),
+    ('8:30 - 9:30', '8:30 - 9:30'),
+    ('9:30 - 10:30', '9:30 - 10:30'),
+    ('11:00 - 11:50', '11:00 - 11:50'),
+    ('11:50 - 12:40', '11:50 - 12:40'),
+    ('12:40 - 1:30', '12:40 - 1:30'),
+    ('2:30 - 3:30', '2:30 - 3:30'),
+    ('3:30 - 4:30', '3:30 - 4:30'),
+    ('4:30 - 5:30', '4:30 - 5:30'),
+)
+
+DAYS_OF_WEEK = (
+    ('Monday', 'Monday'),
+    ('Tuesday', 'Tuesday'),
+    ('Wednesday', 'Wednesday'),
+    ('Thursday', 'Thursday'),
+    ('Friday', 'Friday'),
+    ('Saturday', 'Saturday'),
+)
+
 
 class AttendanceClass(models.Model):
     assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
@@ -37,9 +58,9 @@ class Attendance(models.Model):
     status = models.BooleanField(default='True')
 
     def __str__(self):
-        sname = Student.objects.get(name=self.student)
-        cname = Subject.objects.get(name=self.subject)
-        return '%s : %s' % (sname.name, cname.shortname)
+        sname = Student.objects.get(full_name=self.student)
+        cname = Subject.objects.get(full_name=self.subject)
+        return '%s : %s' % (sname.full_name, cname.shortname)
 
 class AttendanceTotal(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -50,21 +71,21 @@ class AttendanceTotal(models.Model):
 
     @property
     def att_class(self):
-        stud = Student.objects.get(name=self.student)
+        stud = Student.objects.get(full_name=self.student)
         cr = Subject.objects.get(name=self.subject)
         att_class = Attendance.objects.filter(subject=cr, student=stud, status='True').count()
         return att_class
 
     @property
     def total_class(self):
-        stud = Student.objects.get(name=self.student)
+        stud = Student.objects.get(full_name=self.student)
         cr = Subject.objects.get(name=self.subject)
         total_class = Attendance.objects.filter(subject=cr, student=stud).count()
         return total_class
 
     @property
     def attendance(self):
-        stud = Student.objects.get(name=self.student)
+        stud = Student.objects.get(full_name=self.student)
         cr = Subject.objects.get(name=self.subject)
         total_class = Attendance.objects.filter(subject=cr, student=stud).count()
         att_class = Attendance.objects.filter(subject=cr, student=stud, status='True').count()
@@ -76,7 +97,7 @@ class AttendanceTotal(models.Model):
 
     @property
     def classes_to_attend(self):
-        stud = Student.objects.get(name=self.student)
+        stud = Student.objects.get(full_name=self.student)
         cr = Subject.objects.get(name=self.subject)
         total_class = Attendance.objects.filter(subject=cr, student=stud).count()
         att_class = Attendance.objects.filter(subject=cr, student=stud, status='True').count()
