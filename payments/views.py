@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import F, Sum, Q
 from payments.forms import PaymentForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm
 from django.contrib import messages
@@ -461,28 +463,28 @@ class PaymentCategoryListView(LoginRequiredMixin, ListView):
     context_object_name = 'categorylist'
     model = PaymentCategory
     queryset = PaymentCategory.objects.all()
-    template_name = 'payment/payment_cat_list.html'
+    template_name = 'payments/payment_cat_list.html'
     paginate_by = 30
 
-class BankListView(LoginRequiredMixin, ListView):
+class BankListView(LoginRequiredMixin, ListView, SuccessMessageMixin):
     context_object_name = 'banklist'
     model = BankDetail
     queryset = BankDetail.objects.all()
-    template_name = 'payment/bank_list.html'
-    paginate_by = 30
+    template_name = 'payments/bank_list.html'
+    success_message = "%(field1)s was created successfully"
 
 
-class BankCreateView(LoginRequiredMixin, CreateView):
+class BankCreateView(LoginRequiredMixin, CreateView, SuccessMessageMixin):
     form_class = BankRegisterForm
-    template_name = 'payment/bank_register_form.html'
-    success_url = reverse_lazy('payment:bank-list')
-    # queryset= StudentDetail.objects.all()
+    template_name = 'payments/bank_register_form.html'
+    success_url = reverse_lazy('payments:bank-list')
+    success_message = "%(field1)s was created successfully"
+    
 
     # success_url = '/'
     def form_valid(self, form):
         return super().form_valid(form)
-
-
+    
 class PaymentUpdateView(LoginRequiredMixin, UpdateView):
     fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a', 
               'amount_paid_b', 'payment_date_b', 'bank_name_b',

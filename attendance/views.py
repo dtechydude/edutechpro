@@ -137,7 +137,7 @@ def confirm(request, ass_c_id):
             assc.status = 1
             assc.save()
 
-    return HttpResponseRedirect(reverse('t_class_date', args=(ass.id,)))
+    return HttpResponseRedirect(reverse('attendance:t_class_date', args=(ass.id,)))
 
 
 @login_required()
@@ -185,7 +185,7 @@ def e_confirm(request, assign_id):
         a = Attendance(subject=cr, student=s, status=status, date=date, attendanceclass=assc)
         a.save()
 
-    return HttpResponseRedirect(reverse('t_clas', args=(ass.teacher_id, 1)))
+    return HttpResponseRedirect(reverse('attendance:t_clas', args=(ass.teacher_id, 1)))
 
 
 @login_required()

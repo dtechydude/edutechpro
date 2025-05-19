@@ -20,6 +20,12 @@ urlpatterns = [
      path('<str:id>/', StaffDetailView.as_view(), name="staff-detail"),
      path('<str:id>/update/', StaffUpdateView.as_view(), name="staff-update"),
      path('<str:id>/delete/', StaffDeleteView.as_view(), name="staff-delete"),
+
+     # Teacher's Own Student List
+     path('teacher/<int:assign_id>/Students/attendance/', staff_views.my_student, name='my_student'),
+     path('teacher/<slug:teacher_id>/<int:choice>/Classes/', staff_views.my_clas, name='my_clas'),
+
+
      
 
 ]

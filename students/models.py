@@ -12,7 +12,6 @@ from staff.models import Assign, AssignTime
 
 
 
-
 test_name = (
     ('Internal test 1', 'Internal test 1'),
     ('Internal test 2', 'Internal test 2'),
@@ -183,6 +182,7 @@ class Student(models.Model):
     def __str__(self):
         return self.full_name
     
+
 
 #All subject offer by student
 class StudentSubject(models.Model):

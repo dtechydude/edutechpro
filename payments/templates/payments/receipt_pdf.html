@@ -1,0 +1,255 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+    <title>Payment Receipt</title>
+    <style>
+    body {
+      background-image: url('#'); 
+      background-size: contain;
+      background-position: center;  
+      background-repeat: repeat-x;
+           
+    } 
+ 
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 3px;
+        vertical-align: middle;
+
+      }
+      
+      tr:nth-child(even) {background-color: #f2f2f2;}
+      
+   
+    html {
+        -webkit-print-color-adjust: exact;
+    
+    } 
+    table, th, td {
+      border:  1px solid grey;
+      border-collapse: collapse;
+    }
+
+    
+ 
+  </style>
+  </head>
+
+  <body style="background-color:#3399cc;">
+
+    <div  style="padding-top:1px;">
+      <div style="background-color:#ffffff;" >
+        <img src="https://schoolly.com.ng/portal/small_logo.png" alt="" style="float: left;">       
+            
+
+      </div>
+     
+     <p style="text-align: center; color:#f2f2f2; font-size:17px;">Receipt Of Payments</p>
+     <div></div>
+     </div>
+ 
+
+<div class="invoice-items">
+    <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student Code </th>
+            <th>Student Name </th>
+            <th>Current Class / Session  </h>
+            <th>Payment Status </h>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{% if my_receipt.student_id %}
+                  <span style="font-size: 14px; color: red;">{{my_receipt.student_id.studentdetail.student_username}}</span>
+                  {% else %} 
+                  <span style="font-size: 14px; color: green;">{{my_receipt.student_detail.student_username}}</span>
+                  {% endif %}
+                </td>
+                <td>{% if my_receipt.student_id %}
+                    <span style="font-size: 14px; color: green;">{{my_receipt.student_id.studentdetail.first_name}}</span>
+                    <span style="font-size: 14px; color: green;"> {{my_receipt.student_id.studentdetail.last_name}}</span>
+                    <span style="font-size: 14px; color: green;">{{my_receipt.student_id.studentdetail.middle_name}} </span>
+                    {% else %}
+                    <span style="font-size: 14px; color: green;">{{my_receipt.student_detail.last_name }}</span>
+                    <span style="font-size: 14px; color: green;"> {{my_receipt.student_detail.first_name }}</span>
+                    <span style="font-size: 14px; color: green;"> {{my_receipt.student_detail.middle_name }} </span>
+                    {% endif %}
+                  </td>
+                <td>
+                  <span style="font-size: 11px; color: green;">{{my_receipt.student_detail.current_class}} / {{ my_receipt.payment_name.session }}</span>
+                </td>
+                <td>
+                    
+                    <span pan class="label label-success" style="font-size:small;">Detailed Payments</span>
+                    <!-- <span class="label label-success" style="font-size:medium;">PAID - "Confirmed"</span> -->
+          
+                </td>
+            </tr>
+
+        </tbody>
+        </table>
+
+
+<div class="invoice-items">
+<div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th class="per70 text-center" style="font-size: 17px;">Payment Type</th>
+<th class="per5 text-center" style="font-size: 17px;">Description</th>
+<th class="per25 text-center" style="font-size: 17px;">Amount Paid</th>
+
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Payment Name:</strong> {{ my_receipt.payment_name }} - <strong> <br>
+                                    Total Due: {{ my_receipt.payment_name.amount_due }}</strong>
+                                    {% if my_receipt.amount_paid_a == 'First Payment'%} 
+                                        {{ my_receipt.payment_name.amount_due }}
+                                    {% endif %}
+                                    </td>
+<td class="text-center">{% if my_receipt.amount_paid_a %}  1st Payment -  {{ my_receipt.payment_date_a }}
+                        {% if my_receipt.confirmed_a %} <span style="color:green;"> "confirmed" </span>
+                        {% else %} 
+                        <span style="color:red;"> "Unconfirmed"</span>
+                        {% endif %}
+                        {% endif %} <br>
+                        {% if my_receipt.amount_paid_b %}  2nd Payment - {{ my_receipt.payment_date_b }}
+                        {% if my_receipt.confirmed_b %} <span style="color:green;"> "confirmed" </span>
+                        {% else %} <span style="color:red;"> "Unconfirmed"</span>
+                        {% endif %}
+                        {% endif %}<br>
+                        {% if my_receipt.amount_paid_c %}  3nd Payment - {{ my_receipt.payment_date_c }}
+                        {% if my_receipt.confirmed_c %} <span style="color:green;"> "confirmed" </span>
+                        {% else %} <span style="color:red;"> "Unconfirmed"</span>
+                        {% endif %}
+                        {% endif %}
+</td>
+<td class="text-center">{% if my_receipt.amount_paid_a %}
+                            N{{ my_receipt.amount_paid_a}}
+                        {% endif %}<br>
+                         {% if my_receipt.amount_paid_b %} 
+                            N{{ my_receipt.amount_paid_b}}
+                        {% endif %}<br>
+                         {% if my_receipt.amount_paid_c %}
+                            N{{ my_receipt.amount_paid_c}}
+                        {% endif %}
+                        </td>
+</tr>
+<tr>
+<td><strong>STUDENT DISCOUNTED AMOUNT DUE:  </strong> <br>
+    {% if my_receipt.discounted_amount %}
+    {{my_receipt.discounted_amount_due |floatformat:2}}
+    {% else %}
+    No Discount Given
+    {% endif %}
+</td>
+<td class="text-center">n/a</td>
+<td class="text-center"> - </td>
+</tr>
+<tr>
+<td><strong>Payment Last Updated : </strong>{{ my_receipt.payment_updated_date}}  </td>
+<td class="text-center">n/a</td>
+<td class="text-center"> - </td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<th colspan="2" class="text-right" style="font-size: larger; text-align: right;">Sub Total:</th>
+<th class="text-center" style="font-size: larger; text-align: center;">N {{ my_receipt.total_amount_paid}}</th>
+</tr>
+<tr>
+<th colspan="2" class="text-right" style="text-align: right;"> Outstanding DEBT/CREDIT</th>
+<th class="text-center">
+                        <!-- Calculations with discount -->
+                        {% if my_receipt.discount %}
+                        {% if my_receipt.discounted_amount_due > my_receipt.total_amount_paid %}
+                        <span style="color: red;"> DEBT : {{ my_receipt.discounted_balance_owed}}</span>
+
+                        {% elif my_receipt.total_amount_paid > my_receipt.discounted_amount_due %} 
+                        <span style="color: green;">CREDIT : N{{ my_receipt.credit_balance_discounted|floatformat:2 }} </span>
+
+                        {% elif my_receipt.total_amount_paid == my_receipt.discounted_amount_due %} 
+                        <span style="color: green;">PAYMENT COMPLETED </span>
+                         {% else %}
+                         <span style="color: green;">UNKNOWN </span>
+                         {% endif %}
+                         {% endif%}
+
+                         <!-- Calculation without DISCOUNT -->
+                        
+                        {% if my_receipt.discount == False %}
+                        {% if my_receipt.payment_name.amount_due > my_receipt.total_amount_paid %}
+                        <span style="color: red;"> DEBT : N{{ my_receipt.balance_pay }}</span>
+
+                        {% elif my_receipt.total_amount_paid == my_receipt.payment_name.amount_due %} 
+                        <span style="color: green;">PAYMENT COMPLETED </span>
+
+                        {% elif my_receipt.total_amount_paid > my_receipt.payment_name.amount_due %} 
+                        <span style="color: green;">CREDIT : N{{ my_receipt.credit_balance }} </span>
+                         {% else %}
+                         <span style="color: green;">UNKNOWN </span>
+                         {% endif %}
+                         {% endif%}
+                        </th>
+</tr>
+
+<tr>
+    {% if my_receipt.balance_pay < 0 and my_receipt.installment_level == "First_payment"%}
+    <th colspan="" class="text-right"> You Have A Credit</th>
+    <th class="text-center" style="color:green;">N {{ my_receipt.balance_pay}} </th>
+    {% elif my_receipt.balance_pay > 0 and my_receipt.installment_level == "First_payment" %}
+    <th colspan="" class="text-right"> You Still Owe</th>
+    <th class="text-center" style="color:red;">N {{ my_receipt.balance_pay}} </th>
+    {% elif my_receipt.amount_paid_a == my_receipt.payment_name.amount_due %}
+    <th colspan="" class="text-right"> You Paid In Full</th>
+    <th class="text-center" style="color:green;">No Balance Due </th>
+    {% else %}
+    <th colspan="2" class="text-right"> <span style="color:green; font-size:12px;"><em>Payment Reference</em></span> - 
+        <span style="font-weight: 200;">{{ my_receipt.payment_name}} - {{ my_receipt.payment_name.session}}</span></span> </th>
+    {% endif %}
+    </tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="invoice-footer mt25">
+<p class="text-center" style="font-size: 17px; color: white; text-align: center;"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check. <br>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+      
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

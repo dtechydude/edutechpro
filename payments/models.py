@@ -18,6 +18,7 @@ class BankDetail(models.Model):
 
     class Meta:
         ordering:['bank_name']
+        unique_together = ['acc_name', 'acc_number', 'bank_name']
         
 
 class PaymentCategory(models.Model):
@@ -96,10 +97,10 @@ class PaymentDetail(models.Model):
         
 
     def __str__ (self):
-       return f'{self.student_detail} {self.student_id} '
+       return f'{self.student_detail} '
 
     def get_absolute_url(self):
-        return reverse('payment:my_payments')  
+        return reverse('payments:my_payments')  
     
     # def get_absolute_url(self):
     #     return reverse('payment:payment_detail', kwargs={'id':self.id})

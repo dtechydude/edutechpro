@@ -1,7 +1,7 @@
 {% extends 'pages/base.html' %}
 {% block content %}
 
-<form action="{% url 'marks_confirm' mc.id %}" method="post">
+<form action="{% url 'students:marks_confirm' mc.id %}" method="post">
             {% csrf_token %}
     <div class="card mb-3">
         <div class="card-header">
@@ -20,10 +20,10 @@
                 <tbody>
                     {% for m in m_list %}
                     <tr>
-                    <td>{{m.studentcourse.student.name}}</td>
+                    <td>{{m.studentsubject.student.name}}</td>
                     <td>{{ m.total_marks }}</td>
                     <td>
-                        <input type="number" name="{{ m.studentcourse.student.USN }}" min="0" max="{{ m.total_marks }}" value="{{ m.marks1 }}">
+                        <input type="number" name="{{ m.studentsubject.student.USN }}" min="0" max="{{ m.total_marks }}" value="{{ m.marks1 }}">
                     </td>
                     </tr>
                 {% endfor %}

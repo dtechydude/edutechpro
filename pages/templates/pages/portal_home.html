@@ -742,12 +742,34 @@
 							<span class="nav-text">Student Mgt.</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="{% url 'students:student-list' %}">All Students</a></li>	
+							{% if user.is_superuser or user.is_staff %}
+							<li><a href="{% url 'students:student-list' %}">All Students</a></li>
+							<li><a href="{% url 'students:student-list' %}">Class & Nos</a></li>
+														
+							<li><a href="#">My Students</a></li>
+							{% elif user.student %}	
 							<li><a href="./app-profile.html">My ID Card</a></li>
 							<li><a href="./post-details.html">Post Details</a></li>							
-							<li><a href="./app-calender.html">Calendar</a></li>							
+							<li><a href="./app-calender.html">Calendar</a></li>		
+							{% else %}
+							<li><a href="./app-calender.html">Calendar</a></li>	
+							{% endif %}					
 						</ul>
 					</li>
+					{% if user.is_superuser or user.is_staff or user.teacher%}
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Attendance</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="./form-element.html">Take Attendance</a></li>
+							<li><a href="./form-wizard.html">Attendance Report</a></li>
+
+							
+						</ul>
+						{% endif %}
+					</li>
+					{% if user.is_superuser or user.is_staff %}
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">Staff Mgt/Tools</span>
@@ -759,47 +781,69 @@
 					
 						</ul>
 					</li>
-					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-						<i class="flaticon-013-checkmark"></i>
-							<span class="nav-text">Results</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="./ui-accordion.html">1st. Term Results</a></li>
-							<li><a href="./ui-alert.html">2nd. Term Results</a></li>
-							<li><a href="./ui-badge.html">3rd. Term Results</a></li>
-						
-
-						</ul>
-					</li>
+					{% endif %}
+					
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">Payments/Bills</span>
 						</a>
 						<ul aria-expanded="false">
+							{% if user.is_superuser or user.is_staff %}
+							<li><a href="./uc-noui-slider.html">All Payments</a></li>
+							<li><a href="./uc-toastr.html">Debtors List</a></li>
+							{% endif %}							
+							{% if user.student or user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'payments:payment_instruction' %}">Payment Instruction</a></li>
 							<li><a href="./uc-select2.html">Make Payment</a></li>
-							<li><a href="./uc-nestable.html">Payment Chart</a></li>
-							<li><a href="./uc-noui-slider.html">All Payments</a></li>
-							<li><a href="./uc-sweetalert.html">My Payments</a></li>
-							<li><a href="./uc-toastr.html">Debtors List</a></li>
+							<li><a href="./uc-nestable.html">Payment Chart</a></li>	
 							<li><a href="./map-jqvmap.html">Online Payment</a></li>
+							{% endif %}
+							{% if user.student %}					
+							<li><a href="./uc-sweetalert.html">My Payments</a></li>	
+							{% endif %}						
+							
+						</ul>
+					</li>
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="flaticon-013-checkmark"></i>
+						<span class="nav-text">School Bus</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="./form-element.html">Bus Route</a></li>
+						<li><a href="./form-wizard.html">Students/Route</a></li>
+						
+					</ul>
+					</li>
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="flaticon-013-checkmark"></i>
+							<span class="nav-text">Results</span>
+						</a>
+						<ul aria-expanded="false">
+							{% if user.is_superuser or user.is_staff%}
+							<li><a href="./ui-accordion.html">1st. Term Results</a></li>
+							<li><a href="./ui-alert.html">2nd. Term Results</a></li>
+							<li><a href="./ui-badge.html">3rd. Term Results</a></li>
+							{% elif user.student %}
+							<li><a href="./ui-accordion.html">My 1st-Term Results</a></li>
+							<li><a href="./ui-alert.html">My 2nd-Term Results</a></li>
+							<li><a href="./ui-badge.html">My 3rd-Term Results</a></li>
+							{% elif user.teacher %}
+							<li><a href="./ui-alert.html">Record Results</a></li>
+							
+							{% else %}
+							<li><a href="#">No Priviledge</a></li>
+							{% endif %}
+						
+
 						</ul>
 					</li>
 					<li><a href="widget-basic.html" class="" aria-expanded="false">
 							<i class="flaticon-013-checkmark"></i>
-							<span class="nav-text">Widget</span>
-						</a>
+							<span class="nav-text">CBT </span>
+						</a>						
+					
 					</li>
-					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-072-printer"></i>
-							<span class="nav-text">Attendance</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="./form-element.html">Take Attendance</a></li>
-							<li><a href="./form-wizard.html">Attendance Report</a></li>
-							
-						</ul>
-					</li>
+					
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">E-Learning</span>
@@ -809,13 +853,19 @@
 							<li><a href="table-datatable-basic.html">Datatable</a></li>
 						</ul>
 					</li>
+					<li><a href="widget-basic.html" class="" aria-expanded="false">
+						<i class="flaticon-013-checkmark"></i>
+						<span class="nav-text">Help Center </span>
+					</a>						
+				
+				</li>
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">Settings</span>
 						</a>
-						<ul aria-expanded="false">
-							<li><a href="./page-login.html">Reset Password</a></li>
-							<li><a href="./page-register.html">Update Profile</a></li>							
+						<ul aria-expanded="false">							
+							<li><a href="./page-register.html">My Profile</a></li>
+							<li><a href="./page-login.html">Reset Password</a></li>							
 							<li><a href="./page-lock-screen.html">Log Out</a></li>				
 						</ul>
 					</li>

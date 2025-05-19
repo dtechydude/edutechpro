@@ -44,7 +44,10 @@ def student_list(request):
     context ={
         'all_students':all_students
     }
-    return render(request, 'students/student_list.html', context)
+    if request.user.is_superuser or request.user.is_staff:
+        return render(request, 'students/student_list.html', context)
+    else:
+         return render(request, 'pages/portal_home.html')
 
 
 # Student Search Query App

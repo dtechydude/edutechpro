@@ -1,7 +1,7 @@
 {% extends 'pages/base.html' %}
 {% block content %}
 
-<form action="{% url 'confirm' assc.id %}" method="post">
+<form action="{% url 'attendance:confirm' assc.id %}" method="post">
             {% csrf_token %}
     <div class="card mb-3">
         <div class="card-header">
@@ -19,7 +19,7 @@
                 <tbody>
                     {% for att in att_list %}
                     <tr>
-                    <td>{{att.student.name}}</td>
+                    <td>{{att.student.full_name}}</td>
                     <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
 

@@ -12,6 +12,7 @@ from django.template.loader import get_template
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from staff.models import Teacher, Staff, Assign
 from staff.forms import TeacherUpdateForm, StaffRegisterForm, StaffUpdateForm
+from attendance.models import AttendanceTotal, Attendance, AttendanceClass
 
 
 
@@ -105,3 +106,28 @@ class StaffDeleteView(LoginRequiredMixin, DeleteView):
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Staff, id=id_)
+    
+
+
+@login_required()
+def my_student(request, assign_id):
+    ass = Assign.objects.get(id=assign_id)
+    std_list = []
+    for stud in ass.class_id.student_set.all():
+        try:
+            a = AttendanceTotal.objects.get(student=stud, subject=ass.subject)
+        except AttendanceTotal.DoesNotExist:
+            a = AttendanceTotal(student=stud, subject=ass.subject)
+            a.save()
+        std_list.append(a)
+    # return render(request, 'staff/my_student_list.html', {'std_list': std_list})
+    return render(request, 'staff/my_student_list.html', {'std_list': std_list, 'assign_id':assign_id})
+
+
+
+@login_required
+def my_clas(request, teacher_id, choice):
+    teacher1 = get_object_or_404(Teacher, id=teacher_id)
+    return render(request, 'attendance/t_clas.html', {'teacher1': teacher1, 'choice': choice})
+
+

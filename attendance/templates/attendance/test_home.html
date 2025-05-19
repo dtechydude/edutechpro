@@ -1,0 +1,300 @@
+{% extends 'pages/portal_home.html' %}
+{% load static %}
+<head>
+    
+	<!-- PAGE TITLE HERE -->
+    {% block title %}
+	<title>Student List</title>
+	{% endblock title %}
+	
+	<!-- FAVICONS ICON -->
+    {% block favicon %}
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+    <!-- Datatable -->
+    <link href="{% static 'pages/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+	<link href="{% static 'pages/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static 'pages/css/style.css' %}" rel="stylesheet">
+    {% endblock favicon %}
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+   <div id="preloader">
+		<div class="lds-ripple">
+			<div></div>
+			<div></div>
+		</div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+		
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<!--**********************************
+            Chat box start
+        ***********************************-->
+		
+		<!--**********************************
+            Chat box End
+        ***********************************-->
+
+		
+        <!--**********************************
+            Header start
+        ***********************************-->
+       
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+      
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        {% block content_body %}
+
+    <!--*******************
+        Preloader start
+    ********************-->
+   <div id="preloader">
+		<div class="lds-ripple">
+			<div></div>
+			<div></div>
+		</div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+     
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<!--**********************************
+            Chat box start
+        ***********************************-->
+		
+		<!--**********************************
+            Chat box End
+        ***********************************-->
+		
+		<!--**********************************
+            Header start
+        ***********************************-->
+         
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+      
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+		
+		<!--**********************************
+            Content body start
+        ***********************************-->
+        {% block content_body %}
+        <div class="content-body">
+            <div class="container-fluid">
+				
+				<div class="row page-titles">
+			  <!-- Navigation -->
+              <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <div class="container">
+                  <a class="navbar-brand" href="{% url 'attendance:att_index' %}">College Management System</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                          <a class="nav-link text-capitalize">{{ request.user.student.name }}</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+          
+              <!-- Page Content -->
+              <div class="container">
+          
+                <!-- Jumbotron Header -->
+                <header class="jumbotron my-4">
+                  <h1 class="display-3 text-capitalize">Welcome {{ request.user.teacher }}</h1>
+          {#        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>#}
+          {#        <a href="#" class="btn btn-primary btn-lg">Call to action!</a>#}
+                </header>
+          
+                <!-- Page Features -->
+                <div class="row text-center">
+          
+                  <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card">
+                        <a href="{% url 'attendance:t_clas' request.user.teacher.id 1 %}">
+                          <img class="card-img-top" src="{% static 'attendance/images/attendance2.jpg' %}" alt="">
+                        </a>
+                        <div class="card-body">
+                        <h4 class="card-title">Attendance</h4>
+                        <p class="card-text">Enter the attendance of the students based on the class they are in. There is also
+                            the provision to edit the attendance of a whole class or student individually.</p>
+                      </div>
+                      <div class="card-footer">
+                          <a class="btn btn-primary" role="button" href="{% url 'attendance:t_clas' request.user.teacher.id 1 %}"> Enter Attendance</a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card">
+                        <a href="{% url 'attendance:t_clas' request.user.teacher.id 2 %}">
+                          <img class="card-img-top" src="{% static 'attendance/images/marks.jpg' %}" alt="">
+                        </a>
+                        <div class="card-body">
+                        <h4 class="card-title">Marks</h4>
+                        <p class="card-text">Enter the marks of the students based on the class they are in. This includes
+                              Internals, events and SEE. The marks of the students can also be edited.</p>
+                      </div>
+                      <div class="card-footer">
+                          <a class="btn btn-primary" role="button" href="{% url 'attendance:t_clas' request.user.teacher.id 2 %}">Enter Marks</a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card">
+                        <a href="{% url 'attendance:t_timetable' request.user.teacher.id %}">
+                          <img class="card-img-top" src="{% static 'attendance/images/timetable.png' %}" alt="">
+                        </a>
+                        <div class="card-body">
+                        <h4 class="card-title">TimeTable</h4>
+                        <p class="card-text">View the timetable in a tabular form. For a particular class, it specifies a
+                            list of teachers who handle the same class that are free for that time slot.</p>
+                      </div>
+                      <div class="card-footer">
+                          <a class="btn btn-primary" role="button" href="{% url 'attendance:t_timetable' request.user.teacher.id %}">View TimeTable</a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card">
+                      <a href="{% url 'attendance:t_clas' request.user.teacher.id 3 %}">
+                          <img class="card-img-top" src="{% static 'attendance/images/reports.png' %}" alt="">
+                      </a>
+                      <div class="card-body">
+                        <h4 class="card-title">Reports</h4>
+                        <p class="card-text">Generate reports for each class. These reports include generating a table consisting
+                              of the students belonging to that class and their respective CIE and Attendance.</p>
+                      </div>
+                      <div class="card-footer">
+                        <a href="{% url 'attendance:t_clas' request.user.teacher.id 3 %}" class="btn btn-primary">Generate Reports</a>
+                      </div>
+                    </div>
+                  </div>
+          
+                </div>
+                <!-- /.row -->
+          
+              </div>
+              <!-- /.container -->
+              <!-- Logout Modal-->
+              <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                      <a class="btn btn-primary" href="/accounts/logout">Logout</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+        {% endblock content_body %}
+        <!--**********************************
+            Content body end
+        ***********************************-->
+		
+		
+        <!--**********************************
+            Footer start
+        ***********************************-->
+       
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+		<!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+			
+
+
+	</div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/dlabnav-init.js"></script>
+	<script src="./js/demo.js"></script>
+    <script src="./js/styleSwitcher.js"></script>
+</body>
+</html>

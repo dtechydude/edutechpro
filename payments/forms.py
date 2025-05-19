@@ -43,7 +43,6 @@ class PaymentForm(forms.ModelForm):
                         #Note that i removed user because it is an instance in the view already
 
 
-
           
 class PaymentCatForm(forms.ModelForm):
         
@@ -51,7 +50,6 @@ class PaymentCatForm(forms.ModelForm):
             model = PaymentCategory
             fields = '__all__'
            
-
 class BankRegisterForm(forms.ModelForm):
         
         class Meta:
