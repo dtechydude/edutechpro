@@ -7,7 +7,7 @@
     
 	<!-- PAGE TITLE HERE -->
     {% block title %}
-	<title>Teachers List</title>
+	<title>Payment Chart</title>
 	{% endblock title %}
 	
 	<!-- FAVICONS ICON -->
@@ -83,21 +83,12 @@
         <div class="content-body">
             <div class="container-fluid">
 				
-				<div class="row page-titles">
-					<!-- <ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">Students</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0)">All-Time List</a></li>
-					</ol> -->
-                </div>
-                
-                <!-- row -->
-
-                <div class="row">
+		                <div class="row">
                 
 					<div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" style="color:orangered;">Teachers Profile Datatable </h4>
+                                <h4 class="card-title" style="color:green;">All Fees Table </h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -105,35 +96,29 @@
                                         <thead>
                                             <tr>
                                                 <th>S/N</th>
-                                                <th>Image</th>
-                                                <th>Full Name</th>
-                                                <th>Username</th>                                               
-                                                <th>Dept.</th>                                                
-                                                <th>Phone</th>
-                                                <th>Email</th>
-                                                <th>Emp.Date</th>
-                                                <th>Action</th>
+                                                <th>Payment Name</th>
+                                                <th>Category</th>
+                                                <th>Session</th>
+                                                <th>Term</th>
+                                                <th>Amount Due</th>
+                                                <th>Bank Detail</th>                                                 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for ts in all_teachers %}
+                                            {% for p in payment_chart %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-												<td><a href="{% url 'staff:teacher-detail' ts.id %}"><img class="rounded-circle" width="35" src="{{ts.user.profile.image.url}}" alt=""></a></td>
-                                                <td>{{ ts.full_name }}</td>
-                                                <td>{{ ts.user.username }}</td>
-                                                <td>{{ ts.dept }}</td>
-                                                <td>{{ ts.user.profile.phone }}</td>
-                                                <td>{{ ts.user.email }}</td>
-                                                <td><a href="javascript:void(0);"><strong>{{ ts.date_employed }}</strong></a></td>
-                                                <!-- <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td> -->
+												<td>{{p.name}}</td>
+                                                <td>{{s.payment_cart}}</td>
+                                                <td>{{s.session}}</td>
+                                                <td>{{ s.term }}</td>
+                                                <td>{{ s.amount_due }}</td>                                               
                                                 <td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <a href="{% url 'students:student-detail' s.USN %}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-eye"></i></a>
-                                                            <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-pencil-alt"></i></a>
-                                                        </div>
-                                                    </td>
+													<div class="d-flex">
+														<a href="{% url 'payments:bank-list' %}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-eye"></i>
+                                                        </a>
+													</div>
+												</td>
                                                 {% endfor %}
                                             </tr>
                                            

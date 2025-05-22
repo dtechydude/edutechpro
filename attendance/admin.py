@@ -6,7 +6,7 @@ from django.urls import path
 
 from .models import Student, Attendance,  Assign, AssignTime, AttendanceClass
 from .models import  User, AttendanceRange
-from curriculum.models import Class, Dept, Subject
+from curriculum.models import Class, Dept, Subject, Session
 from staff.models import Teacher, Assign, AssignTime
 from students.models import StudentSubject, Marks
 
@@ -43,6 +43,11 @@ class StudentInline(admin.TabularInline):
     model = Student
     extra = 0
     fk_name ='class_id'
+
+class SessionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'id')
+    search_fields = ('name', 'id')
+    ordering = ['name']
 
 
 class ClassAdmin(admin.ModelAdmin):
@@ -142,6 +147,7 @@ class AttendanceClassAdmin(admin.ModelAdmin):
 # admin.site.register(User, UserAdmin)
 admin.site.register(Dept, DeptAdmin)
 admin.site.register(Class, ClassAdmin)
+admin.site.register(Session, SessionAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject, SubjectAdmin)
 # admin.site.register(Teacher, TeacherAdmin)

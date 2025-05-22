@@ -199,7 +199,7 @@ def payment_chart_list(request):
         'payment_chart_list' : payment_chart_list
 
     }
-    return render (request, 'payment/payment_chart.html', context )
+    return render (request, 'payments/fees_table.html', context )
 
 
 

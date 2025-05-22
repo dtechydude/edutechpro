@@ -48,8 +48,8 @@ class TeacherDetailView(DetailView):
     queryset = Teacher.objects.all()
 
     def get_object(self):
-        id_ = self.kwargs.get("USN")
-        return get_object_or_404(Teacher, USN=id_)
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Teacher, id=id_)
 
 
 class TeacherUpdateView(LoginRequiredMixin, UpdateView):
