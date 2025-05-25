@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
     'bootstrap_datepicker_plus',
     'django_filters',
+    'embed_video',
 ]
 
 MIDDLEWARE = [

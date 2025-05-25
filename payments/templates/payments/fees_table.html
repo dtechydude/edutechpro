@@ -88,7 +88,7 @@
 					<div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" style="color:green;">All Fees Table </h4>
+                                <h4 class="card-title" style="color:green;">All Fees Schedule </h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -101,24 +101,19 @@
                                                 <th>Session</th>
                                                 <th>Term</th>
                                                 <th>Amount Due</th>
-                                                <th>Bank Detail</th>                                                 
+                                                                                            
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for p in payment_chart %}
+                                            {% for p in payment_chart_list %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-												<td>{{p.name}}</td>
-                                                <td>{{s.payment_cart}}</td>
-                                                <td>{{s.session}}</td>
-                                                <td>{{ s.term }}</td>
-                                                <td>{{ s.amount_due }}</td>                                               
-                                                <td>
-													<div class="d-flex">
-														<a href="{% url 'payments:bank-list' %}" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-eye"></i>
-                                                        </a>
-													</div>
-												</td>
+												<td><strong>{{ p.name}}</strong></td>
+                                                <td>{{ p.payment_cat.name}}</td>
+                                                <td style="color:brown;">{{ p.session}}</td>
+                                                <td>{{ p.session.term }}</td>
+                                                <td><strong>N{{ p.amount_due }}</strong></td>                                               
+                                              
                                                 {% endfor %}
                                             </tr>
                                            

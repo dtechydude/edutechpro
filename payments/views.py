@@ -143,7 +143,7 @@ def paymentlist(request):
          
 
     }
-    return render (request, 'payment/all_payments.html', context )
+    return render (request, 'payments/payment_total_summary.html', context )
 
     # return render(request, 'payment/schoolly_test_table.html',)
 
@@ -151,7 +151,7 @@ def paymentlist(request):
 @login_required
 def view_self_payments(request):
     # mypayment = PaymentDetail.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
-    mypayment = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
+    mypayment = PaymentDetail.objects.filter(student_detail=Student.objects.get(user=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -165,12 +165,12 @@ def view_self_payments(request):
         mypayment = paginator.page(paginator.num_pages)
     context = {
         # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
-        'mypayment' : PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user)).order_by("payment_date_a"),
+        'mypayment' : PaymentDetail.objects.filter(student_detail=Student.objects.get(user=request.user)).order_by("payment_date_a"),
         'mypayment':mypayment,
         'mypayment_filter' : mypayment_filter,
     }
 
-    return render(request, 'payment/view_self_payment.html', context)
+    return render(request, 'payments/view_self_payment.html', context)
 
 
     
@@ -371,11 +371,10 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
 @login_required
 def payment_report(request):
     paymentlist = PaymentDetail.objects.all()
-    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
+    total_pay = PaymentDetail.objects.values('student_detail__full_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
     # paymentreport_filter = PaymentReportFilter(request.GET, queryset=paymentlist)
     balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
 
-  
 
     # paymentlist = paymentreport_filter.qs
 
@@ -399,9 +398,13 @@ def payment_report(request):
    
     }
    
-    return render(request, 'payment/payment_report_table.html', context )
+    return render(request, 'payments/payment_report_table.html', context )
     
-
+@login_required
+def confirmed_payment(request):
+    paymentlist = PaymentDetail.objects.all()
+    if paymentlist.confirm_a or paymentlist.confirm_b or paymentlist.confirm_c:
+        return render(request, 'payments/confirmed_payment.html')
 
 
 @login_required
@@ -547,9 +550,10 @@ def receipt_render_pdf_view(request, *args, **kwargs):
     pk = kwargs.get('pk')
     
     my_receipt = get_object_or_404(PaymentDetail, pk=pk)
-    template_path = 'payment/receipt_pdf.html'
+    bank_detail = BankDetail.objects.all()
+    template_path = 'payments/receipt_pdf.html'
     # template_path = 'results/result_sheet.html'
-    context = {'my_receipt': my_receipt}
+    context = {'my_receipt': my_receipt, 'bank_detail':bank_detail}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     # if you want to download

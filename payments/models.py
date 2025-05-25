@@ -6,6 +6,7 @@ from students.models import Student
 from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxValueValidator, MinValueValidator 
 from django.db.models import F, Sum, Q
+from .utils import generate_trans_id
 
 
 class BankDetail(models.Model):
@@ -18,7 +19,7 @@ class BankDetail(models.Model):
 
     class Meta:
         ordering:['bank_name']
-        unique_together = ['acc_name', 'acc_number', 'bank_name']
+        # unique_together = ['acc_number', 'bank_name']
         
 
 class PaymentCategory(models.Model):
@@ -87,6 +88,8 @@ class PaymentDetail(models.Model):
     confirmed_b = models.BooleanField(default=False) 
     confirmed_c = models.BooleanField(default=False) 
 
+    trans_id = models.CharField(max_length=8, blank=True)
+
     payment_updated_date = models.DateField(auto_now_add=True)     
 
     class Meta:
@@ -101,6 +104,12 @@ class PaymentDetail(models.Model):
 
     def get_absolute_url(self):
         return reverse('payments:my_payments')  
+    
+    def save(self, *args, **kwargs):
+        if self.trans_id =="":
+            trans_id = generate_trans_id()
+            self.trans_id = trans_id
+        super().save(*args, **kwargs)
     
     # def get_absolute_url(self):
     #     return reverse('payment:payment_detail', kwargs={'id':self.id})
@@ -119,7 +128,7 @@ class PaymentDetail(models.Model):
     def discounted_amount_due(self):
        return self.payment_name.amount_due - (self.discount/100 * self.payment_name.amount_due)
     
-
+    # balance after discount has been removed
     @property
     def discounted_balance_pay(self):
         #return self.discounted_amount_due - self.amount_paid

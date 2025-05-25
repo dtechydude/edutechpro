@@ -744,7 +744,8 @@
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'students:student-list' %}">All Students</a></li>
-							<li><a href="{% url 'students:student-list' %}">Class & Nos</a></li>
+							<li><a href="#">All Boarders</a></li>
+							<li><a href="#">Numbers In Class</a></li>
 														
 							<li><a href="#">My Students</a></li>
 							{% elif user.student %}	
@@ -790,18 +791,20 @@
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'payments:bank-create' %}">Add Bank Details</a></li>
-							<li><a href="./uc-noui-slider.html">All Payments</a></li>
+							<li><a href="{% url 'payments:payment_report' %}">Payment List</a></li>
+							<li><a href="#">Confirmed Payment</a></li>
+							<li><a href="{% url 'payments:payment_summary' %}">Payment Summary</a></li>
 							<li><a href="./uc-toastr.html">Debtors List</a></li>
 							{% endif %}							
 							{% if user.student or user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'payments:payment_instruction' %}">Payment Instruction</a></li>
 							<li><a href="{% url 'payments:bank-list' %}">Bank Details</a></li>
 							<li><a href="./uc-select2.html">Make Payment</a></li>
-							<li><a href="./uc-nestable.html">Payment Chart</a></li>	
+							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>	
 							<li><a href="./map-jqvmap.html">Online Payment</a></li>
 							{% endif %}
 							{% if user.student %}					
-							<li><a href="./uc-sweetalert.html">My Payments</a></li>	
+							<li><a href="{% url 'payments:my_payments' %}">My Payments</a></li>	
 							{% endif %}						
 							
 						</ul>
@@ -1140,13 +1143,13 @@
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
 																<div class="text-center">
 																	<h5 class="fs-28 font-w600">2,342</h5>
-																	<span class="fs-16">Total Customer</span>
+																	<span class="fs-16">Other Staff</span>
 																</div>
 															</div>
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
 																<div class="text-center">
 																	<h5 class="fs-28 font-w600">992</h5>
-																	<span class="fs-16">Total Room</span>
+																	<span class="fs-16">Total Boarders</span>
 																</div>
 															</div>
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">

@@ -15,5 +15,6 @@ urlpatterns = [
     path('<str:standard>/<str:subject>/<slug:slug>/update/', views.LessonUpdateView.as_view(), name='lesson_update'),
     path('<str:standard>/<str:subject>/<slug:slug>/delete/', views.LessonDeleteView.as_view(), name='lesson_delete'),
 
+    path('class-list/', curriculum_view.class_list, name="class_list"),
     
 ]

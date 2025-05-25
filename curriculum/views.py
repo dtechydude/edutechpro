@@ -1,6 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.views.generic import(TemplateView, DetailView,
                                 ListView, FormView, CreateView, 
                                 UpdateView, DeleteView)
@@ -8,7 +10,7 @@ from .models import Lesson, Class, Subject, save_lesson_files
 from .forms import CommentForm, LessonForm, ReplyForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from students.models import StudentDetail
+from students.models import Student
 
 
 class ClassSelfListView(LoginRequiredMixin, ListView):
@@ -19,7 +21,7 @@ class ClassSelfListView(LoginRequiredMixin, ListView):
  
     # Student can only view their class elearning
     def get_queryset(self):
-        return Class.objects.filter(name = self.request.user.student.class_id)
+        return Class.objects.filter(student = self.request.user.student)
 
 # Standard list view for the admin and teachers
 class ClassListView(LoginRequiredMixin, ListView):
@@ -27,6 +29,7 @@ class ClassListView(LoginRequiredMixin, ListView):
     model = Class
     # template_name = 'curriculum/class_list.html'
     template_name = 'curriculum/elearning_class.html'
+    
 
     
 class SubjectListView(DetailView):
@@ -165,6 +168,18 @@ class LessonDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+
+@login_required
+def class_list(request):
+    total_class = Student.objects.filter().order_by('section').values('class_id__id').annotate(count=Count('class_id__id'))
+    total_gender = Student.objects.filter().order_by('gender').values('gender').annotate(count=Count('gender'))
+
+    context = {
+            'total_class': total_class,
+            'total_gender': total_gender,
+
+    }
+    return render(request, 'curriculum/classes_list.html', context)
 
 
    

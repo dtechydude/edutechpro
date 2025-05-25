@@ -49,16 +49,19 @@
   </style>
   </head>
 
-  <body style="background-color:#3399cc;">
+  <body style="background-color:#043c58;">
 
-    <div  style="padding-top:1px;">
+    <div  style="padding-top:20px;">
       <div style="background-color:#ffffff;" >
-        <img src="https://schoolly.com.ng/portal/small_logo.png" alt="" style="float: left;">       
-            
+        <h1><span style="font-size: 25px;">SCHOOLLY EDTECH</span> <br>
+          <span style="font-size: 12px;"> 100 NTA road, Mgbuoba Port Harcourt <br>
+            Rivers State <br>
+          Phone:11111111111 - Email: school@school.com</span></h1>
+        <p style="font-size: 20px; padding-bottom: 1px;">Invoice #{{ my_receipt.trans_id }}</p>         
 
       </div>
      
-     <p style="text-align: center; color:#f2f2f2; font-size:17px;">Receipt Of Payments</p>
+     <p style="text-align: center; color:#f2f2f2; font-size:20px; padding-top: 10px;">Official Receipt Of Payments</p>
      <div></div>
      </div>
  
@@ -68,38 +71,26 @@
     <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Student Code </th>
-            <th>Student Name </th>
-            <th>Current Class / Session  </h>
-            <th>Payment Status </h>
+            <th style="font-size: 14px; color: #043c58; text-align: center;">Student Code </th>
+            <th style="font-size: 14px; color: #043c58; text-align: center;">Student Name </th>
+            <th style="font-size: 14px; color: #043c58; text-align: center;">Current Class / Session  </h>
+            <th style="font-size: 14px; color: #043c58; text-align: center;">Payment Status </h>
         </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{% if my_receipt.student_id %}
-                  <span style="font-size: 14px; color: red;">{{my_receipt.student_id.studentdetail.student_username}}</span>
+                <td style="font-size: 14px; text-align: center;"> {{ my_receipt.student_detail.USN }} </td>
+                <td style="font-size: 13px; text-align: center;"> {{ my_receipt.student_detail.full_name }} </td>
+                <td style="font-size: 12px; text-align: center;"> {{ my_receipt.student_detail.class_id }} <br>{{ my_receipt.payment_name.session }}    </td>
+                <td>
+                  {% if discount > 0 and my_receipt.total_amount_paid == my_receipt.discounted_amount_due %}
+                  <span pan class="label label-success" style="font-size:17px; text-align: center;">FULLY PAID</span>                 
+                  {% elif my_receipt.total_amount_paid == my_receipt.amount_due %}
+                  <span pan class="label label-success" style="font-size:17px; color: green; text-align: center;">FULLY PAID</span>
                   {% else %} 
-                  <span style="font-size: 14px; color: green;">{{my_receipt.student_detail.student_username}}</span>
-                  {% endif %}
-                </td>
-                <td>{% if my_receipt.student_id %}
-                    <span style="font-size: 14px; color: green;">{{my_receipt.student_id.studentdetail.first_name}}</span>
-                    <span style="font-size: 14px; color: green;"> {{my_receipt.student_id.studentdetail.last_name}}</span>
-                    <span style="font-size: 14px; color: green;">{{my_receipt.student_id.studentdetail.middle_name}} </span>
-                    {% else %}
-                    <span style="font-size: 14px; color: green;">{{my_receipt.student_detail.last_name }}</span>
-                    <span style="font-size: 14px; color: green;"> {{my_receipt.student_detail.first_name }}</span>
-                    <span style="font-size: 14px; color: green;"> {{my_receipt.student_detail.middle_name }} </span>
-                    {% endif %}
-                  </td>
-                <td>
-                  <span style="font-size: 11px; color: green;">{{my_receipt.student_detail.current_class}} / {{ my_receipt.payment_name.session }}</span>
-                </td>
-                <td>
-                    
-                    <span pan class="label label-success" style="font-size:small;">Detailed Payments</span>
-                    <!-- <span class="label label-success" style="font-size:medium;">PAID - "Confirmed"</span> -->
-          
+                  <span pan class="label label-success" style="font-size:17px; color: red; text-align: center;">PARTLY PAID</span>                          
+                  {% endif %}  
+
                 </td>
             </tr>
 
@@ -112,85 +103,77 @@
 <table class="table table-bordered">
 <thead>
 <tr>
-<th class="per70 text-center" style="font-size: 17px;">Payment Type</th>
-<th class="per5 text-center" style="font-size: 17px;">Description</th>
-<th class="per25 text-center" style="font-size: 17px;">Amount Paid</th>
+<th class=" text-center" style="font-size: 17px; color: #043c58; text-align: center; padding-top: 8px;">Payment Type</th>
+<th class="per5 text-center" style="font-size: 17px; color: #043c58; text-align: center; padding-top: 8px;">Description</th>
+<th class="per25 text-center" style="font-size: 17px; color: #043c58; padding-top: 8px;">Amount Paid</th>
 
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Payment Name:</strong> {{ my_receipt.payment_name }} - <strong> <br>
-                                    Total Due: {{ my_receipt.payment_name.amount_due }}</strong>
-                                    {% if my_receipt.amount_paid_a == 'First Payment'%} 
-                                        {{ my_receipt.payment_name.amount_due }}
-                                    {% endif %}
-                                    </td>
-<td class="text-center">{% if my_receipt.amount_paid_a %}  1st Payment -  {{ my_receipt.payment_date_a }}
-                        {% if my_receipt.confirmed_a %} <span style="color:green;"> "confirmed" </span>
-                        {% else %} 
-                        <span style="color:red;"> "Unconfirmed"</span>
-                        {% endif %}
-                        {% endif %} <br>
-                        {% if my_receipt.amount_paid_b %}  2nd Payment - {{ my_receipt.payment_date_b }}
-                        {% if my_receipt.confirmed_b %} <span style="color:green;"> "confirmed" </span>
-                        {% else %} <span style="color:red;"> "Unconfirmed"</span>
-                        {% endif %}
-                        {% endif %}<br>
-                        {% if my_receipt.amount_paid_c %}  3nd Payment - {{ my_receipt.payment_date_c }}
-                        {% if my_receipt.confirmed_c %} <span style="color:green;"> "confirmed" </span>
-                        {% else %} <span style="color:red;"> "Unconfirmed"</span>
-                        {% endif %}
-                        {% endif %}
+<td style="font-size: 14px;"><strong>{{ my_receipt.payment_name.name }}<strong> <br>
+<span style="font-size: 16px;">Total Due: N{{ my_receipt.payment_name.amount_due }}</span> </td>
+<td class="text-center" style="font-size: 14px; padding-top: 8px;">
+                        {% if my_receipt.amount_paid_a %}  1st Payment -  {{ my_receipt.payment_date_a |date:"d/m/Y" }}  {% endif %} <br>
+                        {% if my_receipt.amount_paid_b %}  2nd Payment - {{ my_receipt.payment_date_b |date:"d/m/Y"}}    {% endif %}  <br>                  
+                        {% if my_receipt.amount_paid_c %}  3nd Payment - {{ my_receipt.payment_date_c |date:"d/m/Y" }}   {% endif %}  <br>                    
+                       
 </td>
-<td class="text-center">{% if my_receipt.amount_paid_a %}
-                            N{{ my_receipt.amount_paid_a}}
+<td class="text-center" style="font-size: 14px; padding-top: 8px;">{% if my_receipt.amount_paid_a and my_receipt.confirmed_a %}
+                        <strong> N{{ my_receipt.amount_paid_a}}</strong>  - <span style="color:green;">Confirmed </span>
+                        {% endif %}
+                        {% if my_receipt.amount_paid_a and not my_receipt.confirmed_a %}
+                        <strong> N{{ my_receipt.amount_paid_a}}</strong> <span style="color:red;"> - Pending</span>
                         {% endif %}<br>
-                         {% if my_receipt.amount_paid_b %} 
-                            N{{ my_receipt.amount_paid_b}}
+                         {% if my_receipt.amount_paid_b and my_receipt.confirmed_b %} 
+                           <strong>N{{ my_receipt.amount_paid_b}} </strong> - <span style="color:green;">Confirmed </span>
+                           {% endif %}
+                           {% if my_receipt.amount_paid_b and not my_receipt.confirmed_b %}
+                           <strong> N{{ my_receipt.amount_paid_b}} </strong>- <span style="color:red;">Pending</span>
                         {% endif %}<br>
-                         {% if my_receipt.amount_paid_c %}
-                            N{{ my_receipt.amount_paid_c}}
+                         {% if my_receipt.amount_paid_c and my_receipt.confirmed_c %}
+                        <strong>  N{{ my_receipt.amount_paid_c}}</strong> - <span style="color:green;">Confirmed</span>
+                        {% endif %}
+                        {% if my_receipt.amount_paid_c and not my_receipt.confirmed_c %}
+                        <strong>  N{{ my_receipt.amount_paid_c}} </strong>-<span style="color:red;"> Pending</span>
                         {% endif %}
                         </td>
 </tr>
 <tr>
-<td><strong>STUDENT DISCOUNTED AMOUNT DUE:  </strong> <br>
-    {% if my_receipt.discounted_amount %}
-    {{my_receipt.discounted_amount_due |floatformat:2}}
-    {% else %}
-    No Discount Given
-    {% endif %}
-</td>
-<td class="text-center">n/a</td>
-<td class="text-center"> - </td>
+<td style="font-size: 13px; padding-top: 8px;"><strong>STUDENT DISCOUNT:  </strong> <br></td>
+<td class="text-center" style="font-size: 13px; padding-top: 8px;"> {% if my_receipt.discounted_amount %}
+  On <strong>{{ my_receipt.discount }}% </strong> Discount: <span style="font-size: 14px;"> <strong>N{{my_receipt.discounted_amount_due |floatformat:2}}</strong></span>
+  {% else %}
+  Student Has No Discount
+  {% endif %}</td>
+<td class="text-center"  style="font-size: 13px; padding-top: 8px;"> N/A </td>
 </tr>
 <tr>
-<td><strong>Payment Last Updated : </strong>{{ my_receipt.payment_updated_date}}  </td>
-<td class="text-center">n/a</td>
-<td class="text-center"> - </td>
+<td class="text-right" style="font-size: 13px; padding-top: 8px;"><strong>Payment Last Updated : </strong>  </td>
+<td class="text-center" style="font-size: 13px;  padding-top: 8px;">{{ my_receipt.payment_updated_date}}</td>
+<td class="text-center" style="font-size: 13px; padding-top: 8px;"> N/A  - </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
-<th colspan="2" class="text-right" style="font-size: larger; text-align: right;">Sub Total:</th>
-<th class="text-center" style="font-size: larger; text-align: center;">N {{ my_receipt.total_amount_paid}}</th>
+<th colspan="2" class="text-right" style="font-size: 16px; text-align: right; padding-top: 8px; ">Sub Total:</th>
+<th class="text-center" style="font-size: 17px; text-align: left;  padding-top: 8px;">N{{ my_receipt.total_amount_paid}}</th>
 </tr>
 <tr>
-<th colspan="2" class="text-right" style="text-align: right;"> Outstanding DEBT/CREDIT</th>
+<th colspan="2" class="text-right" style="text-align: right; font-size: 16px; padding-top: 8px;"> Outstanding DEBT/CREDIT</th>
 <th class="text-center">
                         <!-- Calculations with discount -->
                         {% if my_receipt.discount %}
                         {% if my_receipt.discounted_amount_due > my_receipt.total_amount_paid %}
-                        <span style="color: red;"> DEBT : {{ my_receipt.discounted_balance_owed}}</span>
+                        <span style="color: red; font-size: 17px;  padding-top: 8px;"> DEBT : N{{ my_receipt.discounted_balance_owed}}</span>
 
                         {% elif my_receipt.total_amount_paid > my_receipt.discounted_amount_due %} 
-                        <span style="color: green;">CREDIT : N{{ my_receipt.credit_balance_discounted|floatformat:2 }} </span>
+                        <span style="color: green; font-size: 17px;  padding-top: 8px;">CREDIT : N{{ my_receipt.credit_balance_discounted|floatformat:2 }} </span>
 
                         {% elif my_receipt.total_amount_paid == my_receipt.discounted_amount_due %} 
-                        <span style="color: green;">PAYMENT COMPLETED </span>
+                        <span style="color: green; font-size: 17px;  padding-top: 8px;">PAYMENT COMPLETED </span>
                          {% else %}
-                         <span style="color: green;">UNKNOWN </span>
+                         <span style="color: green; font-size: 17px;  padding-top: 8px;">UNKNOWN </span>
                          {% endif %}
                          {% endif%}
 
@@ -198,15 +181,15 @@
                         
                         {% if my_receipt.discount == False %}
                         {% if my_receipt.payment_name.amount_due > my_receipt.total_amount_paid %}
-                        <span style="color: red;"> DEBT : N{{ my_receipt.balance_pay }}</span>
+                        <span style="color: red; font-size: 17px;"> DEBT : N{{ my_receipt.balance_pay }}</span>
 
                         {% elif my_receipt.total_amount_paid == my_receipt.payment_name.amount_due %} 
-                        <span style="color: green;">PAYMENT COMPLETED </span>
+                        <span style="color: green; font-size: 17px;">PAYMENT COMPLETED </span>
 
                         {% elif my_receipt.total_amount_paid > my_receipt.payment_name.amount_due %} 
-                        <span style="color: green;">CREDIT : N{{ my_receipt.credit_balance }} </span>
+                        <span style="color: green; font-size: 17px;">CREDIT : N{{ my_receipt.credit_balance }} </span>
                          {% else %}
-                         <span style="color: green;">UNKNOWN </span>
+                         <span style="color: green; font-size: 17px;">UNKNOWN </span>
                          {% endif %}
                          {% endif%}
                         </th>
@@ -232,18 +215,26 @@
 </div>
 </div>
 <div class="invoice-footer mt25">
-<p class="text-center" style="font-size: 17px; color: white; text-align: center;"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check. <br>
+<p class="text-center" style="font-size: 17px; color: white; text-align: center; padding-top: 10px;"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check.</p>
 </div>
 </div>
-
-</div>
-
 </div>
 </div>
-
 </div>
-
 </div>
+</div>
+</div>
+<p style="background-color: white; font-size: 15px;"><a href="#">Read Payment Instruction </a></p>
+<div style="background-color: white;">
+  <h2> How To Pay:</h2>
+  <ul>
+    {% for b in bank_detail %}
+    <li style="font-size: 14px;">{{ b.bank_name }} - {{ b.acc_name}} - {{ b.acc_number}}</li>
+        {% endfor %}
+  </ul>
+  
+  
+ 
 </div>
 
 
