@@ -30,7 +30,7 @@ class PaymentForm(forms.ModelForm):
         class Meta:
             model = PaymentDetail
             fields = '__all__'
-            exclude = ('confirmed', 'file',)
+            exclude = ('confirmed', 'file', 'trans_id', )
 
             widgets = {
             'payment_date': forms.DateInput(
@@ -75,4 +75,16 @@ class PaymentUpdateForm(forms.ModelForm):
                         #Note that i removed user because it is an instance in the view already
 
 
+class MyPaymentForm(forms.ModelForm):
+    class Meta:
+        model = PaymentDetail
+        fields = ['amount_paid_a', 'payment_date_a', 'bank_name_a', 
+              'amount_paid_b', 'payment_date_b', 'bank_name_b',
+              'amount_paid_c', 'payment_date_c', 'bank_name_c',]
 
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.user.student = self.request.user
+        if commit:
+            instance.save()
+        return instance

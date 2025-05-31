@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
@@ -48,7 +48,32 @@ def student_list(request):
         return render(request, 'students/student_list.html', context)
     else:
          return render(request, 'pages/portal_home.html')
+    
+    
+ # for boarding students   
+def student_boarder_list(request):
+    boarder_student = Student.objects.filter(student_type='boarder').order_by('-date_admitted')
+    # boarder_student = Student.objects.all().order_by('-date_admitted')
 
+    context ={
+        'boarder_student':boarder_student
+    }
+    if request.user.is_superuser or request.user.is_staff:
+        return render(request, 'students/student_boarder_list.html', context)
+    else:
+         return render(request, 'pages/portal_home.html')
+    
+
+# def search_students(request):
+#     if request.method == "Post":
+#         searched = request.POST['searched']
+#         students = Student.objects.filter(full_name__contains=searched)
+#         return render(request, 'students/search_students.html', {'searched':searched, 'students':students})
+#     else:
+#         return render(request, 'students/search_student_list.html')
+    
+# def search_form(request):
+#     return render(request, 'students/search_students.html')
 
 # Student Search Query App
 
@@ -77,44 +102,12 @@ def search(request):
         if query == '':
             query = 'None'
 
-        results = Student.objects.filter(Q(full_name__icontains=query) | Q(student_type__icontains=query) | Q(class_id__dept__name__icontains=query) | Q(USN__icontains=query) | Q(guardian_name__icontains=query))
-
+        results = Student.objects.filter(Q(full_name__icontains=query) | Q(class_id__id__icontains=query) | Q(guardian_name__icontains=query) | Q(user__username__icontains=query) | Q(USN__icontains=query))
+        # results = Student.objects.filter(Q(full_name__icontains=query))
         
     return render(request, 'students/search.html', {'query': query, 'results': results})
 
 
-
-
-# Student Search Query App
-def student_search_list(request):
-    student = Student.objects.all()
-    
-     # PAGINATOR METHOD
-    page = request.GET.get('page', 1)
-    paginator = Paginator(student, 30)
-    try:
-        student = paginator.page(page)
-    except PageNotAnInteger:
-        student = paginator.page(1)
-    except EmptyPage:
-        student = paginator.page(paginator.num_pages)
-
-    return render(request, 'students/search_student_list.html', {'student': student })
-
-# Define function to search student
-def search(request):
-    results = []
-
-    if request.method == "GET":
-        query = request.GET.get('search')
-
-        if query == '':
-            query = 'None'
-
-        results = Student.objects.filter(Q(full_name__icontains=query) | Q(student_type__icontains=query) | Q(class_id__name__icontains=query) | Q(USN__icontains=query) | Q(guardian_name__icontains=query))
-
-        
-    return render(request, 'students/search.html', {'query': query, 'results': results})
 
 
 
@@ -125,6 +118,16 @@ class StudentDetailView(DetailView):
     def get_object(self):
         id_ = self.kwargs.get("USN")
         return get_object_or_404(Student, USN=id_)
+    
+# Specific to the login detail
+class StudentSelfDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'students/student_self_detail.html'
+    model = Student
+
+    def get_object(self, queryset=None):
+           if queryset is None:
+               queryset = self.get_queryset()
+           return queryset.filter(user=self.request.user).first()
 
 
 class StudentUpdateView(LoginRequiredMixin, UpdateView):
@@ -149,9 +152,6 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Student, id=id_)
     
-
-
-
 
 
 
@@ -240,3 +240,8 @@ def student_marks(request, assign_id):
     ass = Assign.objects.get(id=assign_id)
     sc_list = StudentSubject.objects.filter(student__in=ass.class_id.student_set.all(), subject=ass.subject)
     return render(request, 'students/t_student_marks.html', {'sc_list': sc_list})
+
+
+
+
+

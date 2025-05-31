@@ -61,3 +61,8 @@ def portal_home(request):
         'no_inteacherclass': no_inteacherclass
     }
     return render(request, 'pages/portal_home.html', context )
+
+
+
+def help_center(request):
+    return render(request, 'pages/help_center.html')

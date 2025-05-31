@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_save, post_delete
 from datetime import timedelta
+from django.urls import reverse
 from curriculum.models import Class, Subject
 # from attendance.models import AttendanceTotal
 from staff.models import Assign, AssignTime
@@ -111,7 +112,7 @@ class Student(models.Model):
     # medical information
     blood_group = models.CharField(max_length=15, choices=blood_group, default=select)
     genotype = models.CharField(max_length=15, choices=genotype, default=select)
-    health_remark = models.CharField(max_length=60, blank=False, null=True)    
+    health_remark = models.CharField(max_length=60, blank=False, null=True, default='enter health detail')    
 
     day_student = 'day_student'
     boarder = 'boarder'
@@ -181,6 +182,12 @@ class Student(models.Model):
 
     def __str__(self):
         return self.full_name
+    
+    class Meta:
+        ordering = ['user']   
+    
+    def get_absolute_url(self):
+        return reverse('students:students-detail', kwargs={'id':self.USN})
     
 
 

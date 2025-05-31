@@ -1,6 +1,6 @@
 from django.urls import path
 from students import views as students_views
-from .views import StudentDetailView, StudentUpdateView, StudentDeleteView
+from students.views import StudentDetailView, StudentUpdateView, StudentDeleteView, StudentSelfDetailView
 
 
 
@@ -8,15 +8,21 @@ app_name ='students'
 
 urlpatterns = [
 
-     path('student_list/', students_views.student_list, name='student-list'),
-     
-     path('<str:USN>/', StudentDetailView.as_view(), name="student-detail"),
-     path('<str:USN>/update/', StudentUpdateView.as_view(), name="student-update"),
-     path('<str:USN>/delete/', StudentDeleteView.as_view(), name="student-delete"), 
-
-     # Search student detail app
-    path('student-search/', students_views.student_search_list, name='student_search_list'),
+    path('student_list/', students_views.student_list, name='student-list'),
+    path('boarder_list/', students_views.student_boarder_list, name='boarder-list'),
+    # Search student detail app
     path('search/', students_views.search, name='search'),
+    path('student_search_list/', students_views.student_search_list, name='student_search_list'),
+     
+    path('my-detail/', StudentSelfDetailView.as_view(), name="student-self-detail"),
+
+    path('<str:USN>/', StudentDetailView.as_view(), name="student-detail"),
+    path('<str:USN>/update/', StudentUpdateView.as_view(), name="student-update"),
+    path('<str:USN>/delete/', StudentDeleteView.as_view(), name="student-delete"), 
+
+    #  # Search student detail app
+    # path('student_search/', students_views.search_form, name='search_form'),
+    # path('search-studen-result/', students_views.search_students, name='student-search-result'),
      
 
     path('student/<slug:stud_id>/marks_list/', students_views.marks_list, name='marks_list'),

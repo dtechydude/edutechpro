@@ -8,5 +8,6 @@ urlpatterns = [
 
      # path('', page_views.schoolly_home, name='schoolly-home'),
      path('', page_views.portal_home, name='portal-home'),
+     path('help-center/', page_views.help_center, name='help-center'),
 
 ]

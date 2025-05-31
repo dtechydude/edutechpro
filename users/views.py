@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, StudentEnrollmentForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -72,5 +73,4 @@ def user_logout(request):
 @login_required
 def users_home(request):
     return render(request, 'pages/portal_home.html')
-
 

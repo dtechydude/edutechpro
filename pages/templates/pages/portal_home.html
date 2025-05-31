@@ -730,9 +730,21 @@
 							<span class="nav-text">Dashboard</span>
 						</a>
 						<ul aria-expanded="false">
+							{% if user.is_superuser or user.is_staff %}
 							<li><a href="/admin/">Admin Settings</a></li>
-							<li><a href="index.html">Search Students</a></li>
+							<li><a href="{% url 'students:student_search_list' %}">Search Students</a></li>
 							<li><a href="index-2.html">Search Payments</a></li>
+							{% endif %}
+							{% if user.student or user.teacher or user.staff %}
+							<li><a href="{% url 'pages:portal-home' %}">Dashboard Home</a></li>
+							{% endif %}
+							{% if user.student %}
+							<li><a href="{% url 'students:student-self-detail' %}">My Profile</a></li>
+							{% endif %}
+							{% if user.teacher %}
+							<li><a href="#">My Profile</a></li>
+							{% endif %}
+
 							
 						</ul>
 
@@ -744,7 +756,7 @@
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'students:student-list' %}">All Students</a></li>
-							<li><a href="#">All Boarders</a></li>
+							<li><a href="{% url 'students:boarder-list' %}">All Boarders</a></li>
 							<li><a href="#">Numbers In Class</a></li>
 														
 							<li><a href="#">My Students</a></li>
@@ -801,7 +813,7 @@
 							<li><a href="{% url 'payments:bank-list' %}">Bank Details</a></li>
 							<li><a href="./uc-select2.html">Make Payment</a></li>
 							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>	
-							<li><a href="./map-jqvmap.html">Online Payment</a></li>
+							<li><a href="{% url 'payments:online_payment' %}">Online Payment</a></li>
 							{% endif %}
 							{% if user.student %}					
 							<li><a href="{% url 'payments:my_payments' %}">My Payments</a></li>	
@@ -858,7 +870,7 @@
 							<li><a href="table-datatable-basic.html">Datatable</a></li>
 						</ul>
 					</li>
-					<li><a href="widget-basic.html" class="" aria-expanded="false">
+					<li><a href="{% url 'pages:help-center' %}" class="" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 						<span class="nav-text">Help Center </span>
 					</a>						
@@ -870,8 +882,8 @@
 						</a>
 						<ul aria-expanded="false">							
 							<li><a href="./page-register.html">My Profile</a></li>
-							<li><a href="./page-login.html">Reset Password</a></li>							
-							<li><a href="./page-lock-screen.html">Log Out</a></li>				
+							<li><a href="{% url 'users:password_reset' %}">Reset Password</a></li>							
+							<li><a href="{% url 'users:user_logout' %}">LogOut</a></li>				
 						</ul>
 					</li>
 				</ul>
@@ -885,7 +897,7 @@
 							</div>	
 						</div>
 						<div>
-							<a href="#" class="btn btn-md text-secondary">Contact Us</a>
+							<a href="{% url 'pages:portal-home' %}" class="btn btn-md text-secondary">DASHBOARD</a>
 						</div>
 					</div>
 				</div>

@@ -19,7 +19,7 @@
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- PAGE TITLE HERE -->
-	<title>Schoolly Login</title>
+	<title>Online Payment</title>
 	
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="{% static 'pages/images/favicon.png'%} " />
@@ -36,23 +36,16 @@
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
-									<div class="text-center mb-3">
-                                        <a href="https://schoolly.com.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a>
+									<div class="text-center mb-3">                                  
+                                        <!-- <a href="https://schoolly.com.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a> -->
+                                        <h3>Online Payment </h3>
+                                        <hr>
 									</div>
-                                    
-                                    <h4 class="text-center mb-4">Forgot Password</h4>
-                                    <p>Enter your email address below</p>
-                                    <form action="" method="POST">
-                                        {% csrf_token %}
-                                                    
-                                        {{ form|crispy}}
-                                        <div class="text-center mt-4">
-                                            <button type="submit" value="submit" class="btn btn-primary btn-block">Reset Password</button>
-                                        </div>
-                                    </form>
-                                   
+                                    <!-- <h4 class="text-center mb-4">Welcome To Ermine App!</h4> -->
+                                    <h3>Online Payment Not Yet Available!</h3>
+
                                     <div class="new-account mt-3">
-                                        <p>Back To: <a class="text-primary" href="{% url 'pages:portal-home' %}"> DASHBOARD </a>
+                                        <p>Back To: <a class="text-primary" href="{% url 'pages:portal-home' %}">DASHBOARD - </a>
                                         </p>
                                     </div>
                                 </div>

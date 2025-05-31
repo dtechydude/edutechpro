@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import F, Sum, Q
-from payments.forms import PaymentForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm
+from payments.forms import PaymentForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm, MyPaymentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -56,13 +56,12 @@ def payment_form(request):
     return render(request, 'payments/make_payment.html', context)
 
 class PaymentCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'payment/student_payment_form.html'
+    template_name = 'payments/student_payment_form.html'
     form_class = PaymentCreateForm
     context_object_name = 'payment_create'
     # model = PaymentDetail
     
-    success_url = reverse_lazy('payment:my_payments')
-
+    success_url = reverse_lazy('payments:my_payments')
 
 
     def form_valid(self, form):
@@ -410,14 +409,11 @@ def confirmed_payment(request):
 @login_required
 def debtor_list(request):
     debtorlist = PaymentDetail.objects.all()
-    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
+    # total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
     # paymentreport_filter = PaymentReportFilter(request.GET, queryset=debtorlist)
     balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
 
-  
-
     # debtorlist = paymentreport_filter.qs
-
     page = request.GET.get('page', 1)
     paginator = Paginator(debtorlist, 40)
     try:
@@ -433,12 +429,12 @@ def debtor_list(request):
         # 'paymentreport_filter': paymentreport_filter,
         'debtorlist' : debtorlist,
         'balance_pay': balance_pay,
-        'total_pay': total_pay,
+        # 'total_pay': total_pay,
         'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
    
     }
    
-    return render(request, 'payment/debtor_report.html', context )
+    return render(request, 'payments/debtor_report.html', context )
 
 def debtor_csv(request):
     response = HttpResponse(content_type ='text/csv')
@@ -456,7 +452,7 @@ def debtor_csv(request):
     # Loop thru and output
     for payments in payment:
         
-        writer.writerow([ payments.student_id, payments.student_detail, payments.payment_name.session, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c)])
+        writer.writerow([ payments.student_detail.user, payments.student_detail, payments.payment_name.session, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c)])
 
     return response
 
@@ -488,6 +484,20 @@ class BankCreateView(LoginRequiredMixin, CreateView, SuccessMessageMixin):
     def form_valid(self, form):
         return super().form_valid(form)
     
+#Create Self-Payment
+class MyPaymentCreateView(LoginRequiredMixin, CreateView):    
+    form_class = MyPaymentForm
+    template_name = 'payments/student_payment_form.html'
+    success_url = reverse_lazy('payments:bank-list')
+    success_message = " was created successfully"
+    
+
+    # success_url = '/'
+    # def form_valid(self, form):
+    #     return super().form_valid(form)
+    
+
+#Update self-payment  
 class PaymentUpdateView(LoginRequiredMixin, UpdateView):
     fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a', 
               'amount_paid_b', 'payment_date_b', 'bank_name_b',
@@ -498,7 +508,7 @@ class PaymentUpdateView(LoginRequiredMixin, UpdateView):
     
     
     def form_valid(self, form):
-        form.instance.student_id = self.request.user
+        form.instance.student_detail = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
@@ -576,3 +586,6 @@ def receipt_render_pdf_view(request, *args, **kwargs):
 
 def payment_instruction(request):
     return render(request, 'payments/payment_instruction.html')
+
+def online_payment(request):
+    return render(request, 'payments/online_payment.html')
