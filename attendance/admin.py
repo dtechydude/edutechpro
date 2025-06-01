@@ -8,7 +8,7 @@ from .models import Student, Attendance,  Assign, AssignTime, AttendanceClass
 from .models import  User, AttendanceRange
 from curriculum.models import Class, Dept, Subject, Session
 from staff.models import Teacher, Assign, AssignTime
-from students.models import StudentSubject, Marks
+from students.models import StudentSubject, Marks, StudentId
 
 # Register your models here.
 
@@ -88,7 +88,16 @@ class StudentSubjectAdmin(admin.ModelAdmin):
     ordering = ('student__class_id__dept__name', 'student__class_id__id', 'student__USN')
 
 
+class StudentIdInline(admin.TabularInline):
+    model = StudentId
+    exclude =['f_1', 'f_2', 'f_3']
+    max_num = 1
+    
+    def has_delete_permission(self, request, obj=None):
+        return False    
+
 class StudentAdmin(admin.ModelAdmin):
+    inlines = [StudentIdInline] 
     list_display = ('USN', 'full_name', 'class_id', 'gender', 'student_status')
     search_fields = ('USN', 'full_name', 'class_id__id', 'class_id__dept__name')
     ordering = ['class_id__dept__name', 'class_id__id', 'USN']
@@ -99,8 +108,6 @@ class StudentAdmin(admin.ModelAdmin):
 #     list_display = ('full_name', 'dept')
 #     search_fields = ('full_name', 'dept__name')
 #     ordering = ['dept__name', 'full_name']
-
-    
 
 
 class AttendanceClassAdmin(admin.ModelAdmin):

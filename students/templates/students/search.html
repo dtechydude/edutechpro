@@ -99,7 +99,7 @@
            {% endwith %}
            </h5>
    {% for c in results %}
-  <a href="#"><h6>{{c.full_name}} {{c.class_id}} </h6></a>
+  <a href="{{c.get_absolute_url}}"><h6>{{c.full_name}}  - {{c.class_id}} </h6></a>
  
   <p> <span style="color:rgba(43, 43, 207, 0.753)">Current Class : </span> <strong>{{ c.class_id }} </strong><span style="color:rgba(43, 43, 207, 0.753)"> Class Teacher :</span> <strong>{{ c.USN }} </strong></span></p>
   
@@ -109,7 +109,7 @@
    {% endfor %}
   {% endif %}
         <form action="{% url 'students:student_search_list' %}" class="form-inline" method="get">
-        <button type="submit" class="btn btn-primary btn-sm mb-2">Back</button>
+        <button type="submit" class="btn btn-primary btn-sm mb-2">Go Back</button>
         </form>
     </div>
 </div>

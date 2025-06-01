@@ -757,7 +757,7 @@
 							{% if user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'students:student-list' %}">All Students</a></li>
 							<li><a href="{% url 'students:boarder-list' %}">All Boarders</a></li>
-							<li><a href="#">Numbers In Class</a></li>
+							<li><a href="{% url 'students:student-in-class' %}">No. In Class</a></li>
 														
 							<li><a href="#">My Students</a></li>
 							{% elif user.student %}	
@@ -827,6 +827,7 @@
 					</a>
 					<ul aria-expanded="false">
 						<li><a href="./form-element.html">Bus Route</a></li>
+						<li><a href="./form-wizard.html">SignUp For Bus</a></li>
 						<li><a href="./form-wizard.html">Students/Route</a></li>
 						
 					</ul>
@@ -837,13 +838,13 @@
 						</a>
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff%}
-							<li><a href="./ui-accordion.html">1st. Term Results</a></li>
-							<li><a href="./ui-alert.html">2nd. Term Results</a></li>
-							<li><a href="./ui-badge.html">3rd. Term Results</a></li>
+							<li><a href="{% url 'results:print-result' %}">1st. Term Results</a></li>
+							<li><a href="{% url 'results:print-second-result' %}">2nd. Term Results</a></li>
+							<li><a href="{% url 'results:print-third-result' %}">3rd. Term Results</a></li>
 							{% elif user.student %}
-							<li><a href="./ui-accordion.html">My 1st-Term Results</a></li>
-							<li><a href="./ui-alert.html">My 2nd-Term Results</a></li>
-							<li><a href="./ui-badge.html">My 3rd-Term Results</a></li>
+							<li><a href="{% url 'results:my-result' %}">My 1st-Term Results</a></li>
+							<li><a href="{% url 'results:mysecond-term-result' %}">My 2nd-Term Results</a></li>
+							<li><a href="{% url 'results:mythird-term-result' %}">My 3rd-Term Results</a></li>
 							{% elif user.teacher %}
 							<li><a href="./ui-alert.html">Record Results</a></li>
 							
@@ -854,7 +855,7 @@
 
 						</ul>
 					</li>
-					<li><a href="widget-basic.html" class="" aria-expanded="false">
+					<li><a href="{% url 'cbt:cbt-home' %}" class="" aria-expanded="false">
 							<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">CBT </span>
 						</a>						

@@ -1,0 +1,717 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>Third Term Report Card</title>
+  <style>
+    body {
+      background-image: url('/static/pages/bkgrd.jpg');
+      background-size: contain;
+      background-position: center;
+      background-repeat: repeat-x;
+
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="col-sm-12" style="padding-top:20px; text-align:center">
+      <img src="{% static 'pages/report_card_header1.png' %}" width="100%" height="100%">
+
+    </div>
+
+    <!-- <div class="col-sm-12" style="padding-top:20px;">
+        <div class="col-sm-4 bg-light p-3 mb-2" style="float:right"><p>STUDENT IDENTITY<br> Name: </p></div>
+        <div class="col-sm-4 bg-light p-3 mb-2" style="float:right"><p>ACADEMIC CALENDAR<br> Session: <br> Term: </p></div>
+        <div class="col-sm-4 bg-light p-3 mb-2" style="float:right;"><p>STUDENT IDENTITY<br> Name:<br> Class:  </p></div>
+      </div> -->
+    <div style="padding-top:5px;">
+      <div class=" col-sm-12" style="float:right;">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center; color:black;" class="">STUDENT REPORT SHEET |
+                {{my_resultsheet.exam.session}} </strong>
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+        <!-- 
+        <div  style="padding-top:5px;">
+        <div class=" col-sm-2" style="float:right;">
+          <table class="">
+            <thead>
+              <tr>                                       
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                 <td style="text-align:center;"><img src="{% static 'pages/qr_code.png' %}" width="80px" height="80px"></td>                    
+              </tr>
+                </tbody>
+          </table>
+          </div> -->
+
+        <div style="padding-top:5px;">
+
+          <div class="">
+            <table class="table table-bordered table-sm" style="width:100%;">
+              <thead>
+                <tr>
+                  <!-- <th scope="col" colspan="2" style="text-align:center;" class="bg-info text-white">CLASS  TERM STATISTIC</th> -->
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width:auto; ">NAME : <span
+                      style="text-transform:uppercase;"><strong>{{my_resultsheet.student_detail.first_name}}
+                        {{my_resultsheet.student_detail.middle_name}}
+                        {{my_resultsheet.student_detail.last_name}}</strong></span></td>
+                  <td style="width:auto;">ID : <span
+                      style="text-transform:uppercase;"><strong>{{my_resultsheet.student_detail.user}}</strong> </span>
+                  </td>
+                  <td style="width:auto;">CLASS : <span
+                      style="text-transform:uppercase;"><strong>{{my_resultsheet.student_detail.current_class}} -
+                        {{my_resultsheet.student_detail.class_group}}</strong></span></td>
+                  <td style="width:auto;"> NO. IN CLASS : <span style="text-transform:uppercase;"><strong>
+                        {{my_resultsheet.no_in_class}}</strong> </span></td>
+
+                </tr>
+                <tr>
+                  <td style="text-transform:uppercase; font-size:12px;">Days Sch. Opened :
+                    {{my_resultsheet.no_days_school_open}}</td>
+                  <td style="text-transform:uppercase; font-size:12px;">Days Present :
+                    {{my_resultsheet.no_days_present}} </td>
+                  <td style="text-transform:uppercase; font-size:12px;">Days Absent : {{my_resultsheet.no_days_absent }}
+                  </td>
+                  <td style="text-transform:uppercase; font-size:12px;">Next Term Begins :
+                    {{my_resultsheet.next_term_resume }} </td>
+
+                  <!-- <td style="text-align:center;"><img src="{% static 'pages/qr_code.png' %}" width="80px" height="80px"></td> -->
+
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+        <div class="" style=" width:100%;">
+          <table style="width:100%; margin:0 auto;" class="table table-bordered table-sm">
+            <thead>
+              <tr>
+               
+                <th scope="col" style="width:auto; text-align:center;">SUBJECT</th>
+                <th scope="col" style="width:auto; text-align:center;">C.A<br> (40%)</th>
+                <th scope="col" style="width:auto; text-align:center;">EXAM <br>(60%)</th>
+                <th scope="col" style="width:auto; text-align:center;">TOTAL <br>(100%)</th>
+                <th scope="col" style="width:auto; text-align:center;">GRADE</th>
+                <td scope="col" style="width:auto; text-align:center;">2nd Term <br> (100%)</td>
+                <td scope="col" style="width:auto; text-align:center;">1st Term<br> (100%)</td>
+                <th scope="col" style="width:auto; text-align:center;">Subj. Avg.<br>(100%)</th>
+                
+                <th scope="col" style="width:auto;">REMARK</th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                {% if my_resultsheet.subject_1 %}
+                
+                <td>{{ my_resultsheet.subject_1}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_1ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_1exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_1 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_1 > 79 %}A
+                  {% elif my_resultsheet.total_score_1 > 70 %} B+ {% elif my_resultsheet.total_score_1 > 60 %} B 
+                  {% elif my_resultsheet.total_score_1 > 49 %} C {% elif my_resultsheet.total_score_1 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_1}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_1}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_1 |floatformat:0}}</td>
+
+                
+                <td>{% if my_resultsheet.total_average_1 > 79 %}Excellent{% elif my_resultsheet.total_average_1 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_1 > 60 %} Good {% elif my_resultsheet.total_average_1 > 49 %}
+                  Average {% elif my_resultsheet.total_average_1 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_2 %}
+              
+                <td>{{ my_resultsheet.subject_2}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_2ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_2exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_2 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_2 > 79 %}A
+                  {% elif my_resultsheet.total_score_2 > 70 %} B+ {% elif my_resultsheet.total_score_2 > 60 %} B 
+                  {% elif my_resultsheet.total_score_2 > 49 %} C {% elif my_resultsheet.total_score_2 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_2}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_2}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_2 |floatformat:0}}</td>
+
+                <td>{% if my_resultsheet.total_average_2 > 79 %}Excellent{% elif my_resultsheet.total_average_2 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_2 > 60 %} Good {% elif my_resultsheet.total_average_2 > 49 %}
+                  Average {% elif my_resultsheet.total_average_2 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_3 %}
+              
+                <td>{{ my_resultsheet.subject_3}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_3ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_3exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_3 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_2 > 79 %}A
+                  {% elif my_resultsheet.total_score_2 > 70 %} B+ {% elif my_resultsheet.total_score_2 > 60 %} B 
+                  {% elif my_resultsheet.total_score_2 > 49 %} C {% elif my_resultsheet.total_score_2 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_3}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_3}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_3 |floatformat:0}}</td>
+  
+                <td>{% if my_resultsheet.total_average_3 > 79 %}Excellent{% elif my_resultsheet.total_average_3 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_3 > 60 %} Good {% elif my_resultsheet.total_average_3 > 49 %}
+                  Average {% elif my_resultsheet.total_average_3 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_4 %}
+             
+                <td>{{ my_resultsheet.subject_4}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_4ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_4exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_4 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_4 > 79 %}A
+                  {% elif my_resultsheet.total_score_4 > 70 %} B+ {% elif my_resultsheet.total_score_4 > 60 %} B 
+                  {% elif my_resultsheet.total_score_4 > 49 %} C {% elif my_resultsheet.total_score_4 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_4}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_4}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_4 |floatformat:0}}</td>
+                <td>{% if my_resultsheet.total_average_4 > 79 %}Excellent{% elif my_resultsheet.total_average_4 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_4 > 60 %} Good {% elif my_resultsheet.total_average_4 > 49 %}
+                  Average {% elif my_resultsheet.total_average_4 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_5 %}
+
+                <td>{{ my_resultsheet.subject_5}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_5ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_5exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_5 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_5 > 79 %}A
+                  {% elif my_resultsheet.total_score_5 > 70 %} B+ {% elif my_resultsheet.total_score_5 > 60 %} B 
+                  {% elif my_resultsheet.total_score_5 > 49 %} C {% elif my_resultsheet.total_score_5 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_5}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_5}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_5 |floatformat:0}}</td>
+                <td>{% if my_resultsheet.total_average_5 > 79 %}Excellent{% elif my_resultsheet.total_average_5 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_5 > 60 %} Good {% elif my_resultsheet.total_average_5 > 49 %}
+                  Average {% elif my_resultsheet.total_average_5 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_6 %}
+                <td>{{ my_resultsheet.subject_6}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_6ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_6exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_6 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_6 > 79 %}A
+                  {% elif my_resultsheet.total_score_6 > 70 %} B+ {% elif my_resultsheet.total_score_6 > 60 %} B 
+                  {% elif my_resultsheet.total_score_6 > 49 %} C {% elif my_resultsheet.total_score_6 > 39 %} D 
+                  {% else %} E {% endif %}</td>
+
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_6}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_6}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_6 |floatformat:0}}</td>
+                
+                <td>{% if my_resultsheet.total_average_6 > 79 %}Excellent{% elif my_resultsheet.total_average_6 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_6 > 60 %} Good {% elif my_resultsheet.total_average_6 > 49 %}
+                  Average {% elif my_resultsheet.total_average_6 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_7 %}
+               
+                <td>{{ my_resultsheet.subject_7}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_7ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_7exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_7 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_7 > 79 %}A
+                  {% elif my_resultsheet.total_score_7 > 70 %} B+ {% elif my_resultsheet.total_score_7 > 60 %} B 
+                  {% elif my_resultsheet.total_score_7 > 49 %} C {% elif my_resultsheet.total_score_7 > 39 %} D {% else %}E
+                  {% endif %}</td>
+
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_7}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_7}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_7 |floatformat:0}}</td>
+
+                <td>{% if my_resultsheet.total_average_7 > 79 %}Excellent{% elif my_resultsheet.total_average_7 > 70 %} Very
+                  Good {% elif my_resultsheet.total_average_7 > 60 %} Good {% elif my_resultsheet.total_average_7 > 49 %}
+                  Average {% elif my_resultsheet.total_average_7 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_8 %}
+                <td>{{ my_resultsheet.subject_8}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_8ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_8exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_8 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_8 > 79 %}A
+                  {% elif my_resultsheet.total_score_8 > 70 %} B+ {% elif my_resultsheet.total_score_8 > 60 %} B 
+                  {% elif my_resultsheet.total_score_8 > 49 %} C {% elif my_resultsheet.total_score_8 > 39 %} D {% else %}E
+                  {% endif %}</td>
+
+                <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_8}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_8}}</td>
+                <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_8 |floatformat:0}}</td>
+                
+                <td>{% if my_resultsheet.total_average_8 > 79 %}Excellent{% elif my_resultsheet.total_average_8 > 70 %} Very
+                Good {% elif my_resultsheet.total_average_8 > 60 %} Good {% elif my_resultsheet.total_average_8 > 49 %}
+                Average {% elif my_resultsheet.total_average_8 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_9 %}
+                
+                <td>{{ my_resultsheet.subject_9}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_9ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_9exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_9 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_9 > 79 %}A
+                  {% elif my_resultsheet.total_score_9 > 70 %} B+ {% elif my_resultsheet.total_score_9 > 60 %} B 
+                  {% elif my_resultsheet.total_score_9 > 49 %} C {% elif my_resultsheet.total_score_9 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_9}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_9}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_9 |floatformat:0}}</td>
+                                  
+                <td>{% if my_resultsheet.total_average_9 > 79 %}Excellent{% elif my_resultsheet.total_average_9 > 70 %} Very Good
+                  {% elif my_resultsheet.total_average_9 > 60 %} Good {% elif my_resultsheet.total_average_9 > 49 %} Average
+                  {% elif my_resultsheet.total_average_9 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_10 %}
+              
+                <td>{{ my_resultsheet.subject_10}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_10ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_10exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_10 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_10 > 79 %} A
+                  {% elif my_resultsheet.total_score_10 > 70 %} B+ {% elif my_resultsheet.total_score_10 > 60 %} B 
+                  {% elif my_resultsheet.total_score_10 > 49 %} C {% elif my_resultsheet.total_score_10 > 39 %} D {% else %}E
+                  {% endif %}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_10}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_10}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_10 |floatformat:0}}</td>
+                  
+                <td>{% if my_resultsheet.total_average_10 > 79 %}Excellent{% elif my_resultsheet.total_average_10 > 70 %}
+                  Very Good {% elif my_resultsheet.total_average_10 > 60 %} Good {% elif my_resultsheet.total_average_10 > 49 %} Average 
+                  {% elif my_resultsheet.total_average_10 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_11 %}
+              
+                <td>{{ my_resultsheet.subject_11}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_11ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_11exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_11 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_11 > 79 %} A {% elif my_resultsheet.total_score_11 > 70 %} B+ {% elif my_resultsheet.total_score_11 > 60 %} B 
+                  {% elif my_resultsheet.total_score_11 > 49 %} C {% elif my_resultsheet.total_score_11 > 39 %} D {% else %} E {% endif %}</td>
+
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_11}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_11}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_11 |floatformat:0}}</td>
+                  
+                <td>{% if my_resultsheet.total_average_11 > 79 %}Excellent{% elif my_resultsheet.total_average_11 > 70 %}
+                  Very Good {% elif my_resultsheet.total_average_11 > 60 %} Good {% elif my_resultsheet.total_average_11 > 49 %} Average {% elif my_resultsheet.total_average_11 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_12 %}
+            
+                <td>{{ my_resultsheet.subject_12}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_12ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_12exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_12 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_12 > 79 %} A {% elif my_resultsheet.total_score_12 > 70 %} B+ {% elif my_resultsheet.total_score_12 > 60 %} B {% elif
+                  my_resultsheet.total_score_12 > 49 %} C {% elif my_resultsheet.total_score_12 > 39 %} D {% else %} E {% endif %}</td>
+
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_12}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_12}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_12 |floatformat:0}}</td>
+                  
+                <td>{% if my_resultsheet.total_average_12 > 79 %}Excellent{% elif my_resultsheet.total_average_12 > 70 %}
+                  Very Good {% elif my_resultsheet.total_average_12 > 60 %} Good {% elif my_resultsheet.total_average_12 >
+                  49 %} Average {% elif my_resultsheet.total_average_12 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_13 %}
+              
+                <td>{{ my_resultsheet.subject_13}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_13ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_13exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_13 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_13 > 79 %}A
+                  {% elif my_resultsheet.total_score_13 > 70 %} B+ {% elif my_resultsheet.total_score_13 > 60 %} B {% elif
+                  my_resultsheet.total_score_13 > 49 %} C {% elif my_resultsheet.total_score_13 > 39 %} D {% else %} E {% endif %}</td>
+
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_13}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_13}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_13 |floatformat:0}}</td>
+                  
+                <td>{% if my_resultsheet.total_average_13 > 79 %}Excellent{% elif my_resultsheet.total_average_13 > 70 %}
+                  Very Good {% elif my_resultsheet.total_average_13 > 60 %} Good {% elif my_resultsheet.total_average_13 >
+                  49 %} Average {% elif my_resultsheet.total_average_13 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_14 %}
+
+                <td>{{ my_resultsheet.subject_14}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_14ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_14exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_14 }}</td>
+                <td scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_14 > 79 %} A {% elif my_resultsheet.total_score_14 > 70 %} B+ {% elif my_resultsheet.total_score_14 > 60 %} B {% elif
+                  my_resultsheet.total_score_14 > 49 %} C {% elif my_resultsheet.total_score_14 > 39 %} D {% else %} E {% endif %}</td>
+
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.second_term.total_score_14}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.first_term.total_score_14}}</td>
+                  <td style="width:auto; text-align:center;">{{my_resultsheet.total_average_14 |floatformat:0}}</td>
+                  
+                <td>{% if my_resultsheet.total_average_14 > 79 %}Excellent{% elif my_resultsheet.total_average_14 > 70 %}
+                  Very Good {% elif my_resultsheet.total_average_14 > 60 %} Good {% elif my_resultsheet.total_average_14 >
+                  49 %} Average {% elif my_resultsheet.total_average_14 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_15 %}
+                <td> </td>
+                <td>{{ my_resultsheet.subject_15}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_15ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_15exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_15 }}</td>
+                <th scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_15 > 79 %} A {% elif my_resultsheet.total_score_15 > 70 %} B+ {% elif my_resultsheet.total_score_15 > 60 %} B {% elif
+                  my_resultsheet.total_score_15 > 49 %} C {% elif my_resultsheet.total_score_15 > 39 %} D {% else %} E {% endif %}</th>
+                <td>{% if my_resultsheet.total_score_15 > 79 %}Excellent{% elif my_resultsheet.total_score_15 > 70 %}
+                  Very Good {% elif my_resultsheet.total_score_15 > 60 %} Good {% elif my_resultsheet.total_score_15 >
+                  49 %} Average {% elif my_resultsheet.total_score_15 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_16 %}
+                <td> </td>
+                <td>{{ my_resultsheet.subject_16}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_16ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_16exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_16 }}</td>
+                <th scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_16 > 79 %}A{%
+                  elif my_resultsheet.total_score_16 > 70 %} B+ {% elif my_resultsheet.total_score_16 > 60 %} B {% elif
+                  my_resultsheet.total_score_16 > 49 %} C {% elif my_resultsheet.total_score_16 > 39 %} D {% else %} E {%endif %}</th>
+                <td>{% if my_resultsheet.total_score_16 > 79 %}Excellent{% elif my_resultsheet.total_score_16 > 70 %}
+                  Very Good {% elif my_resultsheet.total_score_16 > 60 %} Good {% elif my_resultsheet.total_score_16 >
+                  49 %} Average {% elif my_resultsheet.total_score_16 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_17 %}
+                <td> </td>
+                <td>{{ my_resultsheet.subject_17}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_17ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_17exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_17 }}</td>
+                <th scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_17 > 79 %}A{%
+                  elif my_resultsheet.total_score_17 > 70 %} B+ {% elif my_resultsheet.total_score_17 > 60 %} B {% elif
+                  my_resultsheet.total_score_17 > 49 %} C {% elif my_resultsheet.total_score_17 > 39 %} D {% else %} E {%endif %}</th>
+                <td>{% if my_resultsheet.total_score_17 > 79 %}Excellent{% elif my_resultsheet.total_score_17 > 70 %}
+                  Very Good {% elif my_resultsheet.total_score_17 > 60 %} Good {% elif my_resultsheet.total_score_17 >
+                  49 %} Average {% elif my_resultsheet.total_score_17 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_18 %}
+                <td> </td>
+                <td>{{ my_resultsheet.subject_18}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_18ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_18exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_18 }}</td>
+                <th scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_18 > 79 %}A{%
+                  elif my_resultsheet.total_score_18 > 70 %} B+ {% elif my_resultsheet.total_score_18 > 60 %} B {% elif
+                  my_resultsheet.total_score_18 > 49 %} C {% elif my_resultsheet.total_score_18 > 39 %} D {% else %} E {%endif %}</th>
+                <td>{% if my_resultsheet.total_score_18 > 79 %}Excellent{% elif my_resultsheet.total_score_18 > 70 %}
+                  Very Good {% elif my_resultsheet.total_score_18 > 60 %} Good {% elif my_resultsheet.total_score_18 >
+                  49 %} Average {% elif my_resultsheet.total_score_18 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <tr>
+                {% if my_resultsheet.subject_19 %}
+                <td> </td>
+                <td>{{ my_resultsheet.subject_19}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_19ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_19exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_19 }}</td>
+                <th scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_19 > 79 %}A{%
+                  elif my_resultsheet.total_score_19 > 70 %} B+ {% elif my_resultsheet.total_score_19 > 60 %} B {% elif
+                  my_resultsheet.total_score_19 > 49 %} C {% elif my_resultsheet.total_score_19 > 39 %} D {% else %} E {%endif %}</th>
+                <td>{% if my_resultsheet.total_score_19 > 79 %}Excellent{% elif my_resultsheet.total_score_19 > 70 %}
+                  Very Good {% elif my_resultsheet.total_score_19 > 60 %} Good {% elif my_resultsheet.total_score_19 >
+                  49 %} Average {% elif my_resultsheet.total_score_19 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+
+
+              <tr>
+                {% if my_resultsheet.subject_20 %}
+                <td> </td>
+                <td>{{ my_resultsheet.subject_20}} </td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_20ca}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.score_20exam}}</td>
+                <td style="width:auto; text-align:center;">{{ my_resultsheet.total_score_20 }}</td>
+                <th scope="row" style="width:auto; text-align:center;"> {% if my_resultsheet.total_score_20 > 79 %}A{%
+                  elif my_resultsheet.total_score_20 > 70 %} B+ {% elif my_resultsheet.total_score_20 > 60 %} B {% elif
+                  my_resultsheet.total_score_20 > 49 %} C {% elif my_resultsheet.total_score_20 > 39 %} D {% else %} E {%endif %}</th>
+                <td>{% if my_resultsheet.total_score_20 > 79 %}Excellent{% elif my_resultsheet.total_score_20 > 70 %}
+                  Very Good {% elif my_resultsheet.total_score_20 > 60 %} Good {% elif my_resultsheet.total_score_20 >
+                  49 %} Average {% elif my_resultsheet.total_score_20 > 39 %} Fair {% else %}Fail{% endif %}</td>
+                {% endif %}
+              </tr>
+
+              <!-- FOR CALCULATING OVERALL PERCENTAGE AND OTHERS -->
+              <tr>
+
+                <th scope="row" colspan="1" style="text-align:right;">TOTAL SCORE</th>
+                <td style="width:auto; text-align:center;"><strong>{{ my_resultsheet.total_score_ca }}</strong></td>
+                <td style="width:auto; text-align:center;"><strong>{{ my_resultsheet.total_score_exam }}</strong></td>
+                <td style="width:auto; text-align:center;"><strong>{{ my_resultsheet.overall_total }}</strong></td>
+                <!-- <td style="width:auto; text-align:center;"><strong></strong></td> -->
+                <td style="font-size:14px; text-align:center;" colspan="5">Total Subject Taken : <strong>{{ my_resultsheet.empty_fields_count }}</strong></td>
+
+
+
+              </tr>
+              <tr>
+                <!-- <th scope="row" colspan="1"></th> -->
+                <td class=" text-white" colspan="9" style="text-align:center; background-color:grey; ">
+                  <span style="color:white;">1st Term Average : N/a </span>| <span style="color:white;">2nd Term Average
+                    : N/a </span> | <span style="color:white;">3rd Term Average : N/a </span>|
+                  <strong>OVERALL PERCENTAGE : </strong> <span style="font-size:20px;">{{ my_resultsheet.overall_percentage|floatformat:1 }}% </span>
+                </td>
+                <!-- <td></td> -->
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <td style="text-align:center; font-size:11px;"> -->
+
+    <!-- </td>  -->
+    <div>
+      <div style="padding-top:10px;">
+        <div class=" col-sm-6" style="float:right;">
+          <table class="table table-bordered table-sm" style="font-size:11px;">
+            <!-- <thead>
+        <tr>
+          <th scope="col" colspan="" style="text-align:center; font-size:14px;">Other Remarks</th>
+          <th scope="col" colspan="" style="text-align:center; font-size:14px;">Grade Scale</th>
+                   
+        </tr>
+      </thead> -->
+            <tbody>
+              <tr>
+
+              <tr>
+                <td><strong>GRADING 100%</strong>
+                  <li>80-100 - A</li>
+                  <li>71-79 - B+</li>
+                  <li>60-70 - B</li>
+                  <li>50-59 - C</li>
+                  <li>45-49 - D</li>
+                  <li>40-44 - E</li>
+                  <li>0-39 - F</li>
+                </td>
+
+                <td><strong>BEHAVIOUR (5)</strong>
+                  {% for r in my_resultsheet.motorabilitys3.all %}
+                  <li>Honesty = {{r.honesty}}</li>
+                  <li>Politeness = {{r.politeness}}</li>
+                  <li>Neatness = {{r.neatness}}</li>
+                  <li>co-operation = {{r.co_operation}}</li>
+                  <li>Perseverance = {{r.perseverance}}</li>
+                  <li>Leadership = {{r.leadership}}</li>
+                  <li>Obedience = {{r.obedience}}</li>
+                  <li>Attentiveness = {{r.attentiveness}}</li>
+                  <li>Puntuality = {{r.puntuality}}</li>
+                  <li>Attitude = {{r.attitude}}</li>
+                  <li>Emotional Stability = {{r.emotional_stability}}</li>
+
+                </td>
+
+                <td><strong>SKILLS (5)</strong>
+                  <li>Musical = {{r.musical}}</li>
+                  <li>Games = {{r.games}}</li>
+                  <li>Hand Writing = {{r.handwriting}}</li>
+                  <li>Reading = {{r.reading}}</li>
+                  <li>Verbal Fluency = {{r.verbal_fluency}}</li>
+                  <li>Handling Tools = {{r.handling_tools}}</li>
+                  <li>Physical Edu. = {{r.physical_education}}</li>
+                  {% endfor %}
+
+                </td>
+
+                <td>
+                  <strong>GRADING KEYS:</strong><br>
+                  <li>5 - Excellent</li>
+                  <li>4 - Good</li>
+                  <li>3 - Fair</li>
+                  <li>2 - Poor</li>
+                  <li>1 - Very Poor</li>
+                  <span style="text-align:center;"> <img src="{% static 'pages/qr_code.png' %}" width="90px"
+                      height="90px"></span>
+                </td>
+
+              </tr>
+
+              <!-- </table> -->
+              </td>
+              <!-- <td style="text-align:center; font-size:10px;"> -->
+              <!-- <span> 80% - 100% = A  | 70% - 79% = B+<br>
+                    60% - 69% = B  | 55% - 59% = C<br>
+                    40% - 54% = D  | 00% - 39% = E<br>
+                  </span> -->
+              <!-- <td style="text-align:center;"><img src="{% static 'pages/qr_code.png' %}" width="80px" height="80px"></td>                     -->
+              <!-- 
+             </td>   -->
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class=" col-sm-6" style="float:left;">
+      <table class="table table-stripped">
+        <thead>
+          <!-- <tr>
+            <th scope="col" colspan="2" style="text-align:center; font-size:14px;">Official Comments</th> 
+          </tr> -->
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align:justify;">
+              <strong style="font-size:13px;">Class Teacher's Remark : </strong> <br>
+
+              <span style="font-size:12px;">{% if my_resultsheet.overall_percentage > 79 %}Your dedication and
+                commitment to learning are evident in your results. keep it up.
+                {% elif my_resultsheet.overall_percentage > 70 %} You're doing well, but there's room for improvement in
+                some areas.
+                {% elif my_resultsheet.overall_percentage > 60 %} Good performance. You can do better next term, improve
+                on the weak subjects
+                {% elif my_resultsheet.overall_percentage > 50 %} A significant effort is needed to bring your grades up
+                to an acceptable level.
+                {% elif my_resultsheet.overall_percentage > 39 %} Your performance falls significantly below
+                expectations. Immediate action is required.
+                {% else %}You have performed poorly and this result is not acceptable.{% endif %}</span>
+
+              <br>
+
+              <!-- <strong>Principal's Comment : </strong><em>{{ my_resultsheet.principal_comment}}</em> -->
+              <strong style="font-size:13px;">Principal's/Head Teacher's Remark : </strong> <br>
+              <span style="font-size:12px;">{% if my_resultsheet.overall_percentage > 79 %}Outstanding effort and
+                achievement! Keep up the excellent work.
+                {% elif my_resultsheet.overall_percentage > 70 %} Impressive work overall. Continue to strive for
+                excellence.
+                {% elif my_resultsheet.overall_percentage > 60 %} Meeting expectations in most areas. Keep working
+                harder to improve.
+                {% elif my_resultsheet.overall_percentage > 50 %} Your performance has room for growth. Extra effort and
+                attention are needed.
+                {% elif my_resultsheet.overall_percentage > 39 %} Struggling in some areas. Focused effort is required
+                for improvement.
+                {% else %}Your performance is far below acceptable grade. You need to work hard to meet up.
+                {% endif %} </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+  </div>
+  <div class="col-sm-6 " style="padding-top:10px; text-align:center;">
+
+    <!-- <img src="{% static 'pages/barcode2.jpg' %}" width="100%" height="60"> -->
+    <img src="{% static 'pages/signed.jpg' %}" width="30%" height="auto">
+  </div>
+
+  </div>
+
+
+</body>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

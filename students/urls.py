@@ -10,9 +10,12 @@ urlpatterns = [
 
     path('student_list/', students_views.student_list, name='student-list'),
     path('boarder_list/', students_views.student_boarder_list, name='boarder-list'),
+    path('student_in_class/', students_views.student_in_class, name='student-in-class'),
     # Search student detail app
     path('search/', students_views.search, name='search'),
     path('student_search_list/', students_views.student_search_list, name='student_search_list'),
+    #render id card as pdf
+    path('idcard-pdf/<pk>/', students_views.student_id_card_pdf_view, name="idcard-pdf-view"),
      
     path('my-detail/', StudentSelfDetailView.as_view(), name="student-self-detail"),
 

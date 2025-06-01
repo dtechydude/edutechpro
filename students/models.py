@@ -187,8 +187,22 @@ class Student(models.Model):
         ordering = ['user']   
     
     def get_absolute_url(self):
-        return reverse('students:students-detail', kwargs={'id':self.USN})
+        return reverse('students:student-detail', kwargs={'USN':self.USN})
     
+# Student ID Card Generation
+class StudentId(models.Model):
+    id_card = models.BooleanField( default=False) 
+    student = models.ForeignKey(Student, related_name='idcardimage', on_delete=models.CASCADE, blank=True, null=True, default=None,)
+    f_1 = models.ImageField(default='school_id_header.jpg', upload_to='school_logo', help_text='Do not upload file')
+    f_2 = models.ImageField(default='qr_code.jpg', upload_to='school_logo', help_text='Do not upload file')
+    f_3 = models.ImageField(default='sign.jpg', upload_to='school_logo', help_text='Do not upload file')
+
+    def __str__(self):
+      return f"IdCard: {self.student}" 
+
+    class Meta:
+        verbose_name = 'Confirm to enable student generate ID Card'
+
 
 
 #All subject offer by student

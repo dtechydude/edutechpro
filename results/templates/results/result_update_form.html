@@ -1,0 +1,65 @@
+{% extends 'pages/portal_home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title>Update Student Result </title>{% endblock title %}
+
+{% block content_body %}
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href=""><span style="font-size: 35px;"><h3>Result Update Form</h3></span></a></li>
+                
+                
+            </ol>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xl-8 col-xxl-8 col-lg-8">
+                <div class="card">
+                    <div class="card-header border-0 pb-0">
+                        <h5 class="card-title">You are Updating -<span style="color:black"><b> RESULT </b></span></h5>
+                    </div>
+                    <div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor%}
+                        {% endif%}
+                    </div>
+                    <div class="card-body">
+                        <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height770">
+                            
+                            {% if user.is_superuser or user.profile.user_type == "admin" or user.staffprofile.staff_role == 'form_teacher' %}
+                           <form method="post">
+                            {% csrf_token%}
+                            {{ form|crispy}}
+                            
+                            <button type="submit" name="submit" class="btn btn-primary form-control mt-3" ><h5 style="color:white;">Update  Result</h5></button>
+                        
+                        </form>
+                        <a href="{% url 'results:print-result'%}"><button class="btn btn-secondary form-control mt-3" ><h5 style="color:red;">Cancel Update</h5></button></a>
+                       {% else %}
+                        <div>
+                            <h1>Permission Denied!</h1>
+                        </div>
+                      
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_body %}
+
+
+
+

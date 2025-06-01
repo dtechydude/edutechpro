@@ -12,9 +12,9 @@ from payments.models import BankDetail
 class Route(models.Model):
     name = models.CharField(max_length=200, blank=True )
     direction = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
-    staff_in_charge = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True)
+    staff_in_charge = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True, related_name='official_staff')
+    driver = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True, related_name='bus_driver')
     slug = models.SlugField(null=True, blank=True)
-
 
     def __str__ (self):
         return f'{self.name} {self.staff_in_charge} '
@@ -25,16 +25,16 @@ class Route(models.Model):
 
 
 class BusFee(models.Model):
-    amount = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
+    amount_due = models.CharField(max_length=200, blank=True, verbose_name='bus_fare')
     route = models.ForeignKey(Route, on_delete=models.CASCADE, default= None, related_name='route_name')
-    session = models.ForeignKey(Session, on_delete=models.CASCADE, default= None, related_name='route_name')
-    term = models.ForeignKey(Route, on_delete=models.CASCADE, default= None, related_name='route_name')
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, default= None, related_name='academic_session')
+    term = models.ForeignKey(Session, on_delete=models.CASCADE, default= None, related_name='term')
 
     class Meta:
-        ordering = ['-amount' ]        
+        ordering = ['-amount_due' ]        
 
     def __str__ (self):
-       return f'{self.amount} {self.term} '
+       return f'{self.amount_due} {self.term} '
 
     # def get_absolute_url(self):
     #     return reverse('payment:my_payments')  
@@ -71,14 +71,14 @@ class StudentBusPayment(models.Model):
     class Meta:
         ordering = ['-student' ]
 
-        unique_together = ['student', 'payment_name']
+        unique_together = ['student', 'payment']
     
 
     def __str__ (self):
        return f'{self.student} {self.student} '
 
-    def get_absolute_url(self):
-        return reverse('payment:my_payments')  
+    # def get_absolute_url(self):
+    #     return reverse('payment:my_payments')  
     
     # def get_absolute_url(self):
     #     return reverse('payment:payment_detail', kwargs={'id':self.id})

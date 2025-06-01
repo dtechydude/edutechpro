@@ -14,7 +14,7 @@ from students.models import Student, StudentSubject, MarksClass
 from staff.models import Assign
 from students.forms import StudentUpdateForm
 from users.forms import UserRegisterForm
-# from curriculum.models import Standard
+from curriculum.models import Class
 # from results.models import ResultSheet
 import io
 from reportlab.pdfgen import canvas
@@ -22,19 +22,10 @@ from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 from django.http import FileResponse
 import csv
-# # for my rest_framework
-# from .serializers import StudentDetailSerializer
-# from rest_framework import status
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
-# For Filter
-# from .filters import StudentFilter
-# from django_filters.views import FilterView
-# For panigation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.template.loader import get_template
-# from xhtml2pdf import pisa
+from xhtml2pdf import pisa
 
 
 #Displays all students
@@ -64,19 +55,8 @@ def student_boarder_list(request):
          return render(request, 'pages/portal_home.html')
     
 
-# def search_students(request):
-#     if request.method == "Post":
-#         searched = request.POST['searched']
-#         students = Student.objects.filter(full_name__contains=searched)
-#         return render(request, 'students/search_students.html', {'searched':searched, 'students':students})
-#     else:
-#         return render(request, 'students/search_student_list.html')
-    
-# def search_form(request):
-#     return render(request, 'students/search_students.html')
 
 # Student Search Query App
-
 def student_search_list(request):
     student = Student.objects.all()
     
@@ -107,8 +87,12 @@ def search(request):
         
     return render(request, 'students/search.html', {'query': query, 'results': results})
 
+#count students in each class
+def student_in_class(request):
+    students = Student.objects.all()
+    student_no = Student.objects.values('class_id').annotate(count=Count('class_id')).order_by('class_id')
 
-
+    return render(request, 'students/student_no_in_class.html', {'students': students, 'student_no':student_no})
 
 
 class StudentDetailView(DetailView):
@@ -242,6 +226,36 @@ def student_marks(request, assign_id):
     return render(request, 'students/t_student_marks.html', {'sc_list': sc_list})
 
 
+
+
+@login_required
+def student_id_card_pdf_view(request, *args, **kwargs):    
+
+    pk = kwargs.get('pk')
+    
+    my_id = get_object_or_404(Student, pk=pk)
+    class_detail = Class.objects.all()
+    template_path = 'students/student_id_pdf.html'
+    # template_path = 'results/result_sheet.html'
+    context = {'my_id': my_id, 'class_detail':class_detail}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # if you want to download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if you just want to display
+    response['Content-Disposition'] = 'filename="my_id.pdf"'
+
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+    html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 

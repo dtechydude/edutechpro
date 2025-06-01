@@ -73,7 +73,7 @@ class Class(models.Model):
 
     def __str__(self):
         d = Dept.objects.get(name=self.dept)
-        return '%s : %d %s' % (d.name, self.sem, self.section)
+        return '%s : %s %s' % (self.id, d.name, self.section)
     
 
 

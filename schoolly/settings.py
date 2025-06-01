@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'payments.apps.PaymentsConfig',
     'results.apps.ResultsConfig',
     'inventory.apps.InventoryConfig',
+    'cbt.apps.CbtConfig',
 
     # Installed Apps
     'django_ckeditor_5',

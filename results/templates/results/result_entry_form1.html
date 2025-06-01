@@ -1,0 +1,54 @@
+{% extends 'pages/portal_home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title>Schoolly - Upload Result </title>{% endblock title %}
+
+{% block content_body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href=""><span style="font-size: 35px;"><h3>Result Upload</h3></span></a></li>
+                
+                
+            </ol>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xl-4 col-xxl-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header border-0 pb-0">
+                        <h4 class="card-title">Enter Result For Each Subject</h4>
+                        <p>This allows you to enter result for each subject in the class
+                            select class and pick subject from the drop down list.
+                        </p>
+                    </div>
+                    <div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor%}
+                        {% endif%}
+                    </div>
+                    <div class="card-body">
+                        <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height470">
+                           <form method="post" enctype="multipart/form-data">
+                            {% csrf_token%}
+                            {{ upload_form|crispy }}
+                            
+                            <button type="submit" name="submit" class="btn btn-primary form-control mt-3" >Upload Result</button>
+                        
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_body %}

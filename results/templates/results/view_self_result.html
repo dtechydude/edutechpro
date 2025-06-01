@@ -1,0 +1,212 @@
+{% extends 'pages/portal_home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content_body %}
+
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between align-items-center flex-wrap">
+					<div class="card-action coin-tabs mb-2">
+						
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link"href="">All My results</a>
+							</li>						
+						</ul>
+					</div>
+					<div class="d-flex align-items-center mb-2 flex-wrap"> 
+						<div class="guest-calendar">
+							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
+								<span>My Result List</span><b class="caret"></b>
+								<i class="fas fa-user ms-3"></i>
+							</div>
+						</div>
+						<div class="newest ms-3">
+													
+							</select>
+						</div>	
+					</div>
+				</div>
+<!-- 				
+						<!-- USING FILTER TO GET INFORMATION -->
+							<div class="row">
+								<div ">	
+									<div>
+										<!-- <div style="float:left; padding:4px; width:30%;"> -->
+											<div>
+												<form action="" method="get">
+
+												{{ myresult_filter.form }}
+												
+												<button class="btn btn-primary" type="submit">Search </button>
+											</form>	</div>
+										</div>
+
+									  </div>		
+
+									  <!-- END USING FILTER TO GET INFORMATION -->									
+			
+                                </div>
+                                </div>
+                            
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        
+                                        <div class="card-body p-0">
+                                            <div class="tab-content">	
+                                                <div class="tab-pane active show" id="AllGuest">
+                                                    <div class="table-responsive">
+                                                        <table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
+                                                            <thead>
+                                                        <tr>
+														<th class="bg-none">
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
+															</div>
+														</th>
+														<th>Examination</th>
+														<th>Standard</th>
+                                                        <th>Description</th>
+														<th>Session</th>
+														<th>Term</th>
+														<th>Download</th>
+																									
+													</tr>
+												</thead>
+												<tbody>
+													{% for result in myresult %}
+							
+													<tr>
+														<td>
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="">
+															</div>
+														</td>														
+														<td>
+                                                            <div>
+                                                        <h6 class="text-nowrap">{{ result.exam}}</h6>
+															<span></span>
+                                                        </div>
+														</td>
+														</td>
+														<td>															
+														<h6 class="text-nowrap">{{ result.standard}}</h6>
+																													
+														</td>
+															<td>															
+                                                            <span class="text-nowrap">{{ result.description}}</span>
+																														
+														</td>
+														<td>
+															<div>
+																<h5 class="text-nowrap">{{ result.session }}</h5>
+																<span></span>
+															</div>
+														</td>
+														<td>
+														<div>
+															<h5 class="text-nowrap">{{ result.term }}</h5>
+															<span></span>
+														</div>
+														
+														</td>
+														
+														<td>
+															<div>
+                                                                {% if result.file %}
+                                                                    <a href="{{ result.file.url }}">Download</a>
+                                                                    {% else %}
+                                                                    <a href="">No Result file yet</a>
+                                                                    {% endif %}
+															    </div>																										
+															   </td>	
+
+														{% endfor %}
+													</tr>	
+												</tbody>
+											</table>
+										
+											<!-- Page Paginator start -->
+											{% if studentlist.has_other_pages %}
+											{% if studentlist.has_previous %}
+											<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.previous_page_number }}">&laquo;</a>
+											{% else %}
+											<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+	
+											{% endif %}
+											{% for i in studentlist.paginator.page_range %}
+											{% if studentlist.number == i %}
+	
+											<a class="btn btn-info mb-4" href="">{{ i }}</a>
+											{% else %}
+											<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+											{% endif %}
+											{% endfor %}
+											{% if studentlist.has_next %}
+											<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.next_page_number }}">&raquo;</a>
+											{% else %}
+											
+											<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+											{% endif %}
+										
+										{% endif %}
+										<!-- Page Paginator end -->
+
+										</div>	
+									</div>	
+									
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- ***********************************--> -->
+
+
+
+	
+		{% endblock content_body %}
+		<!--**********************************-->
+			
+			{% block scripts %}
+
+
+			<script src="{% static 'portal/vendor/moment/moment.min.js' %}"></script>
+    		<script src="{% static 'portal/vendor/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+			<script src="{% static 'portal/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+			<script src="{% static 'portal/js/plugins-init/datatables.init.js' %}"></script>
+	
+
+            <script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+
+            <script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+            
+            <!-- Apex Chart -->
+            
+            <script src="{% static 'portal/vendor/apexchart/apexchart.js' %}"></script>
+            
+            
+            <!-- Chart piety plugin files -->
+            
+            
+            <!-- Dashboard 1 -->
+            <script src="{% static 'portal/js/dashboard/dashboard-1.js' %}"></script>
+            
+            <script src="{% static 'portal/vendor/owl-carousel/owl.carousel.js' %}"></script>
+            <script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/moment.js' %}"></script>
+            <script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+            
+            <script src="{% static 'portal/js/custom.min.js' %}"></script>
+            <script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+            <script src="{% static 'portal/js/demo.js' %}"></script>
+            <script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+
+			{% endblock scripts %}

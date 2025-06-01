@@ -1,0 +1,259 @@
+{% extends 'pages/portal_home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}<title>My Result List </title>{% endblock title%}
+
+{% block content_body %}
+
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between align-items-center flex-wrap">
+					<div class="card-action coin-tabs mb-2">
+						                       
+					</div>
+					<div class="d-flex align-items-center mb-2 flex-wrap"> 
+						<div class="guest-calendar">
+							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
+								<span>My Second Term Results</span><b class="caret"></b>
+								<i class="fas fa-user ms-3"></i>
+							</div>
+						</div>
+						<div class="newest ms-3">
+					
+							</select>
+						</div>	
+					</div>
+				</div>
+<!-- 									<!-- USING FILTER TO GET INFORMATION -->
+							<div class="row">
+								<div>	
+									<div>
+										<!-- <div style="float:left; padding:4px; width:30%;"> -->
+											<div>
+												<form action="" method="get">
+											
+											</form>	</div>
+										</div>
+									
+									  </div>		
+
+									  <!-- END USING FILTER TO GET INFORMATION -->
+													
+								</div>
+								</div>
+							
+								<div class="col-xl-12">
+									<div class="card">
+										
+										<div class="card-body p-0">
+											<div class="tab-content">	
+									<div class="tab-pane active show" id="AllGuest">
+										<div class="table-responsive">
+											<table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
+												<thead>
+													<tr>
+														<th class="bg-none">
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
+															</div>
+														</th>
+														
+														<th style="color:green;">Standard</th>
+														<!-- <th style="color:green;">Term</th> -->
+														<th style="color:green;">Exam Name</th>
+														<th style="color:green;">Session/Term</th>
+														<th style="color:green;">Date</th>
+														<th style="color:green;">Results</th>
+														<th style="color:green;">C.As</th>
+																											
+													</tr>
+												</thead>
+												<tbody>
+													{% for r in myresultsheet %}
+							
+													<tr>
+												
+														<td>
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="">
+															</div>
+														</td>
+														<td>
+															<div class="concierge-bx d-flex align-items-center">
+																	<div>
+																	<h5 class="fs-16 mb-0 text-nowrap">
+																	<a class="text-black" href="#">{{ r.exam.standard}} <span style="font-size:9px;, color:grey;"></span></h5>
+																	<span class="text-primary fs-14"> </span></a>
+																</div>
+															</div>
+														</td>
+														<!-- <td class="text-nowrap">
+															<span>{{ r.exam.term}}</span>
+														</td> -->
+														<td class="text-nowrap">
+															
+																<span>{{ r.exam.name}}</span>	
+																<span></span>										
+														</td>
+														<td class="text-nowrap">
+															<span>{{ r.exam.session }}</span>
+																<span></span>
+														</td>
+														<td class="text-nowrap">
+														<span>{{ r.exam.exam_date }}</span>
+															<span></span>
+														</div>
+														
+														</td>
+														{% if r.publish %}
+														<td class="text-nowrap">
+                                                          <a class="text-black" href="{% url 'results:second-result-pdf-view' pk=r.pk %}"><strong><button class="btn btn-secondary">DOWNLOAD</button></strong></a></span></a>
+															<span></span>
+														</td>
+														{% else %}
+														
+														<td class="text-nowrap">
+                                                            <a class="text-black" href=""><span style="color:red;">Exam Result in Review...</span></a>
+															<span></span>
+														</td>
+														{% endif %}
+														<td>																															
+																															
+															<a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">View C.A Result</a>
+														
+														</div>
+														<!-- Modal -->
+														<div class="modal fade" id="sendMessageModal">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title">Continous Assessment - C.A (40%)</h5>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+																	</div>
+																	
+												<!--Modal body -->
+												<div class="modal-body">
+													
+									<div class="d-flex align-items-center mb-3">
+																	
+										<div class="users d-flex align-items-center">
+											
+										<div class="card">
+										<div class="card-body">
+											<div class="basic-list-group">
+												<ul class="list-group">
+													<li class="list-group-item active">This is your C.A results for: {{ r.session}} - {{r.exam}}</li>
+													{% if r.subject_1 %}<li class="list-group-item">(40%) - {{ r.subject_1 }} -   <span style="color:green;"> {{ r.score_1ca}}</span></li>{% endif %}
+													{% if r.subject_2 %}<li class="list-group-item">(40%) - {{ r.subject_2 }} - <span style="color:green;">{{ r.score_2ca}}</span></li>{% endif %}
+													{% if r.subject_3 %}<li class="list-group-item">(40%) - {{ r.subject_3 }} - <span style="color:green;">{{ r.score_3ca}}</span></li>{% endif %}
+													{% if r.subject_4 %}<li class="list-group-item">(40%) - {{ r.subject_4 }} - <span style="color:green;">{{ r.score_4ca}}</span></li>{% endif %}
+													{% if r.subject_5 %}<li class="list-group-item">(40%) - {{ r.subject_5 }} - <span style="color:green;">{{ r.score_5ca}}</span></li>{% endif %}
+													{% if r.subject_6 %}<li class="list-group-item">(40%) - {{ r.subject_6 }} - <span style="color:green;">{{ r.score_6ca}}</span></li>{% endif %}
+													{% if r.subject_7 %}<li class="list-group-item">(40%) - {{ r.subject_7 }} - <span style="color:green;">{{ r.score_7ca}}</span></li>{% endif %}
+													{% if r.subject_8 %}<li class="list-group-item">(40%) - {{ r.subject_8 }} - <span style="color:green;">{{ r.score_8ca}}</span></li>{% endif %}
+													{% if r.subject_9 %}<li class="list-group-item">(40%) - {{ r.subject_9 }} - <span style="color:green;">{{ r.score_9ca}}</span></li>{% endif %}
+													{% if r.subject_10 %}<li class="list-group-item">(40%) - {{ r.subject_10 }} - <span style="color:green;">{{ r.score_10ca}}</span></li>{% endif %}
+													{% if r.subject_11 %}<li class="list-group-item">(40%) - {{ r.subject_11 }} - <span style="color:green;">{{ r.score_11ca}}</span></li>{% endif %}
+													{% if r.subject_12 %}<li class="list-group-item">(40%) - {{ r.subject_12 }} - <span style="color:green;">{{ r.score_12ca}}</span></li>{% endif %}
+													{% if r.subject_13 %}<li class="list-group-item">(40%) - {{ r.subject_13 }} - <span style="color:green;">{{ r.score_13ca}}</span></li>{% endif %}
+													{% if r.subject_14 %}<li class="list-group-item">(40%) - {{ r.subject_14 }} - <span style="color:green;">{{ r.score_14ca}}</span></li>{% endif %}
+													{% if r.subject_15 %}<li class="list-group-item">(40%) - {{ r.subject_15 }} - <span style="color:green;">{{ r.score_15ca}}</span></li>{% endif %}
+													{% if r.subject_16 %}<li class="list-group-item">(40%) - {{ r.subject_16 }} - <span style="color:green;">{{ r.score_16ca}}</span></li>{% endif %}
+													{% if r.subject_17 %}<li class="list-group-item">(40%) - {{ r.subject_17 }} - <span style="color:green;">{{ r.score_17ca}}</span></li>{% endif %}
+													{% if r.subject_18 %}<li class="list-group-item">(40%) - {{ r.subject_18 }} - <span style="color:green;">{{ r.score_18ca}}</span></li>{% endif %}
+													{% if r.subject_19 %}<li class="list-group-item">(40%) - {{ r.subject_19 }} - <span style="color:green;">{{ r.score_19ca}}</span></li>{% endif %}
+													{% if r.subject_20 %}<li class="list-group-item">(40%) - {{ r.subject_20 }} - <span style="color:green;">{{ r.score_20ca}}</span></li>{% endif %}
+													
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>											
+												
+													
+								</td>
+							
+								{% endfor %}
+							</tr>	
+						</tbody>
+					</table>
+										
+						<!-- Page Paginator start -->
+						{% if studentlist.has_other_pages %}
+						{% if studentlist.has_previous %}
+						<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.previous_page_number }}">&laquo;</a>
+						{% else %}
+						<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+						{% endif %}
+						{% for i in studentlist.paginator.page_range %}
+						{% if studentlist.number == i %}
+
+						<a class="btn btn-info mb-4" href="">{{ i }}</a>
+						{% else %}
+						<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+						{% endif %}
+						{% endfor %}
+						{% if studentlist.has_next %}
+						<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.next_page_number }}">&raquo;</a>
+						{% else %}
+						
+						<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+						{% endif %}
+					
+					{% endif %}
+					<!-- Page Paginator end -->
+
+					</div>	
+				</div>	
+									
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ***********************************--> -->
+
+		{% endblock content_body %}
+		<!--**********************************-->
+			
+			{% block scripts %}
+
+			<script src="{% static 'portal/vendor/moment/moment.min.js' %}"></script>
+    		<script src="{% static 'portal/vendor/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+			<script src="{% static 'portal/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+			<script src="{% static 'portal/js/plugins-init/datatables.init.js' %}"></script>
+	
+			<script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+			<script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+			
+			<!-- Apex Chart -->
+				<script src="{% static 'portal/vendor/apexchart/apexchart.js' %}"></script>
+			
+			<!-- Chart piety plugin files -->
+			
+				<!-- Dashboard 1 -->
+			<script src="{% static 'portal/js/dashboard/dashboard-1.js' %}"></script>
+			
+			<script src="{% static 'portal/vendor/owl-carousel/owl.carousel.js' %}"></script>
+			<script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/moment.js' %}"></script>
+			<script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+			
+			<script src="{% static 'portal/js/custom.min.js' %}"></script>
+			<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+			<script src="{% static 'portal/js/demo.js' %}"></script>
+			<script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+
+			{% endblock scripts %}

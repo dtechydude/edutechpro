@@ -88,7 +88,7 @@
             <div class="row">
                 <div class="col-lg-12">
   
-    {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+    {% if user.is_authenticated and user.is_superuser or user.is_staff or user.teacher %}
     <div class="container"><h1></h1></div>
 <div class="container">
     <div class="card">
@@ -109,9 +109,31 @@
         <button type="submit" class="btn btn-success btn-md mb-2">Search</button>
    </form>
    </div>
-  
+  {% endif %}
 <!-- Page Paginator start -->
 <div class="card-body">
+    
+        {% if student.has_other_pages %}
+        {% if student.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ studentlist.previous_page_number }}">&laquo;</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+        {% endif %}
+        {% for i in student.paginator.page_range %}
+        {% if student.number == i %}
+
+        <a class="btn btn-info mb-4" href="">{{ i }}</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+        {% endif %}
+        {% endfor %}
+        {% if student.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ studentlist.next_page_number }}">&raquo;</a>
+        {% else %}
+
+        <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+        {% endif %}
         
     </div>
         <!-- Page Paginator end -->
@@ -120,6 +142,7 @@
 </div>
 </div>
 {% endif %}
+
 
 											</div>
 										</div>
