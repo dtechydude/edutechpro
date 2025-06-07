@@ -775,11 +775,7 @@ class ResultSheet3(models.Model):
         verbose_name = '3rd Term Result'
         verbose_name_plural = '3rd Term Result'
     
-        
-    # class Meta:
-    #     verbose_name = 'Result Sheet'
-    #     verbose_name_plural = 'Result Sheet'
-    
+      
     def get_absolute_url(self):
         return reverse('results:result-sheet', kwargs={'id':self.id})
 

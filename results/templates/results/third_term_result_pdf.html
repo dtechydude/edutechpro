@@ -9,10 +9,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
    
-    <title>Third Term Report Card</title>
+    <title>Second Term Result</title>
     <style>
     body {
-      background-image: url('https://schoolly.com.ng/portal/static/pages/gcis/bkgrd.jpg'); 
+      background-image: url('#'); 
       background-size: contain;
       background-position: center;  
       background-repeat: repeat-x;
@@ -48,24 +48,28 @@
  
   </style>
   </head>
-  <body style="background-color:#3399cc;">
+  <body style="background-color:brown;">
+    <div  style="text-align: center; background-color: white; padding-top:3px; padding-bottom:3px;">
+      <span><img src="{{ school_identity.logo.path}}" style="width:80px;height:80px;"> <br>
+      <span style="font-size: 26px; margin-top:3px; font-weight: bold; color: brown;">{{ school_identity.name }} </span> <br>
+      <span style="color: brown;">{{ school_identity.address_line_1 }} {{ school_identity.address_line_1 }} - {{ school_identity.phone1 }}</span>        
+     
+  </div>  
 
-     <div  style="padding-top:1px;">
       {% for m in my_resultsheet.resultimages3.all %}
-      <img src="{{ m.f_1.path}}">
+      <!-- <img src="{{ m.f_1.path}}"> -->
   
       {% endfor %}
-
-        <div class=" col-sm-12">
-          <table style="margin:0 auto; vertical-align:middle; padding: 2px; border-color:grey;">
-            <thead>
-              <tr>
-                <th scope="col" colspan="2" style="text-align:center;  color:white; background-color:grey; font-size:14px; vertical-align:middle;" >
-                  STUDENT REPORT SHEET | {{my_resultsheet.exam}} </strong>
-                </th>
-                         
-              </tr>
-            </thead>
+      <div class=" col-sm-12">
+        <table style="margin:0 auto; vertical-align:middle; padding: 2px; border-color:grey;">
+          <thead>
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center;  color:white; background-color:grey; font-size:14px; vertical-align:middle; padding-top: 8px;" >STUDENT REPORT SHEET | 
+                {{my_resultsheet.exam.session}} </strong>
+              </th>
+                       
+            </tr>
+          </thead>
             <tbody>
   
             </tbody>
@@ -78,18 +82,18 @@
                   </thead>
                 <tbody>
                   <tr>
-                      <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.first_name}}  {{my_resultsheet.student_detail.middle_name}}  {{my_resultsheet.student_detail.last_name}}</strong></td>
-                      <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_detail.user}}</strong> </td>
-                      <td style="width:auto; text-align:center;">CLASS : <strong>{{my_resultsheet.exam.standard}} - {{my_resultsheet.student_detail.class_group}}</strong></td>
-                      <td style="width:auto; text-align:center;">NO IN CLASS : <strong>{{my_resultsheet.no_in_class}}</strong></td>
-                      <td rowspan="2" style="text-align:center; width:auto;">
-                        {% for m in my_resultsheet.resultimages3.all %}
-                        <img src="{{ m.f_2.path}}" width="60"  height="60">
-                    
-                        {% endfor %}
-                      </td>
+                    <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.full_name|upper}}</strong></td>
+                    <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_detail.user}}</strong> </td>
+                    <td style="width:auto; text-align:center;">CLASS : <strong>{{my_resultsheet.exam.standard}} - {{my_resultsheet.student_detail.class_group}}</strong></td>
+                    <td style="width:auto; text-align:center;">NO IN CLASS : <strong>{{my_resultsheet.no_in_class}}</strong></td>
+                    <td rowspan="2" style="text-align:center; width:auto;">
+                      {% for m in my_resultsheet.resultimages3.all %}
+                      <img src="{{ m.f_2.path}}" width="60"  height="60">
+                  
+                      {% endfor %}
+                    </td>
 
-                    </tr>
+                  </tr>
                     <tr style="color:#990000; ">
                       <td style="width:auto; font-size:9px; text-align:center;"><strong><em>Days Sch. Opened :</em><span style="font-size:11px; color:black"> {{my_resultsheet.no_days_school_open}}</span></strong> </td>
                       <td style="width:auto; font-size:9px; text-align:center;"><strong><em>Days Present : </em><span style="font-size:11px; color:black">{{my_resultsheet.no_days_present}}</span> </strong></td>
