@@ -109,17 +109,30 @@
                                                                                             
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            {% for p in paymentlist %}
+                                        <tbody>                                           
+                                            {% for p in confirmed %}
+                                            {% if p.confirmed_a or p.confirmed_b or p.confirmed_c %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
 												<td><strong>{{ p.student_detail.user.first_name}} {{ p.student_detail.user.last_name}}</strong></td>
                                                 <td>{{ p.payment_name.name}}</td>
                                                 <td style="color:brown;">{{ p.payment_name.session}}</td>
                                                 <td>N{{ p.payment_name.amount_due }}</td>
-                                                <td><strong>N{{ p.amount_paid_a }}</strong> <br> {{ p.payment_date_a | date:"d/m/Y"  }}</td>                                              
+                                                {% if p.confirmed_a and p.amount_paid_a %}
+                                                <td><strong>N{{ p.amount_paid_a }}</strong> <br> {{ p.payment_date_a | date:"d/m/Y"  }}</td>
+                                                {% else %}
+                                                <td><strong>N{{ p.amount_paid_a }}</strong> <br><span style="color: red;"> pending...</span></td>
+                                                {% endif %} 
+                                                {% if p.confirmed_b and p.amount_paid_b %}                                             
                                                 <td><strong>N{{ p.amount_paid_b }}</strong> <br> {{ p.payment_date_b | date:"d/m/Y"}}</td>
+                                                {% else %}
+                                                <td><strong>N{{ p.amount_paid_b }}</strong> <br><span style="color: red;"> pending...</span></td>
+                                                {% endif %}
+                                                {% if p.confirmed_c and p.amount_paid_c %}
                                                 <td><strong>N{{ p.amount_paid_c }}</strong> <br> {{ p.payment_date_c | date:"d/m/Y" }}</td>
+                                                {% else %}
+                                                <td><strong>N{{ p.amount_paid_c }}</strong> <br><span style="color: red;">pending</span></td>
+                                                {% endif %}
                                                 <td><strong>N{{ p.balance_pay }}</strong></td>
                                                
                                                 
@@ -130,7 +143,7 @@
                                                         </div> 
                                                 
                                                 </td>                                                        
-                                              
+                                                {% endif %}
                                                 {% endfor %}
                                             </tr>
                                            

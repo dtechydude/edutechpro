@@ -33,7 +33,7 @@ class Examination(models.Model):
     description = models.CharField(max_length=150, blank=True)  
 
     def __str__ (self):
-        return f'{self.name} - {self.session.name}'
+        return f'{self.name} - {self.session.name} - {self.term}'
     
     class Meta:
       verbose_name = 'Examinations'
@@ -106,7 +106,7 @@ class ResultSheet1(models.Model):
     student_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True, blank=True,  help_text='confirm student username')
     exam = models.ForeignKey(Examination, on_delete=models.CASCADE)
 
-    subject_1 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1', null=True, blank=True,)
+    subject_1 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1', null=True, blank=True)
     score_1ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_1exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
@@ -211,7 +211,7 @@ class ResultSheet1(models.Model):
         return reverse('results:result-sheet', kwargs={'id':self.id})
 
     def __str__(self):
-        st = Student.objects.get(id=self.student_detail_id)
+        st = Student.objects.get(USN=self.student_detail.USN)
         #i REMOVED TEMPORARILY TO AVOID REPEATATION OF STUDENT_ID   MAY BE NECESSARY LATER-----------------------
         # us = User.objects.get_or_create(id=self.student_id_id)
         #------------------------------------------------------------------
@@ -340,7 +340,7 @@ class ResultSheet1(models.Model):
     @property
     def no_in_class(request, *args, **kwargs):
 
-      return Student.objects.filter(current_class__name = request.student_detail.current_class).count()
+      return Student.objects.filter(class_id = request.student_detail.class_id).count()
     
       
 
@@ -374,9 +374,9 @@ class MotorAbility1(models.Model):
 class ResultImage1(models.Model):
     confirm_publish = models.BooleanField( default=False) 
     resultsheet = models.ForeignKey(ResultSheet1, related_name='resultimages', on_delete=models.CASCADE, blank=True, null=True, default=None,)
-    f_1 = models.ImageField(default='report_card_header.png', upload_to='school_logo', help_text='Do not upload file')
-    f_2 = models.ImageField(default='qr_code.jpg', upload_to='school_logo', help_text='Do not upload file')
-    f_3 = models.ImageField(default='sign.jpg', upload_to='school_logo', help_text='Do not upload file')
+    f_1 = models.ImageField(default='report_card_header.png', upload_to='result_header', help_text='Do not upload file')
+    f_2 = models.ImageField(default='qr_code.jpg', upload_to='result_header', help_text='Do not upload file')
+    f_3 = models.ImageField(default='sign.jpg', upload_to='result_header', help_text='Do not upload file')
 
     def __str__(self):
       return f"result: {self.resultsheet}" 
@@ -497,7 +497,7 @@ class ResultSheet2(models.Model):
         return reverse('results:result-sheet', kwargs={'id':self.id})
 
     def __str__(self):
-        st = Student.objects.get(id=self.student_detail_id)
+        st = Student.objects.get(USN=self.student_detail.USN)
         #i REMOVED TEMPORARILY TO AVOID REPEATATION OF STUDENT_ID   MAY BE NECESSARY LATER-----------------------
         # us = User.objects.get_or_create(id=self.student_id_id)
         #------------------------------------------------------------------
@@ -621,14 +621,12 @@ class ResultSheet2(models.Model):
     @property
     def no_days_absent(self):
         return self.no_days_school_open - self.no_days_present
-
-    # Get Students number in class
+    
+     # Get Students number in class
     @property
     def no_in_class(request, *args, **kwargs):
-
-      return Student.objects.filter(current_class__name = request.student_detail.current_class).count()
+      return Student.objects.filter(class_id = request.student_detail.class_id).count()
     
-      
 
 class MotorAbility2(models.Model):
     resultsheet = models.ForeignKey(ResultSheet2, related_name='motorabilitys2', on_delete=models.CASCADE, blank=True, null=True, default=None,)
@@ -786,7 +784,7 @@ class ResultSheet3(models.Model):
         return reverse('results:result-sheet', kwargs={'id':self.id})
 
     def __str__(self):
-        st = Student.objects.get(id=self.student_detail_id)
+        st = Student.objects.get(USN=self.student_detail.USN)
         #i REMOVED TEMPORARILY TO AVOID REPEATATION OF STUDENT_ID   MAY BE NECESSARY LATER-----------------------
         # us = User.objects.get_or_create(id=self.student_id_id)
         #------------------------------------------------------------------
@@ -914,11 +912,10 @@ class ResultSheet3(models.Model):
     def no_days_absent(self):
         return self.no_days_school_open - self.no_days_present
 
-    # Get Students number in class
+     # Get Students number in class
     @property
     def no_in_class(request, *args, **kwargs):
-
-      return Student.objects.filter(current_class__name = request.student_detail.current_class).count()
+      return Student.objects.filter(class_id = request.student_detail.class_id).count()
     
     # Overall Subject Averages
     @property

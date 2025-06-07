@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
    
-    <title>Payment Receipt</title>
+    <title>Student ID Card</title>
     <style>
     body {
       background-image: url('#'); 
@@ -40,7 +40,7 @@
     
     } 
     table, th, td {
-      border:  1px solid grey;
+      border: grey;    
       border-collapse: collapse;
     }
 
@@ -49,182 +49,83 @@
   </style>
   </head>
 
-  <body style="background-color:#043c58;">
+  <body style="background-color:grey;">
 
-    <div  style="padding-top:20px;">
-      <div style="background-color:#ffffff;" >
-        <h1><span style="font-size: 25px;">SCHOOLLY EDTECH</span> <br>
-          <span style="font-size: 12px;"> 100 NTA road, Mgbuoba Port Harcourt <br>
-            Rivers State <br>
-          Phone:11111111111 - Email: school@school.com</span></h1>
-        <p style="font-size: 20px; padding-bottom: 1px;">Invoice #{{ my_receipt.trans_id }}</p>         
-
-      </div>
-     
-     <p style="text-align: center; color:#f2f2f2; font-size:20px; padding-top: 10px;">Official Receipt Of Payments</p>
-     <div></div>
-     </div>
- 
-
+    <div  style="text-align: center; background-color: white; padding: auto;">
+          <span><img src="{{ school_identity.logo.path}}" style="width:80px;height:80px;"> <br>
+          <span style="font-size: 20px; margin-top:3px;">{{ school_identity.name }}</span>
+         
+      </div>       
+     <p style="text-align: center; color:#f2f2f2; font-size:12px; padding-top:5px; margin-top: 2px;"><strong>Student Identification</strong> </p>
+       
 <div class="invoice-items">
     <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
-    <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th style="font-size: 14px; color: #043c58; text-align: center;">Student Code </th>
-            <th style="font-size: 14px; color: #043c58; text-align: center;">Student Name </th>
-            <th style="font-size: 14px; color: #043c58; text-align: center;">Current Class / Session  </h>
-            <th style="font-size: 14px; color: #043c58; text-align: center;">Payment Status </h>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="font-size: 14px; text-align: center;"> {{ my_receipt.student_detail.USN }} </td>
-                <td style="font-size: 13px; text-align: center;"> {{ my_receipt.student_detail.full_name }} </td>
-                <td style="font-size: 12px; text-align: center;"> {{ my_receipt.student_detail.class_id }} <br>{{ my_receipt.payment_name.session }}    </td>
-                <td>
-                  {% if discount > 0 and my_receipt.total_amount_paid == my_receipt.discounted_amount_due %}
-                  <span pan class="label label-success" style="font-size:17px; text-align: center;">FULLY PAID</span>                 
-                  {% elif my_receipt.total_amount_paid == my_receipt.amount_due %}
-                  <span pan class="label label-success" style="font-size:17px; color: green; text-align: center;">FULLY PAID</span>
-                  {% else %} 
-                  <span pan class="label label-success" style="font-size:17px; color: red; text-align: center;">PARTLY PAID</span>                          
-                  {% endif %}  
-
-                </td>
-            </tr>
-
-        </tbody>
-        </table>
-
-
-<div class="invoice-items">
-<div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+   
 <table class="table table-bordered">
 <thead>
 <tr>
-<th class=" text-center" style="font-size: 17px; color: #043c58; text-align: center; padding-top: 8px;">Payment Type</th>
-<th class="per5 text-center" style="font-size: 17px; color: #043c58; text-align: center; padding-top: 8px;">Description</th>
-<th class="per25 text-center" style="font-size: 17px; color: #043c58; padding-top: 8px;">Amount Paid</th>
+<th class=" text-center" style="font-size: 17px; color: #043c58; text-align: center; padding-top: 2px;"> 
+  <img src="{{ student_detail.user.profile.image.path}}" style="width:180px;height:180px;"></th>
+<div>
+<td colspan="2" class=" per5 text-left" style="font-size: 17px; color: #043c58; text-align: left; padding-top: 2px;">
+  <br><span style="color: gray;"> STUDENT'S ID </span> | <span style="color: black;">{{ student_detail.USN }}</span>
+  <br> <span style="color: gray;">STUDENT NAME </span>| <span style="color: black;">{{ student_detail.full_name  |upper }}</span>
+ <br> <span style="color: gray;">CURRENT CLASS </span>| <span style="color: black;">{{ student_detail.class_id  |upper }}</span>
+ <br> <span style="color: gray;">STUDENT TYPE </span>| <span style="color: black;">{{ student_detail.student_type  |upper }}</span>
+ <br><span style="color: gray;"> BADGE </span>| <span style="color: black;">{{ student_detail.badge  |upper }}</span>
+ <br> <span style="color: gray;">DATE ADMITTED  </span>| <span style="color: black;">{{ student_detail.date_admitted  |upper}}</span>
 
+</td>
+<!-- <th class="per25 text-center" style="font-size: 17px; color: #043c58; padding-top: 8px;">Amount Paid</th> -->
+</div>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="font-size: 14px;"><strong>{{ my_receipt.payment_name.name }}<strong> <br>
-<span style="font-size: 16px;">Total Due: N{{ my_receipt.payment_name.amount_due }}</span> </td>
-<td class="text-center" style="font-size: 14px; padding-top: 8px;">
-                        {% if my_receipt.amount_paid_a %}  1st Payment -  {{ my_receipt.payment_date_a |date:"d/m/Y" }}  {% endif %} <br>
-                        {% if my_receipt.amount_paid_b %}  2nd Payment - {{ my_receipt.payment_date_b |date:"d/m/Y"}}    {% endif %}  <br>                  
-                        {% if my_receipt.amount_paid_c %}  3nd Payment - {{ my_receipt.payment_date_c |date:"d/m/Y" }}   {% endif %}  <br>                    
-                       
-</td>
-<td class="text-center" style="font-size: 14px; padding-top: 8px;">{% if my_receipt.amount_paid_a and my_receipt.confirmed_a %}
-                        <strong> N{{ my_receipt.amount_paid_a}}</strong>  - <span style="color:green;">Confirmed </span>
-                        {% endif %}
-                        {% if my_receipt.amount_paid_a and not my_receipt.confirmed_a %}
-                        <strong> N{{ my_receipt.amount_paid_a}}</strong> <span style="color:red;"> - Pending</span>
-                        {% endif %}<br>
-                         {% if my_receipt.amount_paid_b and my_receipt.confirmed_b %} 
-                           <strong>N{{ my_receipt.amount_paid_b}} </strong> - <span style="color:green;">Confirmed </span>
-                           {% endif %}
-                           {% if my_receipt.amount_paid_b and not my_receipt.confirmed_b %}
-                           <strong> N{{ my_receipt.amount_paid_b}} </strong>- <span style="color:red;">Pending</span>
-                        {% endif %}<br>
-                         {% if my_receipt.amount_paid_c and my_receipt.confirmed_c %}
-                        <strong>  N{{ my_receipt.amount_paid_c}}</strong> - <span style="color:green;">Confirmed</span>
-                        {% endif %}
-                        {% if my_receipt.amount_paid_c and not my_receipt.confirmed_c %}
-                        <strong>  N{{ my_receipt.amount_paid_c}} </strong>-<span style="color:red;"> Pending</span>
-                        {% endif %}
-                        </td>
-</tr>
-<tr>
-<td style="font-size: 13px; padding-top: 8px;"><strong>STUDENT DISCOUNT:  </strong> <br></td>
-<td class="text-center" style="font-size: 13px; padding-top: 8px;"> {% if my_receipt.discounted_amount %}
-  On <strong>{{ my_receipt.discount }}% </strong> Discount: <span style="font-size: 14px;"> <strong>N{{my_receipt.discounted_amount_due |floatformat:2}}</strong></span>
-  {% else %}
-  Student Has No Discount
-  {% endif %}</td>
-<td class="text-center"  style="font-size: 13px; padding-top: 8px;"> N/A </td>
-</tr>
-<tr>
-<td class="text-right" style="font-size: 13px; padding-top: 8px;"><strong>Payment Last Updated : </strong>  </td>
-<td class="text-center" style="font-size: 13px;  padding-top: 8px;">{{ my_receipt.payment_updated_date}}</td>
-<td class="text-center" style="font-size: 13px; padding-top: 8px;"> N/A  - </td>
+<td class=" text-center" style="font-size: 17px; color:green; text-align: center; padding-top: 5px;"><strong><u>AUTHORIZED</u><strong></td>
+<td class=" text-center" style="font-size: 12px; color: #043c58; text-align: center; padding-top: 5px;"><strong>STUDENT UNIQUE RCY CODE:- {{student_detail.user.profile.code }}<strong></td>
 </tr>
 </tbody>
-<tfoot>
-<tr>
-<th colspan="2" class="text-right" style="font-size: 16px; text-align: right; padding-top: 8px; ">Sub Total:</th>
-<th class="text-center" style="font-size: 17px; text-align: left;  padding-top: 8px;">N{{ my_receipt.total_amount_paid}}</th>
-</tr>
-<tr>
-<th colspan="2" class="text-right" style="text-align: right; font-size: 16px; padding-top: 8px;"> Outstanding DEBT/CREDIT</th>
-<th class="text-center">
-                        <!-- Calculations with discount -->
-                        {% if my_receipt.discount %}
-                        {% if my_receipt.discounted_amount_due > my_receipt.total_amount_paid %}
-                        <span style="color: red; font-size: 17px;  padding-top: 8px;"> DEBT : N{{ my_receipt.discounted_balance_owed}}</span>
-
-                        {% elif my_receipt.total_amount_paid > my_receipt.discounted_amount_due %} 
-                        <span style="color: green; font-size: 17px;  padding-top: 8px;">CREDIT : N{{ my_receipt.credit_balance_discounted|floatformat:2 }} </span>
-
-                        {% elif my_receipt.total_amount_paid == my_receipt.discounted_amount_due %} 
-                        <span style="color: green; font-size: 17px;  padding-top: 8px;">PAYMENT COMPLETED </span>
-                         {% else %}
-                         <span style="color: green; font-size: 17px;  padding-top: 8px;">UNKNOWN </span>
-                         {% endif %}
-                         {% endif%}
-
-                         <!-- Calculation without DISCOUNT -->
-                        
-                        {% if my_receipt.discount == False %}
-                        {% if my_receipt.payment_name.amount_due > my_receipt.total_amount_paid %}
-                        <span style="color: red; font-size: 17px;"> DEBT : N{{ my_receipt.balance_pay }}</span>
-
-                        {% elif my_receipt.total_amount_paid == my_receipt.payment_name.amount_due %} 
-                        <span style="color: green; font-size: 17px;">PAYMENT COMPLETED </span>
-
-                        {% elif my_receipt.total_amount_paid > my_receipt.payment_name.amount_due %} 
-                        <span style="color: green; font-size: 17px;">CREDIT : N{{ my_receipt.credit_balance }} </span>
-                         {% else %}
-                         <span style="color: green; font-size: 17px;">UNKNOWN </span>
-                         {% endif %}
-                         {% endif%}
-                        </th>
-</tr>
-
-<tr>
- 
-    </tr>
-</tfoot>
 </table>
+<p style="text-align: center; color:#f2f2f2; font-size:12px; padding-top: 7px;">SXCRTYU678MNJJKUILOOOWSQ12CXXDDFF </p>
+
 </div>
 </div>
-<div class="invoice-footer mt25">
-<p class="text-center" style="font-size: 17px; color: white; text-align: center; padding-top: 10px;"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p style="background-color: white; font-size: 15px;"><a href="#">Read Payment Instruction </a></p>
-<div style="background-color: white;">
-  <h2> How To Pay:</h2>
-  <ul>
-    {% for b in bank_detail %}
-    <li style="font-size: 14px;">{{ b.bank_name }} - {{ b.acc_name}} - {{ b.acc_number}}</li>
-        {% endfor %}
-  </ul>
+<hr>
+<p style="background-color: white">>>>Back Cover>>></p>
+
+<div class="invoice-footer mt25"> 
+<p class="text-center" style="font-size: 17px; color: white; text-align: center; padding-top: 10px;"><strong> Note! </strong>This ID Card Is Not Transferable</p>
+<table class="table table-bordered">  
+  <tfoot>   
+  <tr>
+  <th colspan="2" class="text-right" style="text-align: center; font-size: 16px; padding-top: 8px;"> 
+  <span>This Document is a property of <strong>{{ school_identity.name }}</strong> <br>
+    If found, please return to the school authority<br>
+    Contact details as stated below;<br>
+      {{ school_identity.address_line_1 }},<br>
+      {{ school_identity.address_line_2 }},<br>.<br>
+        Phone:+234 {{ school_identity.phone1 }} </th>      
+  </tr>  
   
-  
+  </tfoot> 
+  </table>
+  <div class="invoice-footer mt25"> 
+    <p class="text-center" style="font-size: 17px; color: white; text-align: center; padding-top: 10px;"><strong>SXCRTYU678MNJJKUILOOOWSQ12CXXDDFF </strong></p>
+    <table class="table table-bordered">  
+      <tfoot>  
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p style="background-color: white; font-size: 15px;"><a href="#">Read School Guideline </a></p>
  
 </div>
-
 
       
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -232,3 +133,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
+
+

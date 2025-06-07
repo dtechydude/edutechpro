@@ -38,7 +38,7 @@ class ResultSheet1Admin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display=('student_detail', 'exam',)
     list_filter  = ['student_detail__class_id']
     search_fields = ('student_detail__student_username', 'student_detail__full_name')
-    raw_id_fields = ['student_id', 'student_detail']
+    raw_id_fields = ['student_id', 'student_detail',]
 
 # Second Term Result
 class MotorAbility2Inline(admin.TabularInline):

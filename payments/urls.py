@@ -12,6 +12,7 @@ urlpatterns = [
     path('payment-instruction/', payment_views.payment_instruction, name="payment_instruction"),      
     path('payment-report/', payment_views.payment_report, name="payment_report"),
     path('online-payment/', payment_views.online_payment, name="online_payment"),
+    path('confirmed-payment/', payment_views.confirmed_payment, name="confirmed_payment"),
     # path('summary-payment-report/', payment_views.summary_payment_report, name="summary_payment_report"),
     path('debtor-list/', payment_views.debtor_list, name="debtor_list"),      
     path('payment-cat-form/', payment_views.payment_cat_form, name="payment_cat_form"),

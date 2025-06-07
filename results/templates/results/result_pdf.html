@@ -12,7 +12,7 @@
     <title>Student Report Card</title>
     <style>
     body {
-      background-image: url('https://schoolly.com.ng/portal/static/pages/gcis/bkgrd.jpg'); 
+      background-image: url('#'); 
       background-size: contain;
       background-position: center;  
       background-repeat: repeat-x;
@@ -27,7 +27,7 @@
       
       th, td {
         text-align: left;
-        padding: 3px;
+        padding: 2px;
         vertical-align: middle;
 
       }
@@ -48,11 +48,16 @@
  
   </style>
   </head>
-  <body style="background-color:#3399cc;">
-
-     <div  style="padding-top:1px;">
+  <body style="background-color:brown;">
+    <div  style="text-align: center; background-color: white; padding-top:3px;">
+      <span><img src="{{ school_identity.logo.path}}" style="width:80px;height:80px;"> <br>
+      <span style="font-size: 26px; margin-top:3px; font-weight: bold; color: brown;">{{ school_identity.name }} </span> <br>
+      <span style="color: brown;">{{ school_identity.address_line_1 }} {{ school_identity.address_line_1 }} - {{ school_identity.phone1 }}</span>        
+     
+  </div>  
+     
       {% for m in my_resultsheet.resultimages.all %}
-      <img src="{{ m.f_1.path}}">
+      <!-- <img src="{{ m.f_1.path}}"> -->
   
       {% endfor %}
 
@@ -60,7 +65,7 @@
           <table style="margin:0 auto; vertical-align:middle; padding: 2px; border-color:grey;">
             <thead>
               <tr>
-                <th scope="col" colspan="2" style="text-align:center;  color:white; background-color:grey; font-size:14px; vertical-align:middle;" >STUDENT REPORT SHEET | 
+                <th scope="col" colspan="2" style="text-align:center;  color:white; background-color:grey; font-size:14px; vertical-align:middle; padding-top: 8px;" >STUDENT REPORT SHEET | 
                   {{my_resultsheet.exam.session}} </strong>
                 </th>
                          
@@ -78,7 +83,7 @@
                   </thead>
                 <tbody>
                   <tr>
-                      <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.first_name}}  {{my_resultsheet.student_detail.middle_name}}  {{my_resultsheet.student_detail.last_name}}</strong></td>
+                      <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.full_name|upper}}</strong></td>
                       <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_detail.user}}</strong> </td>
                       <td style="width:auto; text-align:center;">CLASS : <strong>{{my_resultsheet.exam.standard}} - {{my_resultsheet.student_detail.class_group}}</strong></td>
                       <td style="width:auto; text-align:center;">NO IN CLASS : <strong>{{my_resultsheet.no_in_class}}</strong></td>
@@ -120,9 +125,9 @@
     
   </tr>
   </thead>
-  <tbody>
-    {% if my_resultsheet.subject_1 %}
-    <tr>       
+  <tbody>    
+    {% if my_resultsheet.subject_1 %}    
+    <tr style="font-size: 10px;">      
       <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_1}} </td>
       <td style="width:auto; text-align:center;">{{ my_resultsheet.score_1ca}}</td>
       <td style="width:auto; text-align:center;">{{ my_resultsheet.score_1exam}}</td>          
@@ -133,7 +138,7 @@
       </tr>
       {% endif %}
       {% if my_resultsheet.subject_2 %}
-      <tr>             
+      <tr style="font-size: 10px;">            
         <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_2}}</td>
         <td style="width:auto; text-align:center;">{{ my_resultsheet.score_2ca}}</td>
         <td style="width:auto; text-align:center;">{{ my_resultsheet.score_2exam}}</td>  
@@ -145,7 +150,7 @@
         {% endif %}  
         
         {% if my_resultsheet.subject_3 %}
-        <tr>                 
+        <tr style="font-size: 10px;">               
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_3}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_3ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_3exam}}</td>
@@ -157,8 +162,7 @@
           {% endif %}
 
           {% if my_resultsheet.subject_4 %}         
-        <tr>         
-         
+          <tr style="font-size: 10px;">        
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_4}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_4ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_4exam}}</td>
@@ -169,8 +173,7 @@
           </tr>
           {% endif %}
           {% if my_resultsheet.subject_5 %}
-        <tr>
-                   
+          <tr style="font-size: 10px;">                       
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_5}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_5ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_5exam}}</td>
@@ -181,8 +184,7 @@
          {% endif %}
              
          {% if my_resultsheet.subject_6 %}
-        <tr>
-                  
+         <tr style="font-size: 10px;">                   
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_6}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_6ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_6exam}}</td>
@@ -194,7 +196,7 @@
           {% endif %}
                
           {% if my_resultsheet.subject_7 %}
-        <tr>                 
+          <tr style="font-size: 10px;">                      
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_7}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_7ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_7exam}}</td>
@@ -206,7 +208,7 @@
         {% endif %}
                 
         {% if my_resultsheet.subject_8 %}
-        <tr>        
+        <tr style="font-size: 10px;">             
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_8}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_8ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_8exam}}</td>
@@ -218,7 +220,7 @@
         {% endif %}
 
         {% if my_resultsheet.subject_9 %}
-        <tr>                   
+        <tr style="font-size: 10px;">                  
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_9}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_9ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_9exam}}</td>
@@ -229,7 +231,7 @@
         {% endif %}
 
         {% if my_resultsheet.subject_10 %}
-        <tr>                  
+        <tr style="font-size: 10px;">                 
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_10}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_10ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_10exam}}</td>
@@ -241,7 +243,7 @@
         {% endif %}
 
         {% if my_resultsheet.subject_11 %} 
-        <tr>                
+        <tr style="font-size: 10px;">                
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_11}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_11ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_11exam}}</td>
@@ -253,7 +255,7 @@
         {% endif %}
 
         {% if my_resultsheet.subject_12 %}
-        <tr>                 
+        <tr style="font-size: 10px;">                
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_12}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_12ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_12exam}}</td>
@@ -264,7 +266,7 @@
         {% endif %}
                
         {% if my_resultsheet.subject_13 %}
-        <tr>          
+        <tr style="font-size: 10px;">         
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_13}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_13ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_13exam}}</td>
@@ -276,7 +278,7 @@
         {% endif %}
 
         {% if my_resultsheet.subject_14 %}   
-        <tr>                
+        <tr style="font-size: 10px;">                
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_14}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_14ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_14exam}}</td>
@@ -287,8 +289,7 @@
         </tr>
         {% endif %}
         {% if my_resultsheet.subject_15 %} 
-
-        <tr>                
+        <tr style="font-size: 10px;">              
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_15}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_15ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_15exam}}</td>
@@ -299,7 +300,7 @@
         </tr>
         {% endif %}
         {% if my_resultsheet.subject_16 %}
-        <tr>               
+        <tr style="font-size: 10px;">               
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_16}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_16ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_16exam}}</td>
@@ -310,7 +311,7 @@
         </tr>
         {% endif %}
         {% if my_resultsheet.subject_17 %}
-          <tr>             
+        <tr style="font-size: 10px;">             
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_17}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_17ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_17exam}}</td>
@@ -321,8 +322,7 @@
         </tr>
         {% endif %}
         {% if my_resultsheet.subject_18 %}   
-        <tr>
-                
+        <tr style="font-size: 10px;">                 
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_18}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_18ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_18exam}}</td>
@@ -333,7 +333,7 @@
         </tr>
         {% endif %}
         {% if my_resultsheet.subject_19 %} 
-        <tr>                 
+        <tr style="font-size: 10px;">                 
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_19}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_19ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_19exam}}</td>
@@ -345,8 +345,7 @@
         {% endif %}  
 
         {% if my_resultsheet.subject_20 %}
-        <tr> 
-                   
+        <tr style="font-size: 10px;">                    
           <td colspan ='2' style="width:auto;">{{ my_resultsheet.subject_20}} </td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_20ca}}</td>
           <td style="width:auto; text-align:center;">{{ my_resultsheet.score_20exam}}</td>
@@ -356,9 +355,8 @@
                
         </tr>
         {% endif %}   
-        <tr>
-          
-          <th scope="row" colspan="2" style="font-size:14px; text-align:right;">TOTAL SCORE</th>
+        <tr style="font-size: 12px;">           
+          <th scope="row" colspan="2" style="font-size:13px; text-align:right;">TOTAL SCORE</th>
           <td style="font-size:14px; width:auto; text-align:center;"><strong>{{ my_resultsheet.total_score_ca }}</strong></td>
           <td style="font-size:14px; width:auto; text-align:center;"><strong>{{ my_resultsheet.total_score_exam }}</strong></td>
           <td style="font-size:14px; width:auto; text-align:center;"><strong>{{ my_resultsheet.overall_total }}</strong></td>
@@ -367,9 +365,9 @@
         </tr>
         <tr style="background-color:grey;">
           <!-- <th scope="row" colspan="1"></th> -->
-           <td class=" text-white" colspan="4" style="text-align:center;">
+           <td class=" text-white" colspan="4" style="text-align:center; padding-top:7px;">
             <span style="color:white;"><strong>1st Term Average :  N/a | 2nd Term Average : N/a | 3rd Term Average :  N/a  </strong></span> </td>
-          <td class=" text-white" colspan="3" style="text-align:center;"> <span style="color:white; font-size:14px"><strong>OVERALL PERCENTAGE : {{ my_resultsheet.overall_percentage|floatformat:1  }}% </strong></span>
+          <td class=" text-white" colspan="3" style="text-align:center; padding-top:7px;"> <span style="color:white; font-size:14px"><strong>OVERALL PERCENTAGE : {{ my_resultsheet.overall_percentage|floatformat:1  }}% </strong></span>
             <br>
             {% if my_resultsheet.exam.term == 'Third Term' %}
             {% if my_resultsheet.overall_percentage > 49.9 %}

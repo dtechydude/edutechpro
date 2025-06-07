@@ -401,9 +401,8 @@ def payment_report(request):
     
 @login_required
 def confirmed_payment(request):
-    paymentlist = PaymentDetail.objects.all()
-    if paymentlist.confirm_a or paymentlist.confirm_b or paymentlist.confirm_c:
-        return render(request, 'payments/confirmed_payment.html')
+    confirmed = PaymentDetail.objects.all()
+    return render(request, 'payments/confirmed_payment.html', {'confirmed':confirmed})
 
 
 @login_required

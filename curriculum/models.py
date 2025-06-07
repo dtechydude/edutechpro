@@ -9,6 +9,25 @@ from django_ckeditor_5.fields import CKEditor5Field
 from embed_video.fields import EmbedVideoField
 
 
+# Register School
+class SchoolIdentity(models.Model):
+    name = models.CharField(max_length=50)
+    address_line_1 = models.CharField(max_length=60)
+    address_line_2 = models.CharField(max_length=60, blank=True, null=True)
+    phone1 = models.CharField(max_length=11)
+    phone2 = models.CharField(max_length=11, blank=True, null=True)
+    email = models.CharField(max_length=50)
+    logo = models.ImageField(default='default.jpg', upload_to='official_pics', help_text='must not exceed 180px by 180px in size')
+    slug = models.SlugField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = 'School Identity'
+ 
+        
+
+
 class Session(models.Model):
     name = models.CharField(max_length=50)
 

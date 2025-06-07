@@ -3,7 +3,7 @@ from django.contrib import admin
 # from django.contrib.auth.admin import UserAdmin
 from django.http import HttpResponseRedirect
 from django.urls import path
-
+from import_export.admin import ImportExportModelAdmin
 from .models import Student, Attendance,  Assign, AssignTime, AttendanceClass
 from .models import  User, AttendanceRange
 from curriculum.models import Class, Dept, Subject, Session
@@ -96,12 +96,13 @@ class StudentIdInline(admin.TabularInline):
     def has_delete_permission(self, request, obj=None):
         return False    
 
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     inlines = [StudentIdInline] 
     list_display = ('USN', 'full_name', 'class_id', 'gender', 'student_status')
     search_fields = ('USN', 'full_name', 'class_id__id', 'class_id__dept__name')
     ordering = ['class_id__dept__name', 'class_id__id', 'USN']
     list_filter  = ['class_id__dept__name', 'gender', 'student_status']
+    raw_id_fields = ['user',]
 
 
 # class TeacherAdmin(admin.ModelAdmin):

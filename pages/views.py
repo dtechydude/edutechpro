@@ -6,27 +6,40 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 from students.models import Student
 from staff.models import Staff, Teacher, Assign
+from users.models import Profile
+from curriculum.models import Class
+from payments.models import PaymentDetail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import  DetailView
 
 
 # Create your views here.
 def schoolly_home(request):
     return render(request, 'pages/homepage.html')
 
-def portal_home(request):
+# Portal Home
+@login_required
+def portal_home(request):  
     users_num = User.objects.count()
     student_num = Student.objects.count()
+    boarder_std = Student.objects.filter(student_type='boarder').count()
+    day_std = Student.objects.filter(student_type='day_student').count()
     num_student_inclass = Student.objects.filter().count()
     graduated = Student.objects.filter(student_status='graduated').count()
     dropped = Student.objects.filter(student_status='dropped').count()
     expelled = Student.objects.filter(student_status='expelled').count()
     suspended = Student.objects.filter(student_status='suspended').count()
     active = Student.objects.filter(student_status='active').count()
-    staff_num = Teacher.objects.count()
+    payments = PaymentDetail.objects.count()
+    staff_num = Staff.objects.count()
+    teacher_num = Teacher.objects.count()    
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))
     students = Student.objects.filter().order_by('class_id').values('class_id__section').annotate(count=Count('class_id__section'))
     my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
     no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
+    classrooms = Class.objects.all()
 
     try:
         num_inclass = Student.objects.filter(class_id = request.user.student.class_id).count()
@@ -43,26 +56,50 @@ def portal_home(request):
     except EmptyPage:
         events = paginator.page(paginator.num_pages)
     
-    context = {
+    context = {        
         'student_num': student_num,
+        'boarder_std':boarder_std,
+        'day_std': boarder_std,
         'students' : students,
         'users_num': users_num,
         'num_inclass': num_inclass,
         'staff_num': staff_num,
+        'teacher_num':teacher_num,
         'graduated': graduated,
         'dropped': dropped,
         'expelled': expelled,
         'suspended': suspended,
+        'payments': payments,
         'active': active,
         'queryset': queryset,
         'events':events,
         'my_idcard':my_idcard,
         'my_students':my_students,
-        'no_inteacherclass': no_inteacherclass
+        'no_inteacherclass': no_inteacherclass,
+        'classrooms':classrooms
     }
-    return render(request, 'pages/portal_home.html', context )
+        
+    return render(request, 'pages/portal_home.html', context )    
 
-
-
+        
 def help_center(request):
     return render(request, 'pages/help_center.html')
+
+def lock_screen(request):
+    return render(request, 'pages/lockscreen.html')
+
+
+
+class StudentCardDetailView(LoginRequiredMixin, DetailView):
+    model = Student
+    context_object_name = 'my_idcard'
+    template_name = 'students/student_id_card.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj

@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import Staff, StaffPosition, Teacher
+from import_export.admin import ImportExportModelAdmin
+
 
 
 
@@ -8,13 +10,13 @@ class StaffPositionAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     ordering = ['name',]
 
-class StaffAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'dept')
+class StaffAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('full_name', 'dept', 'phone_home', 'qualification', 'date_employed')
     search_fields = ('full_name', 'dept__name')
     # ordering = ['dept__name', 'full_name']
     
-class TeacherAdmin(admin.ModelAdmin):
-    list_display = ( 'user', 'full_name', 'dept', 'staff_role' )
+class TeacherAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ( 'user', 'full_name', 'dept', 'staff_role', 'phone_home' )
     search_fields = ('full_name', 'dept__name')
     ordering = ['dept__name', 'full_name']
 

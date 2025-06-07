@@ -11,6 +11,7 @@ from django.db.models import Count
 from results.models import UploadCertificate, MarkedSheet, ResultSheet1, ResultSheet2, ResultSheet3
 from results.filters import MyresultFilter, MyResultSheetFilter, ResultSheetFilter, ResultSheetFilter2, ResultSheetFilter3
 from students.models import Student, Badge
+from curriculum.models import SchoolIdentity
 import os
 from django_filters.views import FilterView
 # For panigation
@@ -28,12 +29,14 @@ from django.http import FileResponse
 import csv
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from students.models import Student
 
 
 # View First Term Results-ADMIN
 @login_required
 def printresult(request):
     result = ResultSheet1.objects.all()
+    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
     resultsheet_filter = ResultSheetFilter(request.GET, queryset=result) 
     result = resultsheet_filter.qs
     
@@ -54,11 +57,19 @@ def printresult(request):
         context = {
             # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
             'result':result,
+            'my_students':my_students,
             'resultsheet_filter' : resultsheet_filter,
             
         }
 
-        return render(request, 'results/view_result.html', context)
+        if request.user.is_superuser or request.user.is_staff:
+            return render(request, 'results/view_firsttermresult.html', context)
+        elif my_students:
+            return render(request, 'results/my_student_result1.html', context)
+        else:
+            return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! Your Students Dont Have Results yet</h1>'
+                            '<p>Please Please Ask The School Admin To Update Your Student"s RESULT </p>'
+                            '</div>') 
 
     except Student.DoesNotExist:
         return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
@@ -300,7 +311,7 @@ def view_self_reportsheet(request, **kwargs):
         
 @login_required
 def resultsheet(request):
-    resultsheet = ResultSheet.objects.all()
+    resultsheet = ResultSheet1.objects.all()
     context = {
         'resultsheet':resultsheet
     }
@@ -345,12 +356,7 @@ class ResultDetailView(LoginRequiredMixin, DetailView):
         my_resultsheet = my_resultsheet.prefetch_related("motorabilitys")
         return my_resultsheet
 
-    # def result_calculation(request):
-       
-    #     total_score = ResultSheet.objects.annotate(total_score= F('score_1ca') + F('score_1exam'))
-    #     num_in_class = ResultSheet.objects.filter(student_detail__current_class = request.self.student_detail.current_class).count()
-    #     return num_in_class
-
+ 
 # Second Term Result Sheet Detail
 class ResultDetail2View(LoginRequiredMixin, DetailView):
     model = ResultSheet2
@@ -372,13 +378,6 @@ class ResultDetail2View(LoginRequiredMixin, DetailView):
         my_resultsheet = my_resultsheet.prefetch_related("motorabilitys2")
         
         return my_resultsheet
- 
-
-    # def result_calculation(request):
-       
-    #     total_score = ResultSheet3.objects.annotate(total_score= F('score_1ca') + F('score_1exam'))
-    #     num_in_class = ResultSheet3.objects.filter(student_detail__current_class = request.self.student_detail.current_class).count()
-    #     return num_in_class
  
 
 
@@ -418,9 +417,10 @@ def result_render_pdf_view(request, *args, **kwargs):
     pk = kwargs.get('pk')
     
     my_resultsheet = get_object_or_404(ResultSheet1, pk=pk)
+    school_identity = SchoolIdentity.objects.get()
     template_path = 'results/result_pdf.html'
     # template_path = 'results/result_sheet.html'
-    context = {'my_resultsheet': my_resultsheet}
+    context = {'my_resultsheet': my_resultsheet, 'school_identity':school_identity}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     # if you want to download
@@ -447,9 +447,10 @@ def result2_render_pdf_view(request, *args, **kwargs):
     pk = kwargs.get('pk')
     
     my_resultsheet = get_object_or_404(ResultSheet2, pk=pk)
+    school_identity = SchoolIdentity.objects.get()
     template_path = 'results/second_term_result_pdf.html'
     # template_path = 'results/result_sheet.html'
-    context = {'my_resultsheet': my_resultsheet}
+    context = {'my_resultsheet': my_resultsheet, 'school_identity':school_identity}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     # if you want to download
@@ -476,8 +477,9 @@ def result3_render_pdf_view(request, *args, **kwargs):
     pk = kwargs.get('pk')
     
     my_resultsheet = get_object_or_404(ResultSheet3, pk=pk)
+    school_identity = SchoolIdentity.objects.get()
     template_path = 'results/third_term_result_pdf.html'
-    context = {'my_resultsheet': my_resultsheet}
+    context = {'my_resultsheet': my_resultsheet, 'school_identity':school_identity}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     # if you want to download
@@ -584,7 +586,7 @@ class ResultUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         id_ = self.kwargs.get("id")
-        return get_object_or_404(ResultSheet, id=id_)
+        return get_object_or_404(ResultSheet1, id=id_)
 
     def form_valid(self, form):
         print(form.cleaned_data)

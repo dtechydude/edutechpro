@@ -5,12 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.db.models import Count
+from django.db.models import F
 #converting html to pdf
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 # from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from staff.models import Teacher, Staff, Assign
+from students.models import Student
+from curriculum.models import Class
 from staff.forms import TeacherUpdateForm, StaffRegisterForm, StaffUpdateForm
 from attendance.models import AttendanceTotal, Attendance, AttendanceClass
 
@@ -43,8 +46,31 @@ def assign_list(request):
     return render(request, 'staff/assign_list.html', context)
 
 
+# Specific to the login detail
+class TeacherSelfDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'staff/teacher_self_detail.html'
+    model = Teacher
+
+    def get_object(self, queryset=None):
+           if queryset is None:
+               queryset = self.get_queryset()
+           return queryset.filter(user=self.request.user).first()
+
+# Specific to the login detail
+class StaffSelfDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'staff/staff_self_detail.html'
+    model = Staff
+
+    def get_object(self, queryset=None):
+           if queryset is None:
+               queryset = self.get_queryset()
+           return queryset.filter(user=self.request.user).first()
+
+
+
 class TeacherDetailView(DetailView):
     template_name = 'staff/teacher_detail.html'
+    context_object_name = 'teacher'
     queryset = Teacher.objects.all()
 
     def get_object(self):
@@ -131,3 +157,38 @@ def my_clas(request, teacher_id, choice):
     return render(request, 'attendance/t_clas.html', {'teacher1': teacher1, 'choice': choice})
 
 
+    
+@login_required()
+def my_student_in_class(request, assign_id):
+    ass = Assign.objects.get(id=assign_id)
+    std_list = []
+    for stud in ass.class_id.student_set.all():       
+        # std_list.append()
+        return render(request, 'staff/my_own_students.html', {'std_list': std_list, 'assign_id':assign_id})
+
+# students in a particular class
+def student_in_a_class(request):
+    # std_list = Student.objects.filter(class_id=F('USN'))
+    # mystudent = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
+    # mystudent = Student.objects.filter(class_id=Assign.objects.get(teacher_id=request.user))
+    # mystudents = Assign.objects.filter(class_id=Student.objects.get())
+    # class_in_charge = Assign.objects.get(teacher=request.user.teacher)
+    # class_in_charges = Assign.objects.filter(class_id=Student.objects.get() )
+    # class_in_charges = Student.objects.filter(class_id=Class.object.get(id=id))
+    assign = Assign.objects.all()
+    student = Student.objects.all()
+    if assign.class_id == student.class_id:
+        return render(request, 'staff/my_own_students.html', {'assign': assign, 'student':student})
+
+def classroom_students(request, class_id):
+    classroom = get_object_or_404(Class, id=class_id)
+    students = Student.objects.filter(class_id=class_id)
+    students_in_classroom = classroom.students.all().order_by('full_name')
+
+    context = {
+        'classroom': classroom,
+        'students_in_classroom': students_in_classroom,
+        'students':students
+        
+    }
+    return render(request, 'staff/classroom_students.html', context)

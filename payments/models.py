@@ -162,6 +162,17 @@ class PaymentDetail(models.Model):
     def no_of_payments(request):
       return PaymentDetail.objects.filter(student_detail = request.student_detail).count()
     
+    #debtor status
+    @property
+    def debt_stand(self):
+        return self.payment_name.amount_due - (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c )
+    
+    #debtor status with DISCOUNT
+    @property
+    def debt_stand_discounted(self):
+        return self.discounted_amount_due - (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c )
+    
+    
     @property
     def studentdetail(self):
        return self.student_detail

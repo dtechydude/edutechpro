@@ -64,7 +64,7 @@
 		<div class="nav-header">
 			<a href="/" class="brand-logo">
 				
-				<img src="{% static 'pages/images/logo-full1.png' %}" alt="Schoolly">
+				<img src="{% static 'pages/images/logo-full1.png' %}" alt="" width="80px" height="80px">
 				
 			</a>
 			<div class="nav-control">
@@ -516,7 +516,7 @@
 								Admin SuperUser Dashboard
 								{% elif user.is_authenticated and user.is_staff %}
 								Admin Role Dashboard
-								{% elif user.is_authenticated and user.staff.active %}
+								{% elif user.is_authenticated and user.staff %}
 								Staff Dashboard
 								{% elif user.is_authenticated and user.teacher %}
 								Teacher Dashboard
@@ -698,7 +698,15 @@
 										<svg id="icon-user2" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
 										<span class="ms-2">{{user.first_name}} {{ user.last_name }} </span>
 									</a>
-									<a href="#" class="dropdown-item ai-icon">
+									{% if user.teacher %}
+									<a href="{% url 'staff:teacher-self-detail' %}" class="dropdown-item ai-icon">
+										{% elif user.student %}
+										<a href="{% url 'students:student-self-detail' %}" class="dropdown-item ai-icon">
+										{% elif user.staff %}
+										<a href="{% url 'staff:staff-self-detail' %}" class="dropdown-item ai-icon">
+										{% else %}
+										<a href="#" class="dropdown-item ai-icon">								
+										{% endif %}
 										<svg id="icon-inbox1" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
 										<span class="ms-2">My Profile </span>
 									</a>
@@ -731,9 +739,11 @@
 						</a>
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
-							<li><a href="/admin/">Admin Settings</a></li>
+							<li><a href="{% url 'pages:portal-home' %}">Dashboard HOME</a></li>
+							<li><a href="/admin/">Main Settings</a></li>							
+							<li><a href="/admin/curriculum/schoolidentity/">Add/Edit School Info</a></li>
+							<li><a href="">All Registered Users</a></li>
 							<li><a href="{% url 'students:student_search_list' %}">Search Students</a></li>
-							<li><a href="index-2.html">Search Payments</a></li>
 							{% endif %}
 							{% if user.student or user.teacher or user.staff %}
 							<li><a href="{% url 'pages:portal-home' %}">Dashboard Home</a></li>
@@ -742,7 +752,10 @@
 							<li><a href="{% url 'students:student-self-detail' %}">My Profile</a></li>
 							{% endif %}
 							{% if user.teacher %}
-							<li><a href="#">My Profile</a></li>
+							<li><a href="{% url 'staff:teacher-self-detail' %}">My Profile</a></li>
+							{% endif %}
+							{% if user.staff %}
+							<li><a href="{% url 'staff:staff-self-detail' %}">My Profile</a></li>
 							{% endif %}
 
 							
@@ -755,17 +768,22 @@
 						</a>
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
+							<li><a href="{% url 'users:register' %}">Enrol Student</a></li>
 							<li><a href="{% url 'students:student-list' %}">All Students</a></li>
 							<li><a href="{% url 'students:boarder-list' %}">All Boarders</a></li>
 							<li><a href="{% url 'students:student-in-class' %}">No. In Class</a></li>
-														
-							<li><a href="#">My Students</a></li>
-							{% elif user.student %}	
-							<li><a href="./app-profile.html">My ID Card</a></li>
-							<li><a href="./post-details.html">Post Details</a></li>							
-							<li><a href="./app-calender.html">Calendar</a></li>		
+							
+							{% elif user.teacher %}							
+							<li><a href="{% url 'students:student-list' %}">My Students</a></li>																
+							<li><a href="./app-calender.html">Calendar</a></li>
+							{% elif user.student %}
+							{% for idcard in my_idcard %}							
+							<a href="{% url 'students:idcard-pdf-view' pk=idcard.pk  %}">My ID CARD</a>
+							{% endfor %}
+							<a href="">My Teacher</a>
+							<a href="">My Hostel</a>							
 							{% else %}
-							<li><a href="./app-calender.html">Calendar</a></li>	
+							<li>No Access</a></li>
 							{% endif %}					
 						</ul>
 					</li>
@@ -788,6 +806,8 @@
 							<span class="nav-text">Staff Mgt/Tools</span>
 						</a>
 						<ul aria-expanded="false">
+							<li><a href="/admin/staff/teacher/add/">Register New Teacher</a></li>
+							<li><a href="/admin/staff/staff/add/">Register New Staff</a></li>
 							<li><a href="{% url 'staff:staff-list' %}">Staff List</a></li>
 							<li><a href="{% url 'staff:teacher-list' %}">Teachers List</a></li>
 							<li><a href="{% url 'staff:assign-list' %}">Assign List</a></li>
@@ -802,17 +822,19 @@
 						</a>
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
-							<li><a href="{% url 'payments:bank-create' %}">Add Bank Details</a></li>
 							<li><a href="{% url 'payments:payment_report' %}">Payment List</a></li>
 							<li><a href="#">Confirmed Payment</a></li>
 							<li><a href="{% url 'payments:payment_summary' %}">Payment Summary</a></li>
-							<li><a href="./uc-toastr.html">Debtors List</a></li>
+							<li><a href="{% url 'payments:debtor_list' %}">Debtors List</a></li>
+							<li><a href="{% url 'payments:bank-create' %}">Add Bank Info</a></li>
+							<li><a href="">Edit Bank Info</a></li>							
+							
 							{% endif %}							
 							{% if user.student or user.is_superuser or user.is_staff %}
-							<li><a href="{% url 'payments:payment_instruction' %}">Payment Instruction</a></li>
 							<li><a href="{% url 'payments:bank-list' %}">Bank Details</a></li>
-							<li><a href="./uc-select2.html">Make Payment</a></li>
-							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>	
+							<li><a href="{% url 'payments:payment_instruction' %}">Payment Instruction</a></li>
+							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>								
+							<li><a href="./uc-select2.html">Make Payment</a></li>							
 							<li><a href="{% url 'payments:online_payment' %}">Online Payment</a></li>
 							{% endif %}
 							{% if user.student %}					
@@ -827,8 +849,13 @@
 					</a>
 					<ul aria-expanded="false">
 						<li><a href="./form-element.html">Bus Route</a></li>
+						{% if user.student %}
 						<li><a href="./form-wizard.html">SignUp For Bus</a></li>
-						<li><a href="./form-wizard.html">Students/Route</a></li>
+						{% endif %}
+						{% if user.is_superuser or user.is_staff %}
+						<li><a href="./form-wizard.html">Students In Route</a></li>
+						<li><a href="./form-wizard.html">Add/Edit Route</a></li>
+						{% endif %}
 						
 					</ul>
 					</li>
@@ -837,15 +864,23 @@
 							<span class="nav-text">Results</span>
 						</a>
 						<ul aria-expanded="false">
-							{% if user.is_superuser or user.is_staff%}
+							{% if user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'results:print-result' %}">1st. Term Results</a></li>
 							<li><a href="{% url 'results:print-second-result' %}">2nd. Term Results</a></li>
 							<li><a href="{% url 'results:print-third-result' %}">3rd. Term Results</a></li>
+							<li><a href="/admin/results/resultsheet1/">Admin Edit Results</a></li>
+							
 							{% elif user.student %}
 							<li><a href="{% url 'results:my-result' %}">My 1st-Term Results</a></li>
 							<li><a href="{% url 'results:mysecond-term-result' %}">My 2nd-Term Results</a></li>
 							<li><a href="{% url 'results:mythird-term-result' %}">My 3rd-Term Results</a></li>
+
 							{% elif user.teacher %}
+							{% for r in my_students %}
+							<li><a href="{% url 'results:print-result' %}">1st. Term Results</a></li>
+							<li><a href="{% url 'results:print-second-result' %}">2nd. Term Results</a></li>
+							<li><a href="{% url 'results:print-third-result' %}">3rd. Term Results</a></li>
+							{% endfor %}
 							<li><a href="./ui-alert.html">Record Results</a></li>
 							
 							{% else %}
@@ -881,8 +916,16 @@
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">Settings</span>
 						</a>
-						<ul aria-expanded="false">							
-							<li><a href="./page-register.html">My Profile</a></li>
+						<ul aria-expanded="false">	
+							{% if user.teacher %}						
+							<li><a href="{% url 'staff:teacher-self-detail' %}">My Profile</a></li>
+							{% elif user.staff %}
+							<li><a href="{% url 'staff:staff-self-detail' %}">My Profile</a></li>
+							{% elif user.student %}
+							<li><a href="{% url 'students:student-self-detail' %}">My Profile</a></li>
+							{% else %}
+							<li><a href="">My Profile</a></li>
+							{% endif %}
 							<li><a href="{% url 'users:password_reset' %}">Reset Password</a></li>							
 							<li><a href="{% url 'users:user_logout' %}">LogOut</a></li>				
 						</ul>
@@ -981,8 +1024,8 @@
 													</span>
 													<div class="ms-4">
 														{% if user.is_superuser or user.is_staff %}
-														<h5 class="mb-0 font-w600">{{ staff_num }}</h5>
-														<p class="mb-0 text-nowrap ">Total Staff</p>
+														<h5 class="mb-0 font-w600">{{ users_num }}</h5>
+														<p class="mb-0 text-nowrap ">Total Users</p>
 
 														{% elif user.is_authenticated and user.teacher %}
 														<h5 class="mb-0 font-w600">{{ user.teacher.dept }}</h5>
@@ -1044,18 +1087,32 @@
 												</div>	
 												<div class="rooms mt-3 d-flex align-items-center justify-content-between flex-wrap">
 													<div class="d-flex align-items-center mb-3">
-														<img src="{{ user.profile.image.url }}" alt="">
+														<!-- <img src="{{ user.profile.image.url }}" alt="" width="100px" height="100px"> -->
 														<div class="ms-4 bed-text">
 															<h4>My Profile Details</h4>
 															<div class="users d-flex align-items-center">																
 																<div>
 																	<span class="fs-16 font-w500 me-3">{{ user.first_name }} - <strong>{{ user.last_name}}</strong></span><br>
-																	<span style="color: brown;">Updated: {{ user.profile.updated }}</span>
+																	<span style="color: brown;">Updated: {{ user.profile.updated }}</span> <br>
+																	<span><strong>Email:</strong> {{ user.email }}</span> <br>
+																	<span><strong>Phone:</strong> {{ user.profile.phone }}</span><br>
+																	<span> <strong>ROLE:</strong> </span><span style="color: brown;"> 
+																		{% if user.is_superuser %}SUPERUSER 
+																		{% elif user.student %}
+																		STUDENT
+																		{% elif user.teacher %}
+																		TEACHERS
+																		{% elif user.staff %}
+																		NON-ACADEMIC STAFF
+																		{% else %}
+																		ADMIN 
+																		{% endif %}</span> <br>
+
 																</div>
 															</div>
 														</div>
 													</div>
-													<span class="date bg-secondary mb-3"><i class="fas fa-eye"></i></span>
+													<span class="date bg-secondary mb-3"><i class="fas fa-user"></i></span>
 												</div>
 											
 												<div class="rooms mt-3 d-flex align-items-center justify-content-between flex-wrap">
@@ -1089,34 +1146,35 @@
 
 																Active Std
 															</span>
-															<span class="fs-16 font-w600 me-4">23,451 <small class="text-success fs-12 font-w400">+0.4%</small></span>
+															<span class="fs-16 font-w600 me-4">{{ active }} <small class="text-success fs-12 font-w400">+0.4%</small></span>
 															<span class="me-sm-5 ms-0 font-w500">
 																<svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13">
 																  <rect  width="13" height="13" fill="#E23428"/>
 																</svg>
-																InActive Std
+																Dropped Students
 															</span>
-															<span class="fs-16 font-w600">20,441</span>
+															<span class="fs-16 font-w600">{{ dropped }}</span>
 														</div>	
 														<div class="tab-content">
 															<div class="tab-pane fade show active" id="Daily1">															
 															</div>														
 															<div class="tab-pane fade show active" id="Daily1">
-																<h4> Third Content Here...</h4>
-																<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-																	Aliquam quos adipisci tenetur voluptates repudiandae placeat 
-																	nemo expedita numquam illum! Rerum perferendis provident totam error neque deleniti recusandae numquam, accusamus consectetur.</p>																												
+																<h4> About The Portal</h4>
+																<p>This Portal allows you as the admin to Add, Edit and Delete information. <br>
+																	Enter Your SCHOOL's NAME correctly and upload the school logo not larger than 180px by 180px in .jpg file format <br>
+																	Enter Your SCHOOL'S ADDRESS, PHONE and EMAIL correctly.
+																</p>																												
 																</div>
 														</div>
 													</div>
 												</div>
 											</div>
 											<div class="col-xl-6 col-sm-6">
-												<div class="card bg-secondary">
+												<div class="card bg-primary">
 													<div class="card-body">
 														<div class="d-flex align-items-end pb-4 justify-content-between">
-															<span class="fs-14 font-w500 text-white">Total Debtor Count</span>
-															<span class="fs-20 font-w600 text-white"><span class="pe-2"></span>683</span>
+															<span class="fs-14 font-w500 text-white">Graduated Students</span>
+															<span class="fs-20 font-w600 text-white"><span class="pe-2"></span>{{ graduated}}</span>
 														</div>
 														<div class="progress default-progress h-auto">
 															<div class="progress-bar bg-white progress-animated" style="width: 60%; height:13px;" role="progressbar">
@@ -1131,12 +1189,12 @@
 												<div class="card bg-secondary">
 													<div class="card-body">
 														<div class="d-flex align-items-end pb-4 justify-content-between">
-															<span class="fs-14 font-w500 text-white">Total Payment Count</span>
-															<span class="fs-20 font-w600 text-white"><span class="pe-2"></span>156</span>
+															<span class="fs-14 font-w500 text-white">Payments Count</span>
+															<span class="fs-20 font-w600 text-white"><span class="pe-2"></span>{{ payments }}</span>
 														</div>
 														<div class="progress default-progress h-auto">
 															<div class="progress-bar bg-white progress-animated" style="width: 30%; height:13px;" role="progressbar">
-																<span class="sr-only">30% Complete</span>
+																<span class="sr-only">90% Complete</span>
 															</div>
 														</div>
 														
@@ -1149,36 +1207,34 @@
 														<div class="row">
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
 																<div class="text-center">
-																	<h5 class="fs-28 font-w600">569</h5>
+																	<h5 class="fs-28 font-w600">{{ teacher_num }}</h5>
 																	<span class="fs-16">Total Teachers</span>
 																</div>
 															</div>
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
 																<div class="text-center">
-																	<h5 class="fs-28 font-w600">2,342</h5>
+																	<h5 class="fs-28 font-w600">{{ staff_num }}</h5>
 																	<span class="fs-16">Other Staff</span>
 																</div>
 															</div>
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
 																<div class="text-center">
-																	<h5 class="fs-28 font-w600">992</h5>
-																	<span class="fs-16">Total Boarders</span>
+																	<h5 class="fs-28 font-w600">{{ boarder_std}}</h5>
+																	<span class="fs-16">Boarding Students</span>
 																</div>
 															</div>
 															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
 																<div class="text-center">
-																	<h5 class="fs-28 font-w600">76k</h5>
-																	<span class="fs-16 wspace-no">Total Transaction</span>
+																	<h5 class="fs-28 font-w600">{{ day_std }}</h5>
+																	<span class="fs-16 wspace-no">Day Students</span>
 																</div>
 															</div>
 															
 															<div class="mb-5 mt-4 d-flex align-items-center">
 																<div>
-																	<h4><a href="javascript:void(0);" class="text-secondary">Let Travl Generate Your Annualy Report Easily</a></h4>
-																	<span class="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 		incididunt ut labo
-																	</span>
+																	<h4 class="text-secondary">How To Use The Portal - <a href="https://schoolly.com.ng/documents/portal-manual.pdf;">PORTAL MANUAL</a></h4>
 																</div>
-																<div><a href="javascript:void(0);" class="ms-5"><i class="fas fa-arrow-right fs-20"></i></a></div>
+																<div><a href="https://schoolly.com.ng/documents/portal-manual.pdf;;" class="ms-5"><i class="fas fa-arrow-right fs-20"></i></a></div>
 															</div>
 														</div>
 														{% else %}

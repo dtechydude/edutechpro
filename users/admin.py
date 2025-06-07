@@ -3,11 +3,13 @@ from users.models import Profile
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 import csv, datetime
+from import_export.admin import ImportExportModelAdmin
 
 
-class UserProfileAdmin(admin.ModelAdmin):
+
+class UserProfileAdmin(ImportExportModelAdmin, admin.ModelAdmin):
            
-    list_display=('user', 'code', 'user_type')
+    list_display=('user', 'code', 'user_type', 'phone', 'state_of_origin')
     list_filter  = ['user_type',]
     search_fields = ('user__username', 'code', 'user_type')
 

@@ -6,20 +6,14 @@
 {% block content_body %}
 
 <div class="content-body">
-    <div class="container-fluid">
-        <div class="row page-titles">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href=""><span style="font-size: 35px;"><h3>Result Update Form</h3></span></a></li>
-                
-                
-            </ol>
-        </div>
+    <div class="container-fluid">        
         <!-- row -->
         <div class="row">
             <div class="col-xl-8 col-xxl-8 col-lg-8">
                 <div class="card">
                     <div class="card-header border-0 pb-0">
-                        <h5 class="card-title">You are Updating -<span style="color:black"><b> RESULT </b></span></h5>
+                        <h6 class="card-title">Results <b>UPDATE</b> - <span style="color:grey; font-size: 11px;"> 
+                            DO NOT CHANGE THE STUDENT DETAIL,  Maintain Same SUBJECT Nos On All Results</span></h6>
                     </div>
                     <div>
                         {% if messages %}
@@ -31,7 +25,7 @@
                     <div class="card-body">
                         <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height770">
                             
-                            {% if user.is_superuser or user.profile.user_type == "admin" or user.staffprofile.staff_role == 'form_teacher' %}
+                            {% if user.is_superuser or user.profile.user_type == "admin" or user.teacher %}
                            <form method="post">
                             {% csrf_token%}
                             {{ form|crispy}}

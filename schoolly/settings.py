@@ -159,7 +159,7 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'pages:portal-home'
-LOGIN_URL = 'login'
+LOGIN_URL = 'users:login'
 
 
 # # Email Settings

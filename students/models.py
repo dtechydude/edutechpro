@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, post_delete
 from datetime import timedelta
 from django.urls import reverse
 from curriculum.models import Class, Subject
+from staff.models import Teacher
 # from attendance.models import AttendanceTotal
 from staff.models import Assign, AssignTime
 
@@ -90,10 +91,11 @@ class Hostel(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)    
-    USN = models.CharField(primary_key='True', max_length=100, help_text='Unique Student Number')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, help_text='select user or add a new user')    
+    USN = models.CharField(primary_key='True', max_length=100, help_text='Unique Student Number, Must be same as username')
     full_name = models.CharField(max_length=200, help_text='First_Name, Middle_name, Last_Name')
-    class_id = models.ForeignKey(Class, on_delete=models.CASCADE, default=1)
+    class_id = models.ForeignKey(Class, on_delete=models.CASCADE, default=1, related_name='students', help_text='The Student Current Class')
+    class_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True, null=True, related_name='teacher')
     badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, null=True, default='not a prefect', verbose_name='Prefect Tittle (if is prefect)')
 
     
@@ -126,8 +128,7 @@ class Student(models.Model):
     student_type = models.CharField(max_length=15, choices=student_types, default=day_student)
     hostel_name = models.ForeignKey(Hostel, on_delete=models.CASCADE, blank=True, null=True, related_name='hostel_name', verbose_name='hostel')
     date_admitted = models.DateField(default='2020-01-01')
-    class_on_admission = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, related_name='class_on_admission', verbose_name='class_on_admission')
-
+    class_on_admission = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True, related_name='class_on_admission', verbose_name='class_on_admission')
 
      # Guardian details here..
     guardian_name = models.CharField(max_length=60, blank=False)  

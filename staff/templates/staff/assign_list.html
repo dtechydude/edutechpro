@@ -7,7 +7,7 @@
     
 	<!-- PAGE TITLE HERE -->
     {% block title %}
-	<title>Staff List</title>
+	<title>Teachers Assign List</title>
 	{% endblock title %}
 	
 	<!-- FAVICONS ICON -->
@@ -91,13 +91,14 @@
 					<div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title" style="color:green;">Assign List </h4>
+                                <h4 class="card-title" style="color:green;">Teachers Class Assign List </h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example2" class="display" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>S/N</th>
                                                 <th>Teacher</th>
                                                 <th>Gender</th> 
                                                 <th>Role</th>
@@ -110,23 +111,27 @@
                                         <tbody>
                                         
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
+                                                {% for t in assign %}
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ t.teacher.user.username}}<br>{{t.teacher.full_name }}</td>
+                                                <td>{{ t.teacher.gender }}</td>
+                                                <td>{{ t.teacher.staff_role }}</td>
+                                                <td>{{ t.class_id }}</td>
+                                                <td>{{ t.class_id.dept }}</td>
+                                                <td>{{ t.teacher.user.profile.phone }}</td>
+                                                {% endfor %}
                                             </tr>       
                                             
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <th>S/N</th>
                                                 <th>Teacher</th>
                                                 <th>Gender</th> 
                                                 <th>Role</th>
                                                 <th>Class ID</th>
                                                 <th>Dept</th>
-                                                <th>Subject</th>                                           
+                                                <th>Subject</th>                                            
                                                                                      
                                             </tr>
                                         </tfoot>

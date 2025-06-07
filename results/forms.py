@@ -66,6 +66,6 @@ class ResultUpdateForm(forms.ModelForm):
     class Meta:
         model = ResultSheet1
         fields = '__all__'
-        exclude = ('student_id',)
+        exclude = ('student_id', 'publish', 'remark', 'class_teacher_comment', 'principal_comment', 'next_term_resume')
         # exclude = ('user',)
        

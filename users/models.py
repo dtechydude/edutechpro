@@ -110,19 +110,28 @@ class Profile(models.Model):
 
     user_type = models.CharField(max_length=20, choices=user_types, default=student, blank=True, null=True)
     code = models.CharField(max_length=6, blank=True) 
+    recommended_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,  related_name='ref_by' )
     activate = models.BooleanField(default=False, blank=True)   
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
    
-
     class Meta:
         ordering = ['user']
-
 
 #this function returns the profile name in the admin panel profile table
     def __str__ (self):
         return f'username:- {self.user.username} - {self.code}'
+    
+    def get_recommended_profiles(self):
+        qs = Profile.objects.all()
+        # my_recs = [p for p in qs if p.recommended_by == self.user]
+        my_recs = []
+        for profile in qs:
+            if profile.recommended_by == self.user:
+                my_recs.append(profile)
+        return my_recs
+
 
     
     def save(self, *args, **kwargs):
@@ -130,5 +139,4 @@ class Profile(models.Model):
             code = generate_ref_code()
             self.code = code
         super().save(*args, **kwargs)
-
     
