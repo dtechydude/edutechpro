@@ -1,8 +1,9 @@
-{% load static %}
+ {% load static %}
 {% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en" class="h-100">
+
 
 <head>
     <meta charset="utf-8">
@@ -18,13 +19,13 @@
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- PAGE TITLE HERE -->
-	<title>Schoolly User Registeration Form</title>
+	<title>Bank Register</title>
 	
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="{% static 'pages/images/favicon.png'%} " />
     <link href="{% static 'pages/css/style.css' %}" rel="stylesheet">
-
 </head>
+
 {% block content %}
 <body class="vh-100">
     <div class="authincation h-100">
@@ -35,24 +36,24 @@
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
-									<div class="text-center mb-3">
-										<!-- <a href="https://schoolly.com.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a> -->
-                                        <h4>Enrol New Student</h4>
-                                    </div>
-                                    <form  action ="" method="POST">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                            {{ form|crispy }}                                                                         
-                                            <!-- <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" class="form-control" value="hello@example.com"> -->
-                                        </div>
-                                                                              
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Register New User</button>
-                                        </div>
-                                    </form>
+									<div class="text-center mb-3">                                  
+                                        <!-- <a href="https://schoolly.com.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a> -->
+                                        <h3>Successful Submission! </h3>
+									</div>
+                                    <!-- <h4 class="text-center mb-4">Welcome To Ermine App!</h4> -->
+                                    <div>                 
+                                        {% if messages %}
+                                        {% for message in messages %}
+                                        <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+                                        {% endfor%}
+                                        {% endif%}
+                                     </div>
+                                     <hr>
+
                                     <div class="new-account mt-3">
-                                        <p>Back To: <a class="text-primary" href="/">Home Page</a></p>
+                                        <p>Back To: <a class="text-primary" href="{% url 'pages:portal-home' %}">DASHBOARD - </a>
+                                            <span>Or: <a class="text-primary" href="{% url 'users:register' %}">CREATE ANOTHER </a></span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

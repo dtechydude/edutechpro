@@ -11,6 +11,7 @@ urlpatterns = [
      path('', page_views.portal_home, name='portal-home'),
      path('help-center/', page_views.help_center, name='help-center'),
      path('lock-screen/', page_views.lock_screen, name='lock-screen'),
+     path('success-submission/', page_views.success_submission, name='success_submission'),
 
      path('<str:pk>/', views.StudentCardDetailView.as_view(), name='my_idcard'),
 

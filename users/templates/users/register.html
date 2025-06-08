@@ -18,7 +18,7 @@
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- PAGE TITLE HERE -->
-	<title>Ermine App Registration</title>
+	<title>Schoolly Registration Page</title>
 	
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="{% static 'pages/images/favicon.png'%} " />
@@ -36,8 +36,10 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
 									<div class="text-center mb-3">
-										<a href="https://ermine.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a>
-									</div>
+										<!-- <a href="https://ermine.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a> -->
+									<h4>Enrol New Student/Teacher/Staff</h4>
+                                    <span style="color: red;">You must first create the USERNAME, NAMES & PASSWORD </span>
+                                    </div>
                                     <!-- <h4 class="text-center mb-4">Welcome To Ermine App!</h4> -->
                                     <form  action ="" method="POST">
                                         {% csrf_token %}

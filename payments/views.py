@@ -72,7 +72,7 @@ class SelfPaymentCreateView(LoginRequiredMixin, CreateView):
         form.instance.payee = self.payee
         return super().form_valid(form)
 
-
+# Payment Category Form
 @login_required
 def payment_cat_form(request):
     if request.method == 'POST':

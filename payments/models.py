@@ -69,19 +69,19 @@ class PaymentChart(models.Model):
 class PaymentDetail1(models.Model):    
     payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True,  help_text='confirm student username', related_name='student_detail')
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE, default= None, related_name='payment_type')
-    amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='First Payment Amount')
-    bank_name_a = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_a')   
-    payment_date_a = models.DateField()
+    amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='First Payment Amount', verbose_name='1st Payment')
+    bank_name_a = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_a', verbose_name='Bank Account')   
+    payment_date_a = models.DateField(verbose_name='Payment Date')
     remark_a = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Second Payment Amount')
-    bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='bank_b')   
-    payment_date_b = models.DateField(blank=True, null=True)
+    amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Second Payment Amount', verbose_name='2nd Payment')
+    bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='bank_b', verbose_name='Bank Account')   
+    payment_date_b = models.DateField(blank=True, null=True, verbose_name='Payment Date')
     remark_b = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    amount_paid_c = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Third Payment Amount')
-    bank_name_c = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True)   
-    payment_date_c = models.DateField(blank=True, null=True)
+    amount_paid_c = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Third Payment Amount', verbose_name='3rd Payment')
+    bank_name_c = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True, verbose_name='Bank Account')   
+    payment_date_c = models.DateField(blank=True, null=True, verbose_name='Payment Date')
     remark_c = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
     discount = models.DecimalField(help_text='enter in (%) leave empty if no discoun is given', max_digits=3, decimal_places=0, blank=True, null=True, verbose_name='TOTAL DISCOUNT(if any)', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
@@ -164,7 +164,7 @@ class PaymentDetail1(models.Model):
     # for getting total number of payments a student made
     @property
     def no_of_payments(request):
-      return PaymentDetail.objects.filter(student_detail = request.student_detail).count()
+      return PaymentDetail1.objects.filter(payee = request.payee).count()
     
     #debtor status
     @property

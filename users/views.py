@@ -20,7 +20,12 @@ def user_registration(request):
             return redirect('/')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/user_registration.html', {'form': form})
+        user = request.user
+        if user.is_superuser or user.is_staff:
+            return render(request, 'users/user_registration.html', {'form': form})
+       
+
+    
 
 
 #Student Enrollment
@@ -54,11 +59,15 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'New user account has been created!' )
-            return redirect('pages:help-center')
+            return redirect('pages:success_submission')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
-
+        user = request.user
+        if user.is_superuser or user.is_staff:
+            return render(request, 'users/register.html', {'form': form})
+        else:
+            return render(request, 'pages/portal_home.html')       
+    
 
 
 @login_required
@@ -111,4 +120,13 @@ def user_logout(request):
 @login_required
 def users_home(request):
     return render(request, 'pages/portal_home.html')
+
+@login_required
+def all_users(request):
+    all_users = User.objects.all()
+    user = request.user
+    if user.is_superuser or user.is_staff:
+        return render(request, 'users/all_users.html', {'all_users':all_users})
+    else:
+        return render(request, 'pages/portal_home.html')
 

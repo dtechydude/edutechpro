@@ -111,7 +111,7 @@
                                                 <th scope="col" style="font-size: 13px;">Paid(2)</th>
                                                 <th scope="col" style="font-size: 13px;">Paid(3)</th>
                                                 <th scope="col" style="font-size: 13px;">Total Paid</th> 
-                                                <th scope="col" style="font-size: 13px;">Updated</th>                                                
+                                                <th scope="col" style="font-size: 13px;">Updated</th> 
                                                 <th scope="col" style="font-size: 13px;">Action</th>
                                             </tr>
                                         </thead>
@@ -127,20 +127,28 @@
                                                 {% else %}
                                                 <td><strong>N/A</strong></td>
                                                 {% endif %}
-                                                <td>{% if p.confirmed_a %}
-                                                    <span style="color:green;">N{{ p.amount_paid_a |floatformat:2 }}</span>
-                                                    {% else %}
-                                                    <span style="color:red;">N{{ p.amount_paid_a |floatformat:2 }}</span>
-                                                {% endif %}</td>
-                                                <td>{% if p.confirmed_b %}
+                                                
+                                                <td>{% if p.amount_paid_a and p.confirmed_a %}
+                                                    <span style="color:green;">N{{ p.amount_paid_a |floatformat:2 }} </span>
+                                                    {% elif p.amount_paid_a and p.confirmed_a == False %}
+                                                    <span style="color:red;">N{{ p.amount_paid_a |floatformat:2 }}</span>                                                    
+                                                {% endif %} 
+                                               </td>
+                                               
+                                                <td>{% if p.amount_paid_b and p.confirmed_b %}
                                                     <span style="color:green;">N{{ p.amount_paid_b |floatformat:2 }}</span>
-                                                    {% else %}
+                                                    {% elif p.amount_paid_b and p.confirmed_b == False %}
                                                     <span style="color:red;">N{{ p.amount_paid_b |floatformat:2 }}</span>
-                                                {% endif %}</td>
-                                                <td>{% if p.confirmed_c %}
+                                                    {% elif not p.amount_paid_b %}
+                                                    <span style="color:red;"><a href="">Add</a></span>                                                  
+                                                {% endif %}
+                                              </td>
+                                                <td>{% if p.amount_paid_c and p.confirmed_c %}
                                                     <span style="color:green;">N{{ p.amount_paid_c |floatformat:2 }}</span>
-                                                    {% else %}
+                                                    {% elif p.amount_paid_c and p.confirmed_c == False %}
                                                     <span style="color:red;">N{{ p.amount_paid_c |floatformat:2 }}</span>
+                                                    {% elif not p.amount_paid_c %}
+                                                    <span style="color:red;"> <a href="">Add</a></span>
                                                 {% endif %}</td> 
                                                 <td> {{ p.total_amount_paid }}</td>                                              
                                                 <td> {% if p.payment_date_a and not p.payment_date_b and not p.payment_date_c %}
@@ -154,6 +162,7 @@
                                                 </td>
                                                 <td><span><a class =" btn btn-secondary" href="{% url 'payments:receipt-pdf-view' pk=p.pk %}">Receipt</a></span>
                                                 </td>
+                                            
                                             </tr>
                                             {% endfor %}
                                         

@@ -59,7 +59,7 @@ def portal_home(request):
     context = {        
         'student_num': student_num,
         'boarder_std':boarder_std,
-        'day_std': boarder_std,
+        'day_std': day_std,
         'students' : students,
         'users_num': users_num,
         'num_inclass': num_inclass,
@@ -87,6 +87,9 @@ def help_center(request):
 
 def lock_screen(request):
     return render(request, 'pages/lockscreen.html')
+
+def success_submission(request):
+    return render(request, 'pages/success_submission.html')
 
 
 
