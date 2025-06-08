@@ -5,13 +5,14 @@ from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import F, Sum, Q
-from payments.forms import PaymentForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm, MyPaymentForm
+from payments.forms import PaymentForm, PaymentCatForm, PaymentCreateForm, PaymentCreateForm1, BankRegisterForm, MyPaymentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 import os
-from payments.models import PaymentDetail, PaymentChart, PaymentCategory, BankDetail
+from payments.models import PaymentDetail1, PaymentChart, PaymentCategory, BankDetail
 from students.models import Student
+from curriculum.models import SchoolIdentity
 from django.http import HttpResponse
 from django.http import FileResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -55,22 +56,21 @@ def payment_form(request):
     }
     return render(request, 'payments/make_payment.html', context)
 
-class PaymentCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'payments/student_payment_form.html'
+    
+# Student Create Payment
+class SelfPaymentCreateView(LoginRequiredMixin, CreateView):
     form_class = PaymentCreateForm
-    context_object_name = 'payment_create'
-    # model = PaymentDetail
+    model = PaymentDetail1
+    template_name = 'payments/student_payment_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('payments:payment-detail', kwargs={'pk': self.object.pk})
+
     
-    success_url = reverse_lazy('payments:my_payments')
-
-
     def form_valid(self, form):
-        print('form_valid called')
-        object = form.save(commit=False)
-        object.student_id = self.request.user
-        object.save()
-        return super(PaymentCreateView, self).form_valid(form)
-    
+        student_detail = PaymentDetail1.objects.filter(payee=self.payee)
+        form.instance.payee = self.payee
+        return super().form_valid(form)
 
 
 @login_required
@@ -115,7 +115,7 @@ def payment_chart_form(request):
 # Not used anymore on the portal
 @login_required
 def paymentlist(request):
-    paymentlist = PaymentDetail.objects.all()
+    paymentlist = PaymentDetail1.objects.all()
     paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
     #balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
     # balance_pay = PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
@@ -134,7 +134,7 @@ def paymentlist(request):
 
 
     context = {
-        'paymentlist': PaymentDetail.objects.all(),
+        'paymentlist': PaymentDetail1.objects.all(),
         'paymentlist_filter': paymentlist_filter,
         'paymentlist' : paymentlist,
         # 'balance_pay': balance_pay,
@@ -150,7 +150,8 @@ def paymentlist(request):
 @login_required
 def view_self_payments(request):
     # mypayment = PaymentDetail.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
-    mypayment = PaymentDetail.objects.filter(student_detail=Student.objects.get(user=request.user))
+    # mypayment = PaymentDetail.objects.filter(student_detail=Student.objects.get(user=request.user))
+    mypayment = PaymentDetail1.objects.filter(payee=User.objects.get(username=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -164,7 +165,9 @@ def view_self_payments(request):
         mypayment = paginator.page(paginator.num_pages)
     context = {
         # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
-        'mypayment' : PaymentDetail.objects.filter(student_detail=Student.objects.get(user=request.user)).order_by("payment_date_a"),
+        # 'mypayment' : PaymentDetail.objects.filter(student_detail=Student.objects.get(user=request.user)).order_by("payment_date_a"),
+        'mypayment' : PaymentDetail1.objects.filter(payee=User.objects.get(username=request.user)).order_by("payment_date_a"),
+
         'mypayment':mypayment,
         'mypayment_filter' : mypayment_filter,
     }
@@ -193,7 +196,7 @@ def payment_chart_list(request):
 
 
     context = {
-        'payment_chart_list': PaymentDetail.objects.all(),
+        'payment_chart_list': PaymentDetail1.objects.all(),
         'payment_chart_filter' : payment_chart_filter,
         'payment_chart_list' : payment_chart_list
 
@@ -352,7 +355,7 @@ def payment_chart_csv(request):
 
 #This code generates the receipt
 class PaymentDetailView(LoginRequiredMixin, DetailView):
-    model = PaymentDetail
+    model = PaymentDetail1
     context_object_name = 'my_receipt'
     template_name = 'payment/receipt.html'
     
@@ -369,10 +372,10 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
 
 @login_required
 def payment_report(request):
-    paymentlist = PaymentDetail.objects.all()
-    total_pay = PaymentDetail.objects.values('student_detail__full_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
+    paymentlist = PaymentDetail1.objects.all()
+    total_pay = PaymentDetail1.objects.values('payee__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('payee')
     # paymentreport_filter = PaymentReportFilter(request.GET, queryset=paymentlist)
-    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
+    balance_pay = PaymentDetail1.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
 
 
     # paymentlist = paymentreport_filter.qs
@@ -393,7 +396,7 @@ def payment_report(request):
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
         'total_pay': total_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
+        'balance_pay' : PaymentDetail1.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
    
     }
    
@@ -401,16 +404,16 @@ def payment_report(request):
     
 @login_required
 def confirmed_payment(request):
-    confirmed = PaymentDetail.objects.all()
+    confirmed = PaymentDetail1.objects.all()
     return render(request, 'payments/confirmed_payment.html', {'confirmed':confirmed})
 
 
 @login_required
 def debtor_list(request):
-    debtorlist = PaymentDetail.objects.all()
+    debtorlist = PaymentDetail1.objects.all()
     # total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
     # paymentreport_filter = PaymentReportFilter(request.GET, queryset=debtorlist)
-    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
+    balance_pay = PaymentDetail1.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
 
     # debtorlist = paymentreport_filter.qs
     page = request.GET.get('page', 1)
@@ -429,12 +432,13 @@ def debtor_list(request):
         'debtorlist' : debtorlist,
         'balance_pay': balance_pay,
         # 'total_pay': total_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
+        'balance_pay' : PaymentDetail1.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
    
     }
    
     return render(request, 'payments/debtor_report.html', context )
 
+#CSV file Download
 def debtor_csv(request):
     response = HttpResponse(content_type ='text/csv')
     response['Content-Disposition'] = 'attachment; filename=debtors_list.csv'
@@ -442,16 +446,16 @@ def debtor_csv(request):
 # Create a csv writer
     writer = csv.writer(response)
 
-    payment = PaymentDetail.objects.all()
+    payment = PaymentDetail1.objects.all()
 
     # Add column headings to the csv files
-    writer.writerow(['STD.ID', 'STUDENT DETAILS ',  'SESSION', 'FEE DUE',  'PURPOSE', 'TOTAL PAID', 'TOTAL DEBT'])
+    writer.writerow(['STD.ID', 'FIRST NAME ', 'LAST NAME', 'SESSION', 'FEE DUE',  'PURPOSE', 'TOTAL PAID', 'TOTAL DEBT'])
 
 
     # Loop thru and output
     for payments in payment:
         
-        writer.writerow([ payments.student_detail.user, payments.student_detail, payments.payment_name.session, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c)])
+        writer.writerow([ payments.payee, payments.payee.first_name, payments.payee.last_name, payments.payment_name.session, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c)])
 
     return response
 
@@ -491,28 +495,24 @@ class MyPaymentCreateView(LoginRequiredMixin, CreateView):
     success_message = " was created successfully"
     
 
-    # success_url = '/'
-    # def form_valid(self, form):
-    #     return super().form_valid(form)
-    
 
 #Update self-payment  
 class PaymentUpdateView(LoginRequiredMixin, UpdateView):
     fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a', 
               'amount_paid_b', 'payment_date_b', 'bank_name_b',
               'amount_paid_c', 'payment_date_c', 'bank_name_c',)
-    model = PaymentDetail
+    model = PaymentDetail1
     template_name = 'payment/payment_update_form.html'
     # context_object_name = 'payment_update'
     
     
     def form_valid(self, form):
-        form.instance.student_detail = self.request.user
+        form.instance.payee = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         paymentdetail = self.get_object()
-        if self.request.user == paymentdetail.student_detail:
+        if self.request.user == paymentdetail.payee:
             return True
         return False
     
@@ -588,3 +588,55 @@ def payment_instruction(request):
 
 def online_payment(request):
     return render(request, 'payments/online_payment.html')
+
+
+
+@login_required # Ensure only logged-in users can access this view
+def create_payment(request):
+    if request.method == 'POST':
+        form = PaymentCreateForm1(request.POST)
+        if form.is_valid():
+            # Don't save yet! We need to set the user first.
+            submission = form.save(commit=False)
+            submission.payee = request.user # Set the logged-in user
+            submission.save()
+            return redirect('payments:submission_success') # Redirect to a success page
+    else:
+        form = PaymentCreateForm1()
+    return render(request, 'payments/create_submission.html', {'form': form})
+
+
+def submission_success(request):
+    return render(request, 'payments/create_submission_success.html')
+
+
+
+@login_required
+def receipt1_render_pdf_view(request, *args, **kwargs):    
+
+    pk = kwargs.get('pk')
+    
+    my_receipt = get_object_or_404(PaymentDetail1, pk=pk)
+    bank_detail = BankDetail.objects.all()
+    school_id = SchoolIdentity.objects.all()
+    template_path = 'payments/student_receipt_pdf.html'
+    # template_path = 'results/result_sheet.html'
+    context = {'my_receipt': my_receipt, 'bank_detail':bank_detail, 'school_id':school_id}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # if you want to download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if you just want to display
+    response['Content-Disposition'] = 'filename="receipt.pdf"'
+
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+    html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

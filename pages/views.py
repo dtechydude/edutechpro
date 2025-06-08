@@ -8,7 +8,7 @@ from students.models import Student
 from staff.models import Staff, Teacher, Assign
 from users.models import Profile
 from curriculum.models import Class
-from payments.models import PaymentDetail
+from payments.models import PaymentDetail1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,7 +32,7 @@ def portal_home(request):
     expelled = Student.objects.filter(student_status='expelled').count()
     suspended = Student.objects.filter(student_status='suspended').count()
     active = Student.objects.filter(student_status='active').count()
-    payments = PaymentDetail.objects.count()
+    payments = PaymentDetail1.objects.count()
     staff_num = Staff.objects.count()
     teacher_num = Teacher.objects.count()    
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))

@@ -1,6 +1,6 @@
 from django.urls import path
 from payments import views as payment_views
-from payments.views import PaymentCreateView
+from payments.views import SelfPaymentCreateView
 from . import views
 
 
@@ -28,7 +28,7 @@ urlpatterns = [
     path('payment_chart-pdf', payment_views.payment_chart_pdf, name="payment_chart-pdf"),
     path('payment_chart-csv', payment_views.payment_chart_csv, name="payment_chart-csv"),
 
-    path('payment-create/', views.PaymentCreateView.as_view(), name="payment-create"),
+    path('payment-create/', views.SelfPaymentCreateView.as_view(), name="payment-create"),
     path('<int:pk>/', views.PaymentDetailView.as_view(), name='payment_detail'),
     path('payment-category/', views.PaymentCategoryListView.as_view(), name='payment-category'),
     path('bank-list/', views.BankListView.as_view(), name='bank-list'),
@@ -42,5 +42,12 @@ urlpatterns = [
     path('search/', payment_views.search, name='search'),
 
     # render receipt as pdf
-    path('pdf/<pk>/', payment_views.receipt_render_pdf_view, name="receipt-pdf-view"),
+    # path('pdf/<pk>/', payment_views.receipt_render_pdf_view, name="receipt-pdf-view"),
+
+    # render receipt as pdf1
+    path('pdf/<pk>/', payment_views.receipt1_render_pdf_view, name="receipt-pdf-view"),
+
+    # Create Payments
+    path('submit-payment/', views.create_payment, name='create_payment'),
+    path('submit/success/', views.submission_success, name='submission_success'),
 ]

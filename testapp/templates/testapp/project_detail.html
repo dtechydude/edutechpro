@@ -1,0 +1,29 @@
+<!-- myapp/templates/project_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.name }} - Project Details</title>
+</head>
+<body>
+    <h1>Project: {{ project.name }}</h1>
+    <p>{{ project.description }}</p>
+
+    <h2>Tasks</h2>
+    <ul>
+        {% for task in project.tasks.all %}
+            <li>{{ task.title }} - {% if task.is_completed %}Completed{% else %}Pending{% endif %}</li>
+        {% empty %}
+            <li>No tasks yet for this project.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <!-- Link to create a new task for this specific project -->
+        <a href="{% url 'testapp:create_task' project_id=project.id %}">Add New Task for {{ project.name }}</a>
+    </p>
+
+    <p><a href="">Back to Projects</a></p>
+</body>
+</html>

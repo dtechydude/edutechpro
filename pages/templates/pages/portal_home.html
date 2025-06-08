@@ -776,6 +776,7 @@
 							{% elif user.teacher %}							
 							<li><a href="{% url 'students:student-list' %}">My Students</a></li>																
 							<li><a href="./app-calender.html">Calendar</a></li>
+							
 							{% elif user.student %}
 							{% for idcard in my_idcard %}							
 							<a href="{% url 'students:idcard-pdf-view' pk=idcard.pk  %}">My ID CARD</a>
@@ -834,11 +835,13 @@
 							<li><a href="{% url 'payments:bank-list' %}">Bank Details</a></li>
 							<li><a href="{% url 'payments:payment_instruction' %}">Payment Instruction</a></li>
 							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>								
-							<li><a href="./uc-select2.html">Make Payment</a></li>							
+							<li><a href="{% url 'payments:create_payment'%}">Make Payment</a></li>							
 							<li><a href="{% url 'payments:online_payment' %}">Online Payment</a></li>
 							{% endif %}
 							{% if user.student %}					
-							<li><a href="{% url 'payments:my_payments' %}">My Payments</a></li>	
+							<li><a href="{% url 'payments:my_payments' %}">My Payments</a></li>
+							<li><a href="">Create New Task</a>
+							</li>		
 							{% endif %}						
 							
 						</ul>

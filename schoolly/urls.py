@@ -18,7 +18,8 @@ urlpatterns = [
     path('attendance/', include('attendance.urls', namespace='attendance')), 
     path('curriculum/', include('curriculum.urls', namespace='curriculum')),
     path('results/', include('results.urls', namespace='results')),
-    path('cbt/', include('cbt.urls', namespace='cbt')),              
+    path('cbt/', include('cbt.urls', namespace='cbt')), 
+    path('testapp/', include('testapp.urls', namespace='testapp')),              
 
 ]
 

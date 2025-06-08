@@ -1,5 +1,5 @@
 from django import forms
-from payments.models import PaymentDetail, PaymentCategory, PaymentChart, BankDetail
+from payments.models import PaymentCategory, PaymentChart, BankDetail, PaymentDetail1
 
 # INLINE FORM STUFF
 from django import forms
@@ -8,13 +8,12 @@ from django.forms.models import formset_factory
 
 
 class PaymentCreateForm(forms.ModelForm):
-        
-        class Meta:
-            model = PaymentDetail
-            fields = '__all__'
-            exclude = ('confirmed_a', 'confirmed_b', 'confirmed_c', 'discount', 'student_id', 'student_detail',)
+     class Meta:
+        model = PaymentDetail1
+        fields = ('payment_name', 'amount_paid_a', 'bank_name_a', 'payment_date_a', 'remark_a' )
+        # exclude = ('user', 'confirmed_a', 'confirmed_b', 'confirmed_c', 'discount', 'student_id', 'student_detail', 'trans_id')
 
-            widgets = {
+        widgets = {
             'payment_date_a': forms.DateInput(
                 format=('%d/%m/%Y'),
                 attrs={'class': 'form-control', 
@@ -25,14 +24,32 @@ class PaymentCreateForm(forms.ModelForm):
                         #Note that i removed user because it is an instance in the view already
                         
 
-class PaymentForm(forms.ModelForm):
-        
-        class Meta:
-            model = PaymentDetail
-            fields = '__all__'
-            exclude = ('confirmed', 'file', 'trans_id', )
 
-            widgets = {
+class PaymentCreateForm1(forms.ModelForm):
+     class Meta:
+        model = PaymentDetail1
+        fields = '__all__'
+        exclude = ('payee', 'confirmed_a', 'confirmed_b', 'confirmed_c', 'trans_id', 'discount')
+
+        widgets = {
+            'payment_date_a': forms.DateInput(
+                format=('%d/%m/%Y'),
+                attrs={'class': 'form-control', 
+                       'placeholder': 'Select a date',
+                       'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
+                      }),
+        }
+                        #Note that i removed user because it is an instance in the view already
+                        
+
+
+class PaymentForm(forms.ModelForm):
+     class Meta:
+        model = PaymentDetail1
+        fields = '__all__'
+        exclude = ('confirmed_a', 'confirmed_b', 'confirmed_c', 'trans_id', 'discount' )
+
+        widgets = {
             'payment_date': forms.DateInput(
                 format=('%d/%m/%Y'),
                 attrs={'class': 'form-control', 
@@ -45,26 +62,24 @@ class PaymentForm(forms.ModelForm):
 
           
 class PaymentCatForm(forms.ModelForm):
-        
-        class Meta:
-            model = PaymentCategory
-            fields = '__all__'
+     class Meta:
+        model = PaymentCategory
+        fields = '__all__'
+        exclude = ('confirmed_a', 'confirmed_b', 'confirmed_c',)
            
 class BankRegisterForm(forms.ModelForm):
-        
-        class Meta:
-            model = BankDetail
-            fields = '__all__'
+     class Meta:
+        model = BankDetail
+        fields = '__all__'
 
 
 class PaymentUpdateForm(forms.ModelForm):
-        
-        class Meta:
-            model = PaymentDetail
-            fields = '__all__'
-            exclude = ('confirmed', 'discount', 'file', 'student_id', 'student_detail',)
+    class Meta:
+        model = PaymentDetail1
+        fields = '__all__'
+        exclude = ('confirmed', 'discount', 'file', 'student_id', 'student_detail',)
 
-            widgets = {
+        widgets = {
             'payment_date_a' 'payment_date_b': forms.DateInput(
                 format=('%d/%m/%Y'),
                 attrs={'class': 'form-control', 
@@ -74,10 +89,9 @@ class PaymentUpdateForm(forms.ModelForm):
         }
                         #Note that i removed user because it is an instance in the view already
 
-
 class MyPaymentForm(forms.ModelForm):
     class Meta:
-        model = PaymentDetail
+        model = PaymentDetail1
         fields = ['amount_paid_a', 'payment_date_a', 'bank_name_a', 
               'amount_paid_b', 'payment_date_b', 'bank_name_b',
               'amount_paid_c', 'payment_date_c', 'bank_name_c',]

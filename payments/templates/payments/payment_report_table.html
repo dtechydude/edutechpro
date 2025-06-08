@@ -114,7 +114,7 @@
                                             {% for p in paymentlist %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-												<td><strong><a href="">{{ p.student_detail.user.first_name}} {{ p.student_detail.user.last_name}}</a></strong></td>
+												<td><strong><a href="">{{ p.payee.first_name}} <strong>{{ p.payee.last_name}}</strong></a></strong></td>
                                                 <td>{{ p.payment_name.name}}</td>
                                                 <td style="color:brown;">{{ p.payment_name.session}}</td>
                                                 <td>N{{ p.payment_name.amount_due }}</td>

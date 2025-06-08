@@ -1,11 +1,11 @@
 import django_filters
-from .models import PaymentDetail, PaymentChart
+from .models import PaymentChart, PaymentDetail1
 from django.contrib.auth.models import User
 
 class PaymentFilter(django_filters.FilterSet):
 
     class Meta:
-        model = PaymentDetail
+        model = PaymentDetail1
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
         fields = {'payment_name',}
@@ -13,7 +13,7 @@ class PaymentFilter(django_filters.FilterSet):
 class MyPaymentFilter(django_filters.FilterSet):
 
     class Meta:
-        model = PaymentDetail
+        model = PaymentDetail1
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
         fields = {'payment_name'}
@@ -30,17 +30,17 @@ class PaymentChartFilter(django_filters.FilterSet):
 class PaymentReportFilter(django_filters.FilterSet):
 
     class Meta:
-        model = PaymentDetail
+        model = PaymentDetail1
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'student_detail' }
+        fields = {'payee' }
 
 class PaymentSummaryFilter(django_filters.FilterSet):
 
     class Meta:
-        model = PaymentDetail
+        model = PaymentDetail1
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'student_detail__class_id', }
+        fields = {'payee', }
         
 

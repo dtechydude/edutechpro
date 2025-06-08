@@ -117,8 +117,8 @@
 												<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 													<!-- if it is a student that paid -->
 													 <td>
-													<span>{% if t.student_detail %} {{ t.student_detail.full_name }}<br>
-														<span style="color:red;">{{ t.student_detail.user.username }}- {{ t.student_detail.class_id }}</span>
+													<span>{% if t.payee %} {{ t.payee.first_name }}<br>
+														<span style="color:red;">{{ t.payee.username }}- {{ t.payee.user.student.class_id }}</span>
 															
 															{% endif %}</span><br>																					
 														</td>
