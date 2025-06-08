@@ -834,13 +834,15 @@
 							{% if user.student or user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'payments:bank-list' %}">Bank Details</a></li>
 							<li><a href="{% url 'payments:payment_instruction' %}">Payment Instruction</a></li>
-							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>								
-							<li><a href="{% url 'payments:create_payment'%}">Make Payment</a></li>							
+							<li><a href="{% url 'payments:payment_chart' %}">Payment Chart</a></li>
+							{% if user.is_superuser or user.is_staff %}							
+							<li><a href="/admin/payments/paymentdetail1/">Make Payment</a></li>	
+							{% endif %}						
 							<li><a href="{% url 'payments:online_payment' %}">Online Payment</a></li>
 							{% endif %}
 							{% if user.student %}					
 							<li><a href="{% url 'payments:my_payments' %}">My Payments</a></li>
-							<li><a href="">Create New Task</a>
+							<li><a href="{% url 'payments:create_payment'%}">Make Payment</a></li>							
 							</li>		
 							{% endif %}						
 							
