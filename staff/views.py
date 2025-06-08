@@ -69,7 +69,7 @@ class StaffSelfDetailView(LoginRequiredMixin, DetailView):
 
 
 class TeacherDetailView(DetailView):
-    template_name = 'staff/teacher_detail.html'
+    template_name = 'staff/teacher_self_detail.html'
     context_object_name = 'teacher'
     queryset = Teacher.objects.all()
 

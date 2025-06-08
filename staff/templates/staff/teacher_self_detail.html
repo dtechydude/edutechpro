@@ -136,9 +136,15 @@
 												
 												</div>
 												<div class="mt-4">
-													<a href="javascript:void(0);" class="btn btn-primary mb-1 me-1">Edit Profile(Admin)</a> 
-													<a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">School Bus</a>
-												</div>
+                                                    {% if user.teacher or user.staff %}
+													<a href="{% url 'users:employment_profile' %}" class="btn btn-primary mb-1 me-1">Edit Employment</a> 
+													<!-- <a href="{% url 'users:profile' %}" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Edit Profile</a> -->
+                                                    <a href="{% url 'users:profile' %}" class="btn btn-primary mb-1">Edit Profile</a>
+                                                    {% elif user.is_superuser or user.staff %}
+                                                    <a href="/admin/users/profile/" class="btn btn-primary mb-1">Edit Profile From Admin</a>
+                                                    {% endif %}
+
+                                                </div>
 											</div>
 											<!-- Modal -->
 											<div class="modal fade" id="sendMessageModal">
@@ -191,7 +197,7 @@
 											<h5 class="text-primary d-inline">Teacher's Bio</h5>
 											<img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100">
 											<h4><a href="post-details.html" class="text-black">{{ teacher.user.first_name }} {{ teacher.user.last_name}}</a></h4>
-											<p class="mb-0">{{ teacher.user.profile.bio }}</p>
+											<p class="mb-0">{{ teacher.user.profile.bio|slice:":150"  }}</p>
 										</div>
 									</div>
 								</div>
@@ -201,7 +207,7 @@
 									<div class="card-body">
 										<div class="profile-interest">
 											<h5 class="text-primary d-inline">CLASS IN CHARGE</h5>
-                                            <P>{{teacher.assign.class_id }} </P>
+                                            <h4>{{teacher.class_in_charge }} </h4>
 										
 										</div>
 									</div> 
@@ -211,12 +217,12 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="profile-news">
-											<h5 class="text-primary d-inline">School Transport Route</h5>
+											<h5 class="text-primary d-inline">Helpful Links</h5>
 											<div class="media pt-3 pb-3">
-												<img src="images/profile/5.jpg" alt="image" class="me-3 rounded" width="75">
+												<!-- <img src="images/profile/5.jpg" alt="image" class="me-3 rounded" width="75"> -->
 												<div class="media-body">
-													<h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
-													<p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
+													<h5 class="m-b-5"><a href="" class="text-black"> - <u>Portal Manual</u></a></h5>
+                                                    <h5 class="m-b-5"><a href="" class="text-black"> - <u>Contact Support</u></a></h5>
 												</div>
 											</div>
 																					
@@ -243,7 +249,9 @@
                                                 <div class="profile-about-me"> -->
                                                     <div class="pt-4 border-bottom-1 pb-3">
                                                         <h4 class="text-primary">Helpful Tip</h4>
-                                                        <p class="mb-2">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for.</p>
+                                                        <p class="mb-2">The information displayed on this page are pulled from the submission. It can be updated
+                                                            updated or editted accordingly. If you need assistance, please contact the admin.
+                                                        </p>
                                                     </div>
                                                 </div>
                                                
@@ -255,8 +263,7 @@
                                                             </h5>                                                            
                                                         </div>
                                                         <div class="col-sm-9 col-7"><span>{{ teacher.full_name }}</span>
-                                                        </div>
-                                                           
+                                                        </div>                                                           
                                                     </div>
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
@@ -265,12 +272,19 @@
                                                         </div>
                                                         <div class="col-sm-9 col-7"><span>{{ teacher.user.email }}</span>
                                                         </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-sm-3 col-5">
+                                                            <h5 class="f-w-500">Phones <span class="pull-end">:</span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.user.profile.phone }}, {{ teacher.phone_home }}</span>
+                                                        </div>
                                                     </div>
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Current Class <span class="pull-end">:</span></h5>
+                                                            <h5 class="f-w-500">Class In Charge <span class="pull-end">:</span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ teacher.class_id }}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.class_in_charge }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-2">
@@ -305,37 +319,44 @@
                                                     </div>
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Admitted Class <span class="pull-end">:</span></h5>
+                                                            <h5 class="f-w-500">Marital Status <span class="pull-end">:</span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ teacher.class_on_admission}}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.marital_status}}</span>
                                                         </div>
                                                     </div>
 
                                                     
-                                                    <h4 class="text-primary mb-4">Medical Information</h4>
+                                                    <h4 class="text-primary mb-4">Qualification Records</h4>
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Genotype <span class="pull-end">:</span></h5>
+                                                            <h5 class="f-w-500">Qualification <span class="pull-end">:</span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ teacher.genotype}}</span>                                                      
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.qualification}}</span>                                                      
                                                         </div>
                                                     </div>                                                    
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Blood Group <span class="pull-end">:</span></h5>
+                                                            <h5 class="f-w-500">Institution <span class="pull-end">:</span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ teacher.blood_group}}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.institution}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Medical Remark <span class="pull-end"></span></h5>
+                                                            <h5 class="f-w-500">Year <span class="pull-end"></span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ teacher.health_remark }}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.year }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2"></div>
+                                                        <div class="col-sm-3 col-5">
+                                                            <h5 class="f-w-500">Proffesional Body <span class="pull-end"></span></h5>
+                                                        </div>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.professional_body }}</span>
                                                         </div>
                                                     </div>
 
-                                                    <h4 class="text-primary mb-4">Guarantor Information</h4>
+                                                    <h4 class="text-primary mb-4">Guarantor's Information</h4>
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
                                                             <h5 class="f-w-500">Guardian's Name <span class="pull-end">:</span></h5>
@@ -369,20 +390,20 @@
 
                                                     <div class="row mb-2">
                                                         <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Relationship <span class="pull-end">:</span></h5>
+                                                            <h5 class="f-w-500">Next Of Kin <span class="pull-end">:</span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ student.relationship}}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.next_of_kin_name }}</span>
                                                         </div>
                                                     </div>
                                                     
 
                                                     <div class="profile-skills mb-5">
                                                         <h4 class="text-primary mb-2">Quick Links</h4>
-                                                        <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Dashboard Home</a>
-                                                        <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">All Payments</a>
+                                                        <a href="{% url 'pages:portal-home' %}" class="btn btn-primary light btn-xs mb-1">Dashboard Home</a>
+                                                        <!-- <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">All Payments</a>
                                                         <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">1st Term Results</a>
                                                         <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">2nd Term Results</a>
-                                                        <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">3rd Term Results</a>
+                                                        <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">3rd Term Results</a> -->
                                                     </div>
                                                
 

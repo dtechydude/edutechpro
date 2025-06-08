@@ -36,9 +36,8 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
 									<div class="text-center mb-3">
-										<a href="https://schoolly.com.ng"><img src="{% static 'pages/images/logo-full.png' %}" alt=""></a>
-									</div>
-                                    <!-- <h4 class="text-center mb-4">Welcome To Ermine App!</h4> -->
+                                        <h4 class="text-center mb-4">UPDATE PROFILE!</h4>
+									</div>                                    
                                     <form  action ="" method="POST">
                                         {% csrf_token %}
                                         <div class="mb-3">
@@ -49,11 +48,11 @@
                                         </div>
                                                                               
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Enroll Student</button>
+                                            <button type="submit" class="btn btn-primary btn-block">UPDATE PROFILE</button>
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">
-                                        <p>Back To: <a class="text-primary" href="https://schoolly.com.ng">Home Page</a></p>
+                                        <p>Back To: <a class="text-primary" href="{% url 'pages:portal-home' %}">DASHBOARD</a></p>
                                     </div>
                                 </div>
                             </div>

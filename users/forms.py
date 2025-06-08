@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
+from staff.models import Teacher
 
 # class UserRegisterForm(UserCreationForm):
 #     email = forms.EmailField(required=False)
@@ -32,9 +33,9 @@ class StudentEnrollmentForm(forms.ModelForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField(required=False)
-    first_name = forms.CharField()
-    last_name = forms.CharField()
+    # email = forms.EmailField(required=False)
+    # first_name = forms.CharField()
+    # last_name = forms.CharField()
 
     class Meta:
         model = User
@@ -44,7 +45,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = [ 'user_type', ]
+        fields = [ 'state_of_origin', 'bio', 'phone', 'image' ]
         # widgets = {
         #     'date_of_birth': forms.DateInput(
         #         format=('%d/%m/%Y'),
@@ -61,67 +62,12 @@ class UserTwoUpdateForm(forms.ModelForm):
    
     class Meta:
         model = User
-        fields = [ 'last_name', ]
+        fields = [ 'username', ]
 
 
-# class BusinessUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ '', ]
 
-# class BankUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'bank_name', 'acc_no', 'acc_name', ]
+class TeacherEmploymentUpdateForm(forms.ModelForm):  
 
-# class KYCUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'date_of_birth', 'phone', 'nin', 'image', ]
-#         widgets = {
-#             'date_of_birth': forms.DateInput(
-#                 format=('%d/%m/%Y'),
-#                 attrs={'class': 'form-control', 
-#                         'placeholder': 'Select a date',
-#                         'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
-#                         }),
-#         }
-
-# class RoleUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'user_role', ]
-#         widgets = {
-#             'date_of_birth': forms.DateInput(
-#                 format=('%d/%m/%Y'),
-#                 attrs={'class': 'form-control', 
-#                         'placeholder': 'Select a date',
-#                         'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
-#                         }),
-#         }
-   
-# class BioUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'gender', 'bio', ]
-
-# # address update       
-# class AddressUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'state', 'address', 'current_state' ]
-
-# # Phone update       
-# class PhoneUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'phone', 'altenate_phone' ]
-
-# # Current State update       
-# class CurrentStateUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = [ 'current_state',]
-       
-       
-       
+    class Meta:
+        model = Teacher
+        fields = ['full_name', 'qualification', 'year', 'marital_status', 'phone_home', 'professional_body', 'next_of_kin_name', 'next_of_kin_phone']

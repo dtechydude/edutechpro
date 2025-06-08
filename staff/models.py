@@ -135,8 +135,10 @@ class Staff(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     id = models.CharField(primary_key=True, max_length=100)
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
     full_name = models.CharField(max_length=100, help_text='First_Name, Middle_Name, Last_Name')
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
+    class_in_charge = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
+    
 
     female = 'female'
     male = 'male'
