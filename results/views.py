@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.urls import reverse_lazy, reverse
-from results.forms import PrintCertificateForm, ResultUploadForm, ResultCreateForm, ResultUpdateForm
+from results.forms import ResultUpdateForm2, ResultUploadForm, ResultCreateForm, ResultUpdateForm
 from django.contrib import messages
 from django.db.models import Count
 from results.models import UploadCertificate, MarkedSheet, ResultSheet1, ResultSheet2, ResultSheet3
@@ -68,7 +68,7 @@ def printresult(request):
             return render(request, 'results/my_student_result1.html', context)
         else:
             return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! Your Students Dont Have Results yet</h1>'
-                            '<p>Please Please Ask The School Admin To Update Your Student"s RESULT </p>'
+                            '<p> Please Ask The School Admin To Update Your Student"s RESULT </p>'
                             '</div>') 
 
     except Student.DoesNotExist:
@@ -94,9 +94,9 @@ def self_student_results_firsterm(request):
 @login_required
 def printresult2(request):
     result = ResultSheet2.objects.all()
+    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
     resultsheet_filter = ResultSheetFilter2(request.GET, queryset=result) 
-    result = resultsheet_filter.qs
-    
+    result = resultsheet_filter.qs    
 
      # PAGINATOR METHOD
     page = request.GET.get('page', 1)
@@ -117,14 +117,28 @@ def printresult2(request):
             'resultsheet_filter' : resultsheet_filter,
             
         }
-
-        return render(request, 'results/view_secondterm_result.html', context)
+        if request.user.is_superuser or request.user.is_staff:
+            return render(request, 'results/view_secondterm_result.html', context)
+        elif my_students:
+            return render(request, 'results/my_student_result2.html', context)
+        else:
+            return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! Your Students Dont Have Results yet</h1>'
+                            '<p> Please Ask The School Admin To Update Your Student"s RESULT </p>'
+                            '</div>') 
 
     except Student.DoesNotExist:
         return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
                             '<p>Please <a href="#">register</a> as a student</p>'
                             '</div>'
-                            )
+                           )
+
+    #     return render(request, 'results/view_secondterm_result.html', context)
+
+    # except Student.DoesNotExist:
+    #     return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
+    #                         '<p>Please <a href="#">register</a> as a student</p>'
+    #                         '</div>'
+    #                         )
 
 # Teacher seeing his/her students Second Term Result
 @login_required
@@ -139,13 +153,50 @@ def self_student_results_secondterm(request):
     return render (request, 'results/my_students_2results.html', context)
  
  
- # View Third Term Results-ADMIN
+#  # View Third Term Results-ADMIN
+# @login_required
+# def printresult3(request):
+#     result = ResultSheet3.objects.all()
+#     resultsheet_filter = ResultSheetFilter3(request.GET, queryset=result) 
+#     result = resultsheet_filter.qs
+    
+
+#      # PAGINATOR METHOD
+#     page = request.GET.get('page', 1)
+#     paginator = Paginator(result, 50)
+#     try:
+#         result = paginator.page(page)
+#     except PageNotAnInteger:
+#         result = paginator.page(1)
+#     except EmptyPage:
+#         result = paginator.page(paginator.num_pages)
+
+#     try:     
+#         # result = ResultSheet.objects.filter(student_id=StudentDetail.objects.get(user_id=request.user))
+    
+#         context = {
+#             # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
+#             'result':result,
+#             'resultsheet_filter' : resultsheet_filter,
+            
+#         }
+
+#         return render(request, 'results/view_thirdterm_result.html', context)
+
+#     except Student.DoesNotExist:
+#         return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
+#                             '<p>Please <a href="#">register</a> as a student</p>'
+#                             '</div>'
+  
+  
+#                             )
+    
 @login_required
 def printresult3(request):
     result = ResultSheet3.objects.all()
-    resultsheet_filter = ResultSheetFilter3(request.GET, queryset=result) 
-    result = resultsheet_filter.qs
-    
+    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
+    resultsheet_filter = ResultSheetFilter2(request.GET, queryset=result) 
+    result = resultsheet_filter.qs    
 
      # PAGINATOR METHOD
     page = request.GET.get('page', 1)
@@ -166,14 +217,21 @@ def printresult3(request):
             'resultsheet_filter' : resultsheet_filter,
             
         }
-
-        return render(request, 'results/view_thirdterm_result.html', context)
+        if request.user.is_superuser or request.user.is_staff:
+            return render(request, 'results/view_thirdterm_result.html', context)
+        elif my_students:
+            return render(request, 'results/my_student_result3.html', context)
+        else:
+            return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! Your Students Dont Have Results yet</h1>'
+                            '<p> Please Ask The School Admin To Update Your Student"s RESULT </p>'
+                            '</div>') 
 
     except Student.DoesNotExist:
         return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
                             '<p>Please <a href="#">register</a> as a student</p>'
                             '</div>'
-                            )
+                           )
+
                
 # Teacher seeing his/her students Third Term Result
 @login_required
@@ -597,7 +655,7 @@ class ResultUpdateView(LoginRequiredMixin, UpdateView):
     
 # Second Term Result Update View
 class ResultUpdateView2(LoginRequiredMixin, UpdateView):
-    form_class = ResultUpdateForm
+    form_class = ResultUpdateForm2
     template_name = 'results/result_update_form.html'
     queryset = ResultSheet2.objects.all()
     success_url = '/results/second-result-list/'

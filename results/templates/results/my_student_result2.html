@@ -1,0 +1,315 @@
+{% extends 'pages/portal_home.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+	<!-- PAGE TITLE HERE -->
+    {% block title %}
+	<title>Student List</title>
+	{% endblock title %}
+	
+	<!-- FAVICONS ICON -->
+    {% block favicon %}
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+    <!-- Datatable -->
+    <link href="{% static 'pages/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+	<link href="{% static 'pages/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static 'pages/css/style.css' %}" rel="stylesheet">
+    {% endblock favicon %}
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+   <div id="preloader">
+		<div class="lds-ripple">
+			<div></div>
+			<div></div>
+		</div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+		
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<!--**********************************
+            Chat box start
+        ***********************************-->
+		
+		<!--**********************************
+            Chat box End
+        ***********************************-->
+
+		
+        <!--**********************************
+            Header start
+        ***********************************-->
+       
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+      
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        {% block content_body %}
+        <div class="content-body">
+            <div class="container-fluid">				
+                
+                <!-- row -->
+
+                <div class="row">
+                
+					<div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title" style="color:gray;">My Students -  All <strong>2nd. Term Results</strong> </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="display" style="min-width: 845px">
+                                        <thead>
+                                            <tr>
+												<th>S/N</th>
+												<th>Student</th>
+												<th>Exam</th>
+												<th>Subject-1</th>
+												<th>Subject-2</th>
+												<th>Subject-3</th>
+												<th>Subject-4</th>
+												<th>Subject-5</th>
+												<th>Subject-6</th>
+												<th>Subject-7</th>
+												<th>Subject-8</th>
+												<th>Subject-9</th>
+												<th>Subject-10</th>
+												<th>Subject-11</th>
+												<th>Subject-12</th>
+												<th>Subject-13</th>
+												<th>Subject-14</th>
+												<th>Subject-15</th>
+												<th>Subject-16</th>
+												<th>Subject-17</th>
+												<th>Subject-18</th>
+												<th>Subject-19</th>
+												<th>Subject-20</th>
+												<th>Action</th>																					
+																									
+											</tr>
+										</thead>
+										<tbody>
+											{% for res in result %}
+					
+											<tr>										
+												<td>
+													{{forloop.counter}}
+												</td>
+												<td>												
+															<span class="fs-16 mb-0 text-nowrap">
+															<a class="text-black" href="{% url 'results:result-update' res.pk %} ">{{ res.student_detail.full_name}} </span>
+															<span class="text-primary fs-14"> <br> {{ res.student_detail.user.username}}</span></a>
+													</td>
+												<td class="text-nowrap">
+													<span>{{ res.exam.standard }}<br>{{ res.exam.session}}<br>{{ res.exam.term}}</span>
+												</td>
+												<td class="text-nowrap">
+													
+														<span><b>{{ res.subject_1}}</b><br>C.A: <b>{{ res.score_1ca }}</b><br>Exam: <b>{{ res.score_1exam}}</b></span>	
+														<span></span>										
+												</td>
+												<td class="text-nowrap">
+													
+													<span><b>{{ res.subject_2}}</b><br>C.A: <b>{{ res.score_2ca }}</b><br>Exam: <b>{{ res.score_2exam}}</b></span>	
+													<span></span>										
+											</td>
+											<td class="text-nowrap">
+													
+												<span><b>{{ res.subject_3}}</b><br>C.A: <b>{{ res.score_3ca }}</b><br>Exam: <b>{{ res.score_3exam}}</b></span>	
+												<span></span>										
+										</td>
+										<td class="text-nowrap">
+													
+											<span><b>{{ res.subject_4}}</b><br>C.A: <b>{{ res.score_4ca }}</b><br>Exam: <b>{{ res.score_4exam}}</b></span>	
+											<span></span>										
+									</td>
+									<td class="text-nowrap">
+													
+										<span><b>{{ res.subject_5}}</b><br>C.A: <b>{{ res.score_5ca }}</b><br>Exam: <b>{{ res.score_5exam}}</b></span>	
+										<span></span>										
+								</td>
+								<td class="text-nowrap">
+													
+									<span><b>{{ res.subject_6}}</b><br>C.A: <b>{{ res.score_6ca }}</b><br>Exam: <b>{{ res.score_6exam}}</b></span>	
+									<span></span>										
+							</td>
+							<td class="text-nowrap">
+													
+								<span><b>{{ res.subject_7}}</b><br>C.A: <b>{{ res.score_7ca }}</b><br>Exam: <b>{{ res.score_7exam}}</b></span>	
+								<span></span>										
+						</td>
+						<td class="text-nowrap">
+													
+							<span><b>{{ res.subject_8}}</b><br>C.A: <b>{{ res.score_8ca }}</b><br>Exam: <b>{{ res.score_8exam}}</b></span>	
+							<span></span>										
+					</td>
+					<td class="text-nowrap">
+													
+						<span><b>{{ res.subject_9}}</b><br>C.A: <b>{{ res.score_9ca }}</b><br>Exam: <b>{{ res.score_9exam}}</b></span>	
+						<span></span>										
+				</td>
+				<td class="text-nowrap">
+													
+					<span><b>{{ res.subject_10}}</b><br>C.A: <b>{{ res.score_10ca }}</b><br>Exam: <b>{{ res.score_10exam}}</b></span>	
+					<span></span>										
+			</td>
+			<td class="text-nowrap">
+													
+				<span><b>{{ res.subject_11}}</b><br>C.A: <b>{{ res.score_11ca }}</b><br>Exam: <b>{{ res.score_11exam}}</b></span>	
+				<span></span>										
+		</td>
+		<td class="text-nowrap">
+													
+			<span><b>{{ res.subject_12}}</b><br>C.A: <b>{{ res.score_12ca }}</b><br>Exam: <b>{{ res.score_12exam}}</b></span>	
+			<span></span>										
+	</td>
+	<td class="text-nowrap">
+													
+		<span><b>{{ res.subject_13}}</b><br>C.A: <b>{{ res.score_13ca }}</b><br>Exam: <b>{{ res.score_13exam}}</b></span>	
+		<span></span>										
+</td>
+<td class="text-nowrap">
+													
+	<span><b>{{ res.subject_14}}</b><br>C.A: <b>{{ res.score_14ca }}</b><br>Exam: <b>{{ res.score_14exam}}</b></span>	
+	<span></span>										
+</td>
+<td class="text-nowrap">
+													
+<span><b>{{ res.subject_15}}</b><br>C.A: <b>{{ res.score_15ca }}</b><br>Exam: <b>{{ res.score_15exam}}</b></span>	
+<span></span>										
+</td>
+<td class="text-nowrap">
+													
+<span><b>{{ res.subject_16}}</b><br>C.A: <b>{{ res.score_16ca }}</b><br>Exam: <b>{{ res.score_16exam}}</b></span>	
+<span></span>										
+</td>
+<td class="text-nowrap">
+													
+<span><b>{{ res.subject_17}}</b><br>C.A: <b>{{ res.score_17ca }}</b><br>Exam: <b>{{ res.score_17exam}}</b></span>	
+<span></span>										
+</td>
+<td class="text-nowrap">
+													
+<span><b>{{ res.subject_18}}</b><br>C.A: <b>{{ res.score_18ca }}</b><br>Exam: <b>{{ res.score_18exam}}</b></span>	
+<span></span>										
+</td>
+<td class="text-nowrap">
+													
+<span><b>{{ res.subject_19}}</b><br>C.A: <b>{{ res.score_19ca }}</b><br>Exam: <b>{{ res.score_19exam}}</b></span>	
+<span></span>										
+</td>
+<td class="text-nowrap">
+													
+<span><b>{{ res.subject_20}}</b><br>C.A: <b>{{ res.score_20ca }}</b><br>Exam: <b>{{ res.score_20exam}}</b></span>	
+<span></span>										
+</td>
+
+<td>
+		<a class="text-black" href="{% url 'results:second-result-update' res.pk %}"><span style="color:green;">UPDATE</span></a><br>
+		<a class="text-black" href="{% url 'results:second-result-pdf-view' pk=res.pk %}"><span style="color:red;">VIEW</span></a>
+
+	</td>		
+
+					{% endfor %}
+		
+				</tr>	
+			</tbody>
+		</table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+				</div>
+            </div>
+        </div>
+        {% endblock content_body %}
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+       
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    {% block scripts %}
+    <script src="{% static 'pages/vendor/global/global.min.js' %}"></script>
+    <script src="{% static 'pages/vendor/chart.js/Chart.bundle.min.js' %}"></script>
+	<!-- Apex Chart -->
+	<script src="{% static 'pages/vendor/apexchart/apexchart.js' %}"></script>
+	
+    <!-- Datatable -->
+    <script src="{% static 'pages/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'pages/js/plugins-init/datatables.init.js' %}"></script>
+
+	<script src="{% static 'pages/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
+    <script src="{% static 'pages/js/custom.min.js' %}"></script>
+	<script src="{% static 'pages/js/dlabnav-init.js' %}"></script>
+	<script src="{% static 'pages/js/demo.js' %}"></script>
+    <script src="{% static 'pages/js/styleSwitcher.js' %}"></script>
+    {% endblock scripts %}
+</body>
+</html>
+

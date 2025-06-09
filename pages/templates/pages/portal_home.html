@@ -888,10 +888,7 @@
 							<li><a href="{% url 'results:print-second-result' %}">2nd. Term Results</a></li>
 							<li><a href="{% url 'results:print-third-result' %}">3rd. Term Results</a></li>
 							{% endfor %}
-							<li><a href="./ui-alert.html">Record Results</a></li>
-							
-							{% else %}
-							<li><a href="#">No Priviledge</a></li>
+							<li><a href="{% url 'pages:portal-home' %}">Record Results</a></li>							
 							{% endif %}
 						
 

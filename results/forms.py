@@ -1,5 +1,5 @@
 from django import forms
-from results.models import MarkedSheet, UploadCertificate, ResultSheet1
+from results.models import MarkedSheet, UploadCertificate, ResultSheet1, ResultSheet2
 #from .widgets import DatePickerInput, TimePickerInput, DateTimePickerInput
 
 
@@ -62,9 +62,15 @@ class ResultCreateForm(forms.ModelForm):
        
 
 class ResultUpdateForm(forms.ModelForm):
-
     class Meta:
         model = ResultSheet1
+        fields = '__all__'
+        exclude = ('student_id', 'publish', 'remark', 'class_teacher_comment', 'principal_comment', 'next_term_resume')
+        # exclude = ('user',)
+
+class ResultUpdateForm2(forms.ModelForm):
+    class Meta:
+        model = ResultSheet2
         fields = '__all__'
         exclude = ('student_id', 'publish', 'remark', 'class_teacher_comment', 'principal_comment', 'next_term_resume')
         # exclude = ('user',)
