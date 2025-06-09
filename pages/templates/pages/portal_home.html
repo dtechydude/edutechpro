@@ -783,6 +783,7 @@
 							<a href="{% url 'students:idcard-pdf-view' pk=idcard.pk  %}">My ID CARD</a>
 							{% endfor %}
 							<a href="">My Teacher</a>
+							<a href="">My Class Mates</a>
 							<a href="">My Hostel</a>							
 							{% else %}
 							<li>No Access</a></li>
@@ -905,17 +906,23 @@
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">E-Learning</span>
 						</a>
-						<ul aria-expanded="false">
-							<li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
-							<li><a href="table-datatable-basic.html">Datatable</a></li>
+						<ul aria-expanded="false">							
+						
+							{% if user.is_authenticated and user.student %}
+							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
+
+							{% elif user.is_authenticated and user.teacher %}
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
+							
+							{% elif user.is_authenticated and user.is_superuser or user.is_staff %}
+							<li><a href="/admin">Add Subjects & Lessons (Curriculum) </a></li>
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>											
+																	
+							{% endif %}
 						</ul>
+					
 					</li>
-					<li><a href="{% url 'pages:help-center' %}" class="" aria-expanded="false">
-						<i class="flaticon-013-checkmark"></i>
-						<span class="nav-text">Help Center </span>
-					</a>						
-				
-				</li>
+					
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">Settings</span>

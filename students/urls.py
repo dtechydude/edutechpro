@@ -1,6 +1,6 @@
 from django.urls import path
 from students import views as students_views
-from students.views import StudentDetailView, StudentUpdateView, StudentDeleteView, StudentSelfDetailView
+from students.views import StudentDetailView, StudentUpdateView, StudentDeleteView, StudentSelfDetailView, MyTeacherDetailView
 
 
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('<str:USN>/', StudentDetailView.as_view(), name="student-detail"),
     path('<str:USN>/update/', StudentUpdateView.as_view(), name="student-update"),
     path('<str:USN>/delete/', StudentDeleteView.as_view(), name="student-delete"), 
+    path('<str:id>/', MyTeacherDetailView.as_view(), name="my-teacher-detail"),
 
     #  # Search student detail app
     # path('student_search/', students_views.search_form, name='search_form'),

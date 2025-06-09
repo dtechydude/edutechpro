@@ -11,7 +11,7 @@ from django.template.loader import get_template
 # from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from students.models import Student, StudentSubject, MarksClass
-from staff.models import Assign
+from staff.models import Assign, Teacher
 from students.forms import StudentUpdateForm
 from users.forms import UserRegisterForm
 from curriculum.models import SchoolIdentity
@@ -233,38 +233,6 @@ def student_marks(request, assign_id):
 
 
 
-
-# @login_required
-# def student_id_card_pdf_view(request, *args, **kwargs):    
-
-#     pk = kwargs.get('pk')
-    
-#     my_id = get_object_or_404(Student, pk=pk)
-#     # class_detail = Class.objects.all()
-#     template_path = 'students/student_id_pdf.html'
-#     # template_path = 'results/result_sheet.html'
-#     # context = {'my_id': my_id, 'class_detail':class_detail}
-#     # Create a Django response object, and specify content_type as pdf
-#     response = HttpResponse(content_type='application/pdf')
-#     # if you want to download
-#     # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-#     # if you just want to display
-#     response['Content-Disposition'] = 'filename="id_card.pdf"'
-
-#     # find the template and render it.
-#     template = get_template(template_path)
-#     html = template.render(context)
-
-#     # create a pdf
-#     pisa_status = pisa.CreatePDF(
-#     html, dest=response)
-#     # if error then show some funy view
-#     if pisa_status.err:
-#         return HttpResponse('We had some errors <pre>' + html + '</pre>')
-#     return response
-
-
-
 #generate IDCARD PDF
 @login_required
 def id_render_pdf_view(request, *args, **kwargs):    
@@ -294,3 +262,13 @@ def id_render_pdf_view(request, *args, **kwargs):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+
+class MyTeacherDetailView(DetailView):
+    template_name = 'student/my_teacher_detail.html'
+    context_object_name = 'teacher'
+    queryset = Teacher.objects.all()
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Teacher, id=id_)

@@ -41,7 +41,6 @@ class SchoolIdentity(models.Model):
 
 class Session(models.Model):
     name = models.CharField(max_length=50)
-
     first_term = 'First Term'
     second_term = 'Second Term'
     third_term = 'Third Term'

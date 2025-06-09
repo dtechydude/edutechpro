@@ -85,6 +85,9 @@ def portal_home(request):
 def help_center(request):
     return render(request, 'pages/help_center.html')
 
+def support_info(request):
+    return render(request, 'pages/support_info.html')
+
 def lock_screen(request):
     return render(request, 'pages/lockscreen.html')
 
@@ -106,3 +109,18 @@ class StudentCardDetailView(LoginRequiredMixin, DetailView):
         queryset = queryset.filter(pk=new_str)
         obj = queryset.get()
         return obj
+
+# phone list
+def phone_list(request):
+    users = User.objects.all()
+    return render(request, 'pages/phone_list.html', {'users':users})
+
+# email list
+def email_list(request):
+    users = User.objects.all()
+    return render(request, 'pages/email_list.html', {'users':users})
+
+# birthday list
+def birthday_list(request):
+    users = User.objects.all()
+    return render(request, 'pages/birthday_list.html', {'users':users})

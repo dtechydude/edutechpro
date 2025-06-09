@@ -1,23 +1,32 @@
 {% extends 'pages/portal_home.html' %}
 {% load static %}
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Ermine : ermine" />
+	<meta property="og:title" content="Ermine : ermine" />
+	<meta property="og:description" content="Travl : Hotel Admin Dashboard Bootstrap 5 Template" />
+	<meta name="format-detection" content="telephone=no">
+	
 	<!-- PAGE TITLE HERE -->
-    {% block title %}
+     {% block title %}
 	<title>Help Center</title>
-	{% endblock title %}
+    {% endblock title %}
 	
 	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
-    <!-- Chartist -->
-    <link rel="stylesheet" href="{% static 'pages/vendor/chartist/css/chartist.min.css' %}">
-	
-    	<link href="{% static 'pages/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
-		<link href="{% static 'pages/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+     {% block favicon %}
+	<link rel="shortcut icon" type="image/png" href="{% static 'pages/images/favicon.png' %}" />
+	<link href="{% static 'pages/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
     <link href="{% static 'pages/css/style.css' %}" rel="stylesheet">
+    {% endblock favicon %}
 
 </head>
 
@@ -45,7 +54,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-   
+        
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -53,7 +62,7 @@
 		<!--**********************************
             Chat box start
         ***********************************-->
-
+		
 		<!--**********************************
             Chat box End
         ***********************************-->
@@ -62,7 +71,12 @@
         <!--**********************************
             Header start
         ***********************************-->
-      
+        {% block sub-title%}
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active"><a href="javascript:void(0)" class="fs-14">Dashboard </a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0)" class="fs-14">Help Center</a></li>
+        </ol>
+        {% endblock sub-title%}
                     
         <!--**********************************
             Header end ti-comment-alt
@@ -71,7 +85,7 @@
         <!--**********************************
             Sidebar start
         ***********************************-->
-      
+       
         <!--**********************************
             Sidebar end
         ***********************************-->
@@ -81,149 +95,191 @@
         ***********************************-->
         {% block content_body %}
         <div class="content-body">
+            <!-- container starts -->
             <div class="container-fluid">
 				<div class="row page-titles">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">Help Center</a></li>
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Help</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Center</a></li>
 					</ol>
                 </div>
                 <!-- row -->
+                <!-- Row starts -->
                 <div class="row">
-					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                    <!-- Column starts -->
+                    <div class="col-xl-6">
                         <div class="card">
-                            <div class="card-header border-0 pb-0">
-                                <h4 class="card-title">Timeline</h4>
+                            <div class="card-header d-block">
+                                <h4 class="card-title">Merchant: FAQs</h4>
+                                <p class="m-0 subtitle">What you need to know about Ermine Merchant access </p>
                             </div>
                             <div class="card-body">
-                                <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height370">
-                                    <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-badge primary"></div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge info">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-												<p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge danger">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge success">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <!-- Default accordion -->
+                
+								<div class="accordion accordion-primary" id="accordion-one">
+								  <div class="accordion-item">
+									<div class="accordion-header  rounded-lg" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne"   aria-expanded="true" role="button">
+										<span class="accordion-header-icon"></span>
+									  <span class="accordion-header-text">Who is a merchant?</span>
+									  <span class="accordion-header-indicator"></span>
+									</div>
+									<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion-one">
+									  <div class="accordion-body-text">
+										 A merchant is a business owner or service provider e.g trader, shop owners, welder. painter
+                     or anyone with daily cash transaction. 
+									  </div>
+									</div>
+								  </div>
+								  <div class="accordion-item">
+									<div class="accordion-header collapsed rounded-lg" id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo"   role="button" aria-expanded="true">
+									  <span class="accordion-header-text">What Does Ermine Offers</span>
+									 <span class="accordion-header-indicator"></span>
+									</div>
+									<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
+									  <div class="accordion-body-text">
+										 Ermine application connects the merchants with people in need of CASH, this helps the merchant
+                     to dispense his/her available cash and get a transfer from the ermine subscriber in turn.
+                     The benefit of this is that the stress of going on a long queue in the bank for deposit is removed.
+									  </div>
+									</div>
+								  </div>
+								  <div class="accordion-item">
+									<div class="accordion-header collapsed rounded-lg" id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree"  role="button"  aria-expanded="true">
+									  <span class="accordion-header-text">What Other Benefits?</span>
+									  <span class="accordion-header-indicator"></span>
+									</div>
+									<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion-one">
+									  <div class="accordion-body-text">
+										 Instead of the stress and transport expenses to get to the bank, Ermine merchants earn extra Income
+                     as commission/charges paid on every transaction.
+									  </div>
+									</div>
+								  </div>
+                  <div class="accordion-item">
+                    <div class="accordion-header collapsed rounded-lg" id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree"  role="button"  aria-expanded="true">
+                      <span class="accordion-header-text">How To Initiate Transaction</span>
+                      <span class="accordion-header-indicator"></span>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion-one">
+                      <div class="accordion-body-text">
+                       Go to the MENU area and Click Merchant Transact, -> select "Set Transaction", follow the procedure to complete the form.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="accordion-item">
+                      <div class="accordion-header collapsed rounded-lg" id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo"   role="button" aria-expanded="true">
+                        <span class="accordion-header-text">How To Pay Company Charges</span>
+                       <span class="accordion-header-indicator"></span>
+                      </div>
+                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
+                        <div class="accordion-body-text">
+                         Ermine Merchant pays the company charges before the transaction is made ACTIVE to Subscribers.
+                         Once the payment is confirmed by the company the merchant becomes visible to prospective subscribers for patronage.
+                        </div>
+                      </div>
+                      </div>
+								</div>
+                
                             </div>
                         </div>
-					</div>
-					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                    </div>
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                    <div class="col-xl-6">
                         <div class="card">
-                            <div class="card-header border-0 pb-0">
-                                <h4 class="card-title">Timeline 2</h4>
+                            <div class="card-header d-block">
+                                <h4 class="card-title">Subscribers: FAQs</h4>
+                                <p class="m-0 subtitle">All You Need To Know </p>
                             </div>
                             <div class="card-body">
-                                <div id="DZ_W_TimeLine11" class="widget-timeline dlab-scroll style-1 height370">
-                                    <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-badge primary"></div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge info">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-												<p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge danger">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge success">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                
+								<div class="accordion accordion-danger-solid" id="accordion-two">
+								  <div class="accordion-item">
+									<div class="accordion-header  rounded-lg" id="accord-2One" data-bs-toggle="collapse" data-bs-target="#collapse2One" aria-controls="collapse2One"   aria-expanded="true"  role="button">
+									  <span class="accordion-header-text">Starting a transaction</span>
+									  <span class="accordion-header-indicator"></span>
+									</div>
+									<div id="collapse2One" class="collapse accordion__body show" aria-labelledby="accord-2One" data-bs-parent="#accordion-two">
+									  <div class="accordion-body-text">
+                      Go to "Subscriber Transact" on the MENU and select "Start Transaction". A transaction table will display, you can filter based on your choice.
+										 then select the transaction you want by clicking on the transaction ID.
+									  </div>
+									</div>
+								  </div>
+								  <div class="accordion-item">
+									<div class="accordion-header collapsed rounded-lg" id="accord-2Two" data-bs-toggle="collapse" data-bs-target="#collapse2Two" aria-controls="collapse2Two"   aria-expanded="true"  role="button">
+									  <span class="accordion-header-text">Connect With Merchant</span>
+									 <span class="accordion-header-indicator"></span>
+									</div>
+									<div id="collapse2Two" class="collapse accordion__body" aria-labelledby="accord-2Two" data-bs-parent="#accordion-two">
+									  <div class="accordion-body-text">
+                      Once you have successfully started a transaction, you can proceed to complete the comment form in the transaction
+                      flow where you can send messages to the Merchant.
+									  </div>
+									</div>
+								  </div>
+								  <div class="accordion-item">
+									<div class="accordion-header collapsed rounded-lg" id="accord-2Three" data-bs-toggle="collapse" data-bs-target="#collapse2Three" aria-controls="collapse2Three"   aria-expanded="true"  role="button">
+									  <span class="accordion-header-text">Complete Your Transaction</span>
+									 <span class="accordion-header-indicator"></span>
+									</div>
+									<div id="collapse2Three" class="collapse accordion__body" aria-labelledby="accord-2Three" data-bs-parent="#accordion-two">
+									  <div class="accordion-body-text">
+                      For both in-person and remote transaction, ensure you submit a final report on how the transaction went. This
+									      will help Ermine to rate the Merchant and ensure that you enjoy a seamless transaction flow.
+									  </div>
+									</div>
+								  </div>
+								</div>
                             </div>
                         </div>
-					</div>
-					
+                    </div>
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                    
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                  
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
+                    <!-- Column starts -->
+                   
+                    <!-- Column ends -->
                 </div>
+                <!-- Row ends -->
             </div>
+            <!-- container ends -->
         </div>
         {% endblock content_body %}
         <!--**********************************
-            Content body end
-        ***********************************-->
+                Content body end
+            ***********************************-->
+
 
         <!--**********************************
             Footer start
         ***********************************-->
-   
+  
         <!--**********************************
             Footer end
         ***********************************-->
@@ -246,39 +302,14 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-     {% block scripts %}
+    {% block script %}
     <script src="{% static 'pages/vendor/global/global.min.js' %}"></script>
-    <script src="{% static 'pages/vendor/chart.js/Chart.bundle.min.js' %}"></script>
-	<!-- Apex Chart -->
-	<script src="{% static 'pages/vendor/apexchart/apexchart.js' %}"></script>
-	
-	<!-- Chartist -->
-    <script src="{% static 'pages/vendor/chartist/js/chartist.min.js' %}"></script>
-    <script src="{% static 'pages/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js' %}"></script>
-    
-	<!-- Flot -->
-    <script src="{% static 'pages/vendor/flot/jquery.flot.js' %}"></script>
-    <script src="{% static 'pages/vendor/flot/jquery.flot.pie.js' %}"></script>
-    <script src="{% static 'pages/vendor/flot/jquery.flot.resize.js' %}"></script>
-    <script src="{% static 'pages/vendor/flot-spline/jquery.flot.spline.min.js' %}"></script>
-	
-	<!-- Chart sparkline plugin files -->
-    <script src="{% static 'pages/vendor/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
-	<script src="{% static 'pages/js/plugins-init/sparkline-init.js' %}"></script>
-	
-	<!-- Chart piety plugin files -->
-    <script src="{% static 'pages/vendor/peity/jquery.peity.min.js' %}"></script>
-	<script src="{% static 'pages/js/plugins-init/piety-init.js' %}"></script>
-	
-    <!-- Init file -->
-    <script src="{% static 'pages/js/plugins-init/widgets-script-init.js' %}"></script>
-
 	<script src="{% static 'pages/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
-	
-    <script src="{% static 'pages/js/custom.min.js' %}"></script>
+
+    <script src="{% static 'pages/js/custom.min.js ' %}"></script>
 	<script src="{% static 'pages/js/dlabnav-init.js' %}"></script>
 	<script src="{% static 'pages/js/demo.js' %}"></script>
     <script src="{% static 'pages/js/styleSwitcher.js' %}"></script>
-    {% endblock scripts %}
+    {% endblock script %}
 </body>
 </html>
