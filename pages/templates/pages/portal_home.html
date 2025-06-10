@@ -906,23 +906,33 @@
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">E-Learning</span>
 						</a>
-						<ul aria-expanded="false">							
+						<ul aria-expanded="false">
+							{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' or user.studentdetail.student_status == 'inactive' %}
+							<li>Noting to show</li>
 						
-							{% if user.is_authenticated and user.student %}
+							{% elif user.is_authenticated and user.student %}
 							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
-
+							
 							{% elif user.is_authenticated and user.teacher %}
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
-							{% elif user.is_authenticated and user.is_superuser or user.is_staff %}
+							{% elif user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
 							<li><a href="/admin">Add Subjects & Lessons (Curriculum) </a></li>
-							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>											
-																	
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>										
+																
 							{% endif %}
-						</ul>
-					
+						</ul>					
 					</li>
-					
+						
+						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-013-checkmark"></i>
+								<span class="nav-text">Help Center</span>
+							</a>
+							<ul aria-expanded="false">
+								<li><a href="{% url 'pages:help-center' %}">FAQ</a></li>
+								<li><a href="{% url 'pages:support_info' %}">Support Center</a></li>
+							</ul>
+					</li>					
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">Settings</span>

@@ -109,18 +109,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        
-                                            <tr>
-                                                {% for t in assign %}
+                                            {% for t in assign %}
+                                            <tr>                                              
                                                 <td>{{ forloop.counter }}</td>
-                                                <td>{{ t.teacher.user.username}}<br>{{t.teacher.full_name }}</td>
+                                                <td>{{ t.teacher.user.username}} - {{t.teacher.full_name }}</td>
                                                 <td>{{ t.teacher.gender }}</td>
                                                 <td>{{ t.teacher.staff_role }}</td>
                                                 <td>{{ t.class_id }}</td>
                                                 <td>{{ t.class_id.dept }}</td>
-                                                <td>{{ t.teacher.user.profile.phone }}</td>
-                                                {% endfor %}
-                                            </tr>       
+                                                <td>{{ t.teacher.user.profile.phone }}</td>                                                
+                                            </tr>    
+                                            {% endfor %}   
                                             
                                         </tbody>
                                         <tfoot>
@@ -131,7 +130,7 @@
                                                 <th>Role</th>
                                                 <th>Class ID</th>
                                                 <th>Dept</th>
-                                                <th>Subject</th>                                            
+                                                <th>Subject</th>                                           
                                                                                      
                                             </tr>
                                         </tfoot>
@@ -140,8 +139,6 @@
                             </div>
                         </div>
                     </div>
-
-
 
 				</div>
             </div>

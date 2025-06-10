@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'results.apps.ResultsConfig',
     'inventory.apps.InventoryConfig',
     'cbt.apps.CbtConfig',
+    'transport.apps.TransportConfig',
   
     # Installed Apps
     'django_ckeditor_5',
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'django_filters',
     'embed_video',
+    'djrichtextfield',
 ]
 
 MIDDLEWARE = [
@@ -183,3 +185,15 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete' 
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'
+
+
+DJRICHTEXTFIELD_CONFIG = {
+    'js': ['//cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'],
+    'init_template': 'djrichtextfield/init/tinymce.js',
+    'settings': {
+        'menubar': False,
+        'plugins': 'link image',
+        'toolbar': 'bold italic | link image | removeformat',
+        'width': 700
+    }
+}

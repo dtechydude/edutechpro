@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from students.models import Student
 
 
+
 class ClassSelfListView(LoginRequiredMixin, ListView):
     context_object_name = 'standards'
     model = Class
@@ -21,7 +22,7 @@ class ClassSelfListView(LoginRequiredMixin, ListView):
  
     # Student can only view their class elearning
     def get_queryset(self):
-        return Class.objects.filter(student = self.request.user.student)
+        return Class.objects.filter(class_id = self.request.user.teacher)
 
 # Standard list view for the admin and teachers
 class ClassListView(LoginRequiredMixin, ListView):

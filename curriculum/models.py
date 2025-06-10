@@ -4,10 +4,12 @@ from datetime import timedelta
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.urls import reverse
+import os
 from django.utils.html import strip_tags
 from django_ckeditor_5.fields import CKEditor5Field
 from embed_video.fields import EmbedVideoField
 from django.core.exceptions import ValidationError
+from djrichtextfield.models import RichTextField
 
 
 # Register School
@@ -82,12 +84,21 @@ class Dept(models.Model):
 # academic subjects
 class Subject(models.Model):
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
-    id = models.CharField(primary_key='True', max_length=50)
+    id = models.CharField(primary_key='True', max_length=50)    
     name = models.CharField(max_length=50)
     shortname = models.CharField(max_length=50, default='X')
+    slug = models.SlugField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    class Meta:
+      verbose_name = 'Subjects'
+      verbose_name_plural = 'Subjects'
 
 
 class Class(models.Model):
@@ -132,8 +143,8 @@ class Lesson(models.Model):
     # video_url = EmbedVideoField(null=True,blank=True)
     # ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
     Notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
-    #comment = RichTextField(blank=True, null=True)
-    comment = CKEditor5Field('Text', config_name='extends')
+    comment = RichTextField(blank=True, null=True)
+    # comment = CKEditor5Field('Text', config_name='extends')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(null=True, blank=True)
