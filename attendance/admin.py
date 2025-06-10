@@ -6,7 +6,7 @@ from django.urls import path
 from import_export.admin import ImportExportModelAdmin
 from .models import Student, Attendance,  Assign, AssignTime, AttendanceClass
 from .models import  User, AttendanceRange
-from curriculum.models import Class, Dept, Subject, Session
+from curriculum.models import Standard, Dept, Subject, Session
 from staff.models import Teacher, Assign, AssignTime
 from students.models import StudentSubject, Marks, StudentId
 
@@ -28,7 +28,7 @@ def daterange(start_date, end_date):
 
 
 class ClassInline(admin.TabularInline):
-    model = Class
+    model = Standard
     extra = 0
 
 
@@ -50,7 +50,7 @@ class SessionAdmin(admin.ModelAdmin):
     ordering = ['name']
 
 
-class ClassAdmin(admin.ModelAdmin):
+class StandardAdmin(admin.ModelAdmin):
     list_display = ('id', 'dept', 'sem', 'section')
     search_fields = ('id', 'dept__name', 'sem', 'section')
     ordering = ['dept__name', 'sem', 'section']
@@ -154,7 +154,7 @@ class AttendanceClassAdmin(admin.ModelAdmin):
 
 # admin.site.register(User, UserAdmin)
 admin.site.register(Dept, DeptAdmin)
-admin.site.register(Class, ClassAdmin)
+admin.site.register(Standard, StandardAdmin)
 admin.site.register(Session, SessionAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject, SubjectAdmin)

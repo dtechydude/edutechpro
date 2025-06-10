@@ -11,6 +11,7 @@ urlpatterns = [
     path('student_list/', students_views.student_list, name='student-list'),
     path('boarder_list/', students_views.student_boarder_list, name='boarder-list'),
     path('student_in_class/', students_views.student_in_class, name='student-in-class'),
+    path('my_class_teacher/', students_views.my_class_teacher, name='my_class_teacher'),
     # Search student detail app
     path('search/', students_views.search, name='search'),
     path('student_search_list/', students_views.student_search_list, name='student_search_list'),
@@ -40,5 +41,11 @@ urlpatterns = [
     path('idcard-pdf/<pk>/', students_views.id_render_pdf_view, name="idcard-pdf-view"),
     #path('idcard/', PDFTemplateView.as_view(template_name='students/student_id_card.html',
     #                                       filename='id_card.pdf'), name='id-card-pdf'),
+
+
+    # My Attendance Logic
+    path('teacher/dashboard/', students_views.teacher_dashboard, name='teacher_dashboard'),
+    path('teacher/attendance/<int:classroom_id>/', students_views.mark_attendance, name='mark_attendance'),
+    path('teacher/attendance/success/<int:classroom_id>/', students_views.attendance_success, name='attendance_success'),
      
 ]

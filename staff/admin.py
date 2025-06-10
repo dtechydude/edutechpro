@@ -4,7 +4,6 @@ from import_export.admin import ImportExportModelAdmin
 
 
 
-
 class StaffPositionAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
     search_fields = ('name',)

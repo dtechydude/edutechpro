@@ -2,6 +2,7 @@ from django.db import models
 from students.models import Student
 from staff.models import Staff
 from django.template.defaultfilters import slugify
+from django.conf import settings
 from django.urls import reverse
 from curriculum.models import Session
 from payments.models import BankDetail
@@ -13,13 +14,14 @@ from django.core.validators import MinLengthValidator, MaxValueValidator, MinVal
 
 class Route(models.Model):
     name = models.CharField(max_length=200, blank=True )
-    direction = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
+    route_id = models.CharField(max_length=8,null=True, blank=True)
+    direction = models.CharField(max_length=200, blank=True)
     staff_in_charge = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True, related_name='official_staff')
     driver = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True, related_name='bus_driver')
     slug = models.SlugField(null=True, blank=True)
 
     def __str__ (self):
-        return f'{self.name} {self.staff_in_charge} '
+        return f'{self.name} - {self.route_id}'
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -36,14 +38,14 @@ class BusFee(models.Model):
         ordering = ['-amount_due' ]        
 
     def __str__ (self):
-       return f'{self.amount_due} {self.term} '
+       return f'{self.amount_due} - {self.route.name} - {self.route.route_id}'
 
     # def get_absolute_url(self):
     #     return reverse('payment:my_payments')  
     
 
 class StudentBusPayment(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, default=None, null=True)
+    payee_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True,  help_text='confirmusername', related_name='student_id')
     route = models.ForeignKey(Route, on_delete=models.CASCADE, default= None, related_name='routes')
     payment = models.ForeignKey(BusFee, on_delete=models.CASCADE, default= None, related_name='payments')
 
@@ -71,17 +73,19 @@ class StudentBusPayment(models.Model):
     payment_updated_date = models.DateField(auto_now_add=True)     
 
     class Meta:
-        ordering = ['-student' ]
+        ordering = ['-payee_id' ]
 
-        unique_together = ['student', 'payment']
+        unique_together = ['payee_id', 'route']
     
 
     def __str__ (self):
-       return f'{self.student} {self.student} '
+       return f'{self.payee_id} {self.payee_id} '
 
-    # def get_absolute_url(self):
-    #     return reverse('payment:my_payments')  
+    @property
+    def balance_pay(self):
+       return self.payment_name.amount_due - (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c)
     
-    # def get_absolute_url(self):
-    #     return reverse('payment:payment_detail', kwargs={'id':self.id})
+    @property
+    def total_amount_paid(self):
+       return (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c)
     

@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from staff.models import Teacher, Staff, Assign
 from students.models import Student
-from curriculum.models import Class
+from curriculum.models import Standard
 from staff.forms import TeacherUpdateForm, StaffRegisterForm, StaffUpdateForm
 from attendance.models import AttendanceTotal, Attendance, AttendanceClass
 
@@ -21,12 +21,46 @@ from attendance.models import AttendanceTotal, Attendance, AttendanceClass
 
 #Displays all teachers
 def teachers_list(request):
-    all_teachers = Teacher.objects.all().order_by('-date_employed')
+    all_teachers = Teacher.objects.all().order_by('-date_employed')    
 
     context = {
         'all_teachers': all_teachers
     }
     return render(request, 'staff/teachers_list.html', context)
+
+
+# Display only my teacher
+@login_required # Ensure only logged-in users can access this view
+def my_teacher_view(request):
+    logged_in_user = request.user
+
+    try:
+        # Get the Student profile associated with the logged-in user
+        student_profile = Student.objects.get(user=logged_in_user)
+
+        # Get the teacher associated with this student
+        my_teacher = student_profile.class_teacher
+
+        context = {
+            'student': student_profile,
+            'teacher': my_teacher,
+            'has_teacher': True if my_teacher else False # For template logic
+        }
+    except Student.DoesNotExist:
+        # Handle cases where a logged-in user doesn't have a Student profile
+        # (e.g., if they are a teacher, or haven't completed their profile)
+        context = {
+            'student': None,
+            'teacher': None,
+            'has_teacher': False,
+            'message': "You don't have a student profile yet."
+        }
+        # You might redirect them to a profile creation page or show a relevant message
+        # return redirect('create_student_profile')
+
+    return render(request, 'students/my_teacher_detail.html', context)
+
+
 
 #Displays all staff
 def staff_list(request):
@@ -76,7 +110,7 @@ class TeacherDetailView(DetailView):
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Teacher, id=id_)
-
+    
 
 class TeacherUpdateView(LoginRequiredMixin, UpdateView):
     form_class = TeacherUpdateForm

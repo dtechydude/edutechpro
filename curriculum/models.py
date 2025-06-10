@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from djrichtextfield.models import RichTextField
 
 
+
 # Register School
 class SchoolIdentity(models.Model):
     name = models.CharField(max_length=50)
@@ -101,7 +102,7 @@ class Subject(models.Model):
       verbose_name_plural = 'Subjects'
 
 
-class Class(models.Model):
+class Standard(models.Model):
     # courses = models.ManyToManyField(Course, default=1)
     id = models.CharField(primary_key='True', max_length=100)
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
@@ -133,7 +134,7 @@ def save_lesson_files(instance, filename):
 
 class Lesson(models.Model):
     lesson_id = models.CharField(max_length=100, unique=True)
-    class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='lessons')
     name = models.CharField(max_length=250)
     position = models.PositiveSmallIntegerField(verbose_name="Chapter no.")

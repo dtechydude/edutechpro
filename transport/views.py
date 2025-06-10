@@ -5,13 +5,12 @@ from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import F, Sum, Q
-from payments.forms import PaymentForm, PaymentCatForm, PaymentCreateForm, PaymentCreateForm1, BankRegisterForm, MyPaymentForm
 from transport.models import Route, BusFee, StudentBusPayment
+from transport.forms import BusPaymentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 import os
-from payments.models import PaymentDetail1, PaymentChart, PaymentCategory, BankDetail
 from students.models import Student
 from curriculum.models import SchoolIdentity
 from django.http import HttpResponse
@@ -109,26 +108,66 @@ from xhtml2pdf import pisa
 #     return render(request, 'payment/payment_chart_form.html', context)
 
 
-
-
+# bus route list
 @login_required
-def bus_paymentlist(request):
-    paymentlist = StudentBusPayment.objects.all()
+def bus_route_list(request):
+    routelist = Route.objects.all()
 
     context = {
+        'routelist': Route.objects.all(),
+        'routelist' : routelist,      
+
+    }
+    return render (request, 'transport/bus_route_list.html', context )
+
+#Bus Fare List
+# bus route list
+@login_required
+def bus_fare_list(request):
+    routelist = BusFee.objects.all()
+
+    context = {
+        'routelist': BusFee.objects.all(),
+        'routelist' : routelist,      
+
+    }
+    return render (request, 'transport/bus_fees_table.html', context )
+
+# All Payment List
+@login_required
+def bus_paymentlist(request, self):
+    paymentlist = StudentBusPayment.objects.all()
+   
+    context = {
         'paymentlist': StudentBusPayment.objects.all(),
-        'paymentlist' : paymentlist,      
+        'paymentlist' : paymentlist,              
 
     }
     return render (request, 'transport/bus_payment_summary.html', context )
+
+# Students Approved On Bus
+@login_required
+def student_on_bus(request): 
+    paymentlist = StudentBusPayment.objects.all()   
+
+    context = {
+        'paymentlist': StudentBusPayment.objects.all(),
+        'paymentlist' : paymentlist,              
+
+    }
+    if paymentlist:
+        return render (request, 'transport/student_onbus.html', context )
+    else:
+        return HttpResponse ('You have not made payment' )
+   
    
 # Student View Self Bus Payment
 @login_required
 def view_self_bus_payments(request):   
-    mypayment = StudentBusPayment.objects.filter(payee=User.objects.get(username=request.user))
+    mypayment = StudentBusPayment.objects.filter(payee_id=User.objects.get(username=request.user))
     context = {
      
-        'mypayment' : StudentBusPayment.objects.filter(payee=User.objects.get(username=request.user)).order_by("payment_date_a"),
+        'mypayment' : StudentBusPayment.objects.filter(payee_id=User.objects.get(username=request.user)).order_by("payment_date_a"),
 
         'mypayment':mypayment,
     }
@@ -217,7 +256,7 @@ def allpayment_csv(request):
 # Create a csv writer
     writer = csv.writer(response)
 
-    payment = PaymentDetail.objects.all()
+    payment = StudentBusPayment.objects.all()
 
     # Add column headings to the csv files
     writer.writerow(['STD.ID', 'STUDENT DETAIL ', 'SESSION', 'TERM', 'FEE DUE',  'PURPOSE', 'PAID_1', 'DATE_1', 'METHOD_1', 'CHECKED_1', 'PAID_2', 'DATE_2', 'METHOD_2', 'CHECKED_2', 'PAID_3', 'DATE_3', 'METHOD_3', 'CHECKED_3', 'TOTAL PAID', 'TOTAL DEBT'])
@@ -299,7 +338,7 @@ def payment_chart_csv(request):
 
 #This code generates the receipt
 class StudentBusPaymentView(LoginRequiredMixin, DetailView):
-    model = PaymentDetail1
+    model = StudentBusPayment
     context_object_name = 'my_receipt'
     template_name = 'transport/receipt.html'
     
@@ -476,3 +515,23 @@ def receipt1_render_pdf_view(request, *args, **kwargs):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+
+@login_required # Ensure only logged-in users can access this view
+def create_bus_payment(request):
+    if request.method == 'POST':
+        form = BusPaymentForm(request.POST)
+        if form.is_valid():
+            # Don't save yet! We need to set the user first.
+            submission = form.save(commit=False)
+            submission.payee_id = request.user # Set the logged-in user
+            submission.save()
+            messages.success(request, f'The Bus Payment has been entered successfully')
+            return redirect('transport:bus_payment_success') # Redirect to a success page
+    else:
+        form = BusPaymentForm()
+    return render(request, 'transport/signup_for_bus.html', {'form': form})
+
+
+def bus_payment_success(request):
+    return render(request, 'transport/bus_signup_success.html')

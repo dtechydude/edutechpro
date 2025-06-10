@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from users.models import Profile
 from students.models import Student
-from curriculum.models import Class, Subject, Session
+from curriculum.models import Standard, Subject, Session
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator 
@@ -13,7 +13,7 @@ from django.urls import reverse, reverse_lazy
 
 class Examination(models.Model):
     name = models.CharField(max_length=150, blank=True)
-    standard = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
     session = models.ForeignKey(Session, on_delete=models.CASCADE) 
     first_term = 'First Term'
     second_term = 'Second Term'
@@ -46,7 +46,7 @@ class MarkedSheet(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True, default=None)
     exam = models.ForeignKey(Examination, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE) 
-    standard = models.ForeignKey(Class, on_delete=models.CASCADE)
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject_name = models.ForeignKey(Subject, on_delete=models.CASCADE)
     exam_date = models.DateField(null=True)  
     cand_score = models.IntegerField(blank=True) 
@@ -66,7 +66,7 @@ class MarkedSheet(models.Model):
 
 class UploadCertificate(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True, default=None)
-    standard = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True, default=None) 
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True, default=None) 
     exam = models.ForeignKey(Examination, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     # file = models.FileField(upload_to='result', blank=True, null=False, verbose_name='upload result')

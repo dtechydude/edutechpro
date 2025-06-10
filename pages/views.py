@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from students.models import Student
 from staff.models import Staff, Teacher, Assign
 from users.models import Profile
-from curriculum.models import Class
+from curriculum.models import Standard
 from payments.models import PaymentDetail1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
@@ -39,7 +39,7 @@ def portal_home(request):
     students = Student.objects.filter().order_by('class_id').values('class_id__section').annotate(count=Count('class_id__section'))
     my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
     no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
-    classrooms = Class.objects.all()
+    classrooms = Standard.objects.all()
 
     try:
         num_inclass = Student.objects.filter(class_id = request.user.student.class_id).count()

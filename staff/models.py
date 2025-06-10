@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from datetime import timedelta
-from curriculum.models import Class, Dept, Subject
+from curriculum.models import  Dept, Subject, Standard
 from django.template.defaultfilters import slugify
 
 
@@ -51,7 +51,7 @@ class StaffPosition(models.Model):
 class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     id = models.CharField(primary_key=True, max_length=100)
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1, related_name='my_depts')
     staff_position = models.ForeignKey(StaffPosition, on_delete=models.CASCADE, default=1)
     full_name = models.CharField(max_length=100, help_text='First_Name, Middle_Name, Last_Name')
 
@@ -136,8 +136,8 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     id = models.CharField(primary_key=True, max_length=100)
     full_name = models.CharField(max_length=100, help_text='First_Name, Middle_Name, Last_Name')
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
-    class_in_charge = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1, related_name='my_dept')
+    class_in_charge = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True, related_name='myclasses')
     
 
     female = 'female'
@@ -209,7 +209,7 @@ class Teacher(models.Model):
 
 
 class Assign(models.Model):
-    class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
@@ -217,7 +217,7 @@ class Assign(models.Model):
         unique_together = (('subject', 'class_id', 'teacher'),)
 
     def __str__(self):
-        cl = Class.objects.get(id=self.class_id_id)
+        cl = Standard.objects.get(id=self.class_id_id)
         cr = Subject.objects.get(id=self.subject_id)
         te = Teacher.objects.get(id=self.teacher_id)
         return '%s : %s : %s' % (te.full_name, cr.shortname, cl)

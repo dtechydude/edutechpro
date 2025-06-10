@@ -64,7 +64,9 @@
 		<div class="nav-header">
 			<a href="/" class="brand-logo">
 				
-				<img src="{% static 'pages/images/logo-full1.png' %}" alt="" width="80px" height="80px">
+				<!-- <img src="{% static 'pages/images/logo-full1.png' %}" alt="" width="80px" height="80px"> -->
+				<img src="{% static 'pages/images/schoolly_logo.png' %}" alt="" width="80px" height="80px">
+
 				
 			</a>
 			<div class="nav-control">
@@ -781,10 +783,10 @@
 							{% elif user.student %}
 							{% for idcard in my_idcard %}							
 							<a href="{% url 'students:idcard-pdf-view' pk=idcard.pk  %}">My ID CARD</a>
-							{% endfor %}
-							<a href="">My Teacher</a>
-							<a href="">My Class Mates</a>
-							<a href="">My Hostel</a>							
+							{% endfor %}							
+							<li><a href="{% url 'staff:my_teacher_view' %}">My Teacher</a></li>
+							<li><a href="{% url 'staff:teacher-list' %}">My Class Mates</a></li>
+							<li><a href="{% url 'staff:teacher-list' %}">My Hostel</a></li>												
 							{% else %}
 							<li>No Access</a></li>
 							{% endif %}					
@@ -855,15 +857,19 @@
 						<i class="flaticon-013-checkmark"></i>
 						<span class="nav-text">School Bus</span>
 					</a>
-					<ul aria-expanded="false">
-						<li><a href="./form-element.html">Bus Route</a></li>
-						{% if user.student %}
-						<li><a href="./form-wizard.html">SignUp For Bus</a></li>
+					<ul aria-expanded="false">						
+						{% if user.student %}						
+						<li><a href="{% url 'transport:signup_for_bus' %}">SignUp For Bus</a></li>
+						<li><a href="{% url 'transport:my_bus_payment' %}">My Bus Payments</a></li>
+						<li><a href="">My Route Details</a></li>
 						{% endif %}
 						{% if user.is_superuser or user.is_staff %}
-						<li><a href="./form-wizard.html">Students In Route</a></li>
-						<li><a href="./form-wizard.html">Add/Edit Route</a></li>
+						<li><a href="/admin/transport/route/">Add/Edit Route</a></li>
+						<li><a href="/admin/transport/studentbuspayment/">Add Student To Route</a></li>
+						<li><a href="{% url 'transport:student_on_bus' %}">Students In Route</a></li>						
 						{% endif %}
+						<li><a href="{% url 'transport:bus_route_list' %}">Bus Route</a></li>
+						<li><a href="{% url 'transport:bus_fare_list' %}">Bus Fare List</a></li>
 						
 					</ul>
 					</li>

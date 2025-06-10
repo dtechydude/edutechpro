@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.views.generic import(TemplateView, DetailView,
                                 ListView, FormView, CreateView, 
                                 UpdateView, DeleteView)
-from .models import Lesson, Class, Subject, save_lesson_files
+from .models import Lesson, Standard, Subject, save_lesson_files
 from .forms import CommentForm, LessonForm, ReplyForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -16,18 +16,18 @@ from students.models import Student
 
 class ClassSelfListView(LoginRequiredMixin, ListView):
     context_object_name = 'standards'
-    model = Class
+    model = Standard
     # template_name = 'curriculum/class_list.html'
     template_name = 'curriculum/my_class.html'
  
     # Student can only view their class elearning
     def get_queryset(self):
-        return Class.objects.filter(class_id = self.request.user.teacher)
+        return Standard.objects.filter(class_id = self.request.user.teacher)
 
 # Standard list view for the admin and teachers
 class ClassListView(LoginRequiredMixin, ListView):
     context_object_name = 'class'
-    model = Class
+    model = Standard
     # template_name = 'curriculum/class_list.html'
     template_name = 'curriculum/elearning_class.html'
     
@@ -35,7 +35,7 @@ class ClassListView(LoginRequiredMixin, ListView):
     
 class SubjectListView(DetailView):
     context_object_name = 'class'
-    model = Class
+    model = Standard
     template_name = 'curriculum/class_subjects.html'
 
 

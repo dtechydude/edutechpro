@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Attendance, AttendanceTotal, time_slots, DAYS_OF_WEEK, AssignTime, AttendanceClass,  MarksClass
 from students.models import Student, StudentSubject,  Marks
 from staff.models import Teacher, Assign
-from curriculum.models import Subject, Class, Dept
+from curriculum.models import Subject, Standard, Dept
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required

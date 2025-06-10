@@ -5,9 +5,10 @@ from import_export.admin import ImportExportModelAdmin
 
 
 class RouteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'direction', 'staff_in_charge', 'driver')
+    list_display = ('name', 'route_id', 'direction', 'staff_in_charge', 'driver')
     search_fields = ('name', 'staff_in_charge__full_name',)
     ordering = ['name',]
+    exclude = ('slug',)
 
 class BusFeeAdmin(admin.ModelAdmin):
     list_display = ('route', 'amount_due', 'session', 'term')
@@ -16,7 +17,7 @@ class BusFeeAdmin(admin.ModelAdmin):
 
 
 class StudentBusPaymentAdmin(admin.ModelAdmin):
-    list_display = ('route', 'payment')
+    list_display = ('payee_id', 'route', 'payment')
     search_fields = ('route', 'payment')
     ordering = ['route',]
 
