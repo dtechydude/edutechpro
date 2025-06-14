@@ -58,7 +58,7 @@ class ResultImage2Inline(admin.TabularInline):
 
 class ResultSheet2Admin(admin.ModelAdmin):
     inlines = [MotorAbility2Inline, ResultImage2Inline] 
-    exclude =['remark', 'standard']
+    exclude =['remark', 'student_id']
     list_display=('student_detail', 'exam',)
     list_filter  = ['student_detail__standard']
     search_fields = ('student_detail__student_username', 'student_detail__first_name')

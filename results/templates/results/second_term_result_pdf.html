@@ -83,8 +83,8 @@
                   </thead>
                 <tbody>
                   <tr>
-                      <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.full_name|upper}}</strong></td>
-                      <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_detail.user}}</strong> </td>
+                    <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.last_name|upper}} {{my_resultsheet.student_detail.first_name|upper}} {% if my_resultsheet.student_detail.middle_name %}{{my_resultsheet.student_detail.middle_name|upper}} {% endif %}</strong></td>
+                    <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_detail.user}}</strong> </td>
                       <td style="width:auto; text-align:center;">CLASS : <strong>{{my_resultsheet.exam.standard}} - {{my_resultsheet.student_detail.class_group}}</strong></td>
                       <td style="width:auto; text-align:center;">NO IN CLASS : <strong>{{my_resultsheet.no_in_class}}</strong></td>
                       <td rowspan="2" style="text-align:center; width:auto;">

@@ -895,7 +895,7 @@
 							<li><a href="{% url 'results:print-second-result' %}">2nd. Term Results</a></li>
 							<li><a href="{% url 'results:print-third-result' %}">3rd. Term Results</a></li>
 							{% endfor %}
-							<li><a href="{% url 'pages:portal-home' %}">Record Results</a></li>							
+							<li><a href="{% url 'pages:record-result' %}">Record Results</a></li>							
 							{% endif %}
 						
 
@@ -912,11 +912,9 @@
 						<i class="flaticon-013-checkmark"></i>
 							<span class="nav-text">E-Learning</span>
 						</a>
-						<ul aria-expanded="false">
-							{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' or user.studentdetail.student_status == 'inactive' %}
-							<li>Noting to show</li>
+						<ul aria-expanded="false">							
 						
-							{% elif user.is_authenticated and user.student %}
+							{% if user.is_authenticated and user.student %}
 							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
 							
 							{% elif user.is_authenticated and user.teacher %}
@@ -1058,7 +1056,7 @@
 														<h5 class="mb-0 font-w600">{{ user.teacher.dept }}</h5>
 														<p class="mb-0 text-nowrap ">Department</p>
 														{% elif user.is_authenticated and user.student %}
-														<h5 class="mb-0 font-w600">{{ user.student.class_id }}</h5>
+														<h5 class="mb-0 font-w600">{{ user.student.standard }}</h5>
 														<p class="mb-0 text-nowrap ">Current Class</p>
 														{% else %}
 														<h3 class="mb-0 font-w600">xxxxx</h3>

@@ -340,7 +340,7 @@ class ResultSheet1(models.Model):
     @property
     def no_in_class(request, *args, **kwargs):
 
-      return Student.objects.filter(class_id = request.student_detail.class_id).count()
+      return Student.objects.filter(standard = request.student_detail.standard).count()
     
       
 
@@ -625,7 +625,7 @@ class ResultSheet2(models.Model):
      # Get Students number in class
     @property
     def no_in_class(request, *args, **kwargs):
-      return Student.objects.filter(class_id = request.student_detail.class_id).count()
+      return Student.objects.filter(standard = request.student_detail.standard).count()
     
 
 class MotorAbility2(models.Model):
@@ -911,7 +911,7 @@ class ResultSheet3(models.Model):
      # Get Students number in class
     @property
     def no_in_class(request, *args, **kwargs):
-      return Student.objects.filter(class_id = request.student_detail.class_id).count()
+      return Student.objects.filter(standard = request.student_detail.standard).count()
     
     # Overall Subject Averages
     @property

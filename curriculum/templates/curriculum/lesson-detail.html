@@ -1,4 +1,4 @@
-{% extends 'portal/portal-home.html'%}
+{% extends 'pages/portal_home.html'%}
 {% load static %}
 {% load embed_video_tags %}
 
@@ -23,7 +23,7 @@
 					<div class="card-body">
 						<div class="email-left-box generic-width px-0 mb-5">
 							<div class="p-0">
-								{% if user.is_authenticated and user.is_superuser or user.staffprofile %}
+								{% if user.is_authenticated and user.is_superuser or user.teacher %}
 								
 								<!-- <a href="email-compose.html" class="btn btn-primary btn-block">Compose</a> -->
 								<p>Use the buttons below to update or delete lessons</p>

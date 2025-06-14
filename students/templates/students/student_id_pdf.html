@@ -69,8 +69,8 @@
 <div>
 <td colspan="2" class=" per5 text-left" style="font-size: 17px; color: #043c58; text-align: left; padding-top: 2px;">
   <br><span style="color: gray;"> STUDENT'S ID </span> | <span style="color: black;">{{ student_detail.USN }}</span>
-  <br> <span style="color: gray;">STUDENT NAME </span>| <span style="color: black;">{{ student_detail.full_name  |upper }}</span>
- <br> <span style="color: gray;">CURRENT CLASS </span>| <span style="color: black;">{{ student_detail.class_id  |upper }}</span>
+  <br> <span style="color: gray;">STUDENT NAME </span>| <span style="color: black;">{{ student_detail.last_name  |upper }} {{ student_detail.first_name }} {% if student_detail.middle_name %} {{ student_detail.middle_name }} {% endif %}</span>
+ <br> <span style="color: gray;">CURRENT CLASS </span>| <span style="color: black;">{{ student_detail.standard  |upper }}</span>
  <br> <span style="color: gray;">STUDENT TYPE </span>| <span style="color: black;">{{ student_detail.student_type  |upper }}</span>
  <br><span style="color: gray;"> BADGE </span>| <span style="color: black;">{{ student_detail.badge  |upper }}</span>
  <br> <span style="color: gray;">DATE ADMITTED  </span>| <span style="color: black;">{{ student_detail.date_admitted  |upper}}</span>

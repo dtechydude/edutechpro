@@ -14,7 +14,7 @@ from students.models import Student
 
 
 
-class ClassSelfListView(LoginRequiredMixin, ListView):
+class StandardSelfListView(LoginRequiredMixin, ListView):
     context_object_name = 'standards'
     model = Standard
     # template_name = 'curriculum/class_list.html'
@@ -22,7 +22,7 @@ class ClassSelfListView(LoginRequiredMixin, ListView):
  
     # Student can only view their class elearning
     def get_queryset(self):
-        return Standard.objects.filter(class_id = self.request.user.teacher)
+        return Standard.objects.filter(name = self.request.user.student.standard)
 
 # Standard list view for the admin and teachers
 class ClassListView(LoginRequiredMixin, ListView):
@@ -34,7 +34,7 @@ class ClassListView(LoginRequiredMixin, ListView):
 
     
 class SubjectListView(DetailView):
-    context_object_name = 'class'
+    context_object_name = 'standards'
     model = Standard
     template_name = 'curriculum/class_subjects.html'
 

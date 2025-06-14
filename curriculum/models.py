@@ -113,7 +113,8 @@ class Standard(models.Model):
 
 
     class Meta:
-        verbose_name_plural = 'classes'
+        verbose_name = 'Standards'
+        verbose_name_plural = 'Standards'
 
     def __str__(self):
         return self.name
@@ -145,6 +146,10 @@ class ClassGroup(models.Model):
     
     def __str__ (self):
         return f'{self.name}'
+    
+    class Meta:
+        verbose_name_plural = 'Standard Section'
+        verbose_name_plural = "Standard Section"
         
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -177,8 +182,8 @@ class Subject(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-      verbose_name = 'Subjects'
-      verbose_name_plural = 'Subjects'
+      verbose_name = 'E-Learning Subjects'
+      verbose_name_plural = 'E-Learning Subjects'
 
 
 def save_lesson_files(instance, filename):
@@ -205,14 +210,16 @@ class Lesson(models.Model):
     # video_url = EmbedVideoField(null=True,blank=True)
     # ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
     Notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
-    #comment = RichTextField(blank=True, null=True)
-    comment = CKEditor5Field('Text', config_name='extends')
+    comment = RichTextField(blank=True, null=True)
+    # comment = CKEditor5Field('Text', config_name='extends')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(null=True, blank=True)
 
     class Meta:
         ordering = ['position']
+        verbose_name = 'E-Learning Lessons'
+        verbose_name_plural = 'E-Learning Lessons'
 
     def __str__(self):
         return self.name

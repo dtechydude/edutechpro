@@ -42,8 +42,8 @@
                                             <tr>
 												
                                                 <td><strong>{{ standard.id}}</strong></td>
-                                                <td><a href="{% url 'curriculum:subject_list' pk=standard.pk %}"><span>{{standard.section}}</span></a></td>
-                                                <td><a href="{% url 'curriculum:subject_list' pk=standard.pk %}">{% if standard.description %} {{ standard.description }}{% else%}<span>E-learning class</span>{% endif%}</a></td>
+                                                <td><a href="{% url 'curriculum:subject_list' slug=standard.slug %}"><span>{{standard.name}}</span></a></td>
+                                                <td><a href="{% url 'curriculum:subject_list' slug=standard.slug %}">{% if standard.section %} {{ standard.description }}{% else%}<span>E-learning class</span>{% endif%}</a></td>
                                                 <td>ACTIVE!</td>
                                                                                                 											
                                             </tr>

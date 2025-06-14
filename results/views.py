@@ -36,7 +36,7 @@ from students.models import Student
 @login_required
 def printresult(request):
     result = ResultSheet1.objects.all()
-    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
+    my_students = Student.objects.filter(form_teacher__user=request.user).order_by('user')
     resultsheet_filter = ResultSheetFilter(request.GET, queryset=result) 
     result = resultsheet_filter.qs
     
@@ -80,7 +80,7 @@ def printresult(request):
 # Teacher seeing his/her students First Term Result
 @login_required
 def self_student_results_firsterm(request):
-    my_students_results = ResultSheet1.objects.filter(student_detail__class_teacher__user=request.user).order_by('student_id')
+    my_students_results = ResultSheet1.objects.filter(student_detail__form_teacher__user=request.user).order_by('student_id')
 
     context = {
         'my_students_results': my_students_results
@@ -94,7 +94,7 @@ def self_student_results_firsterm(request):
 @login_required
 def printresult2(request):
     result = ResultSheet2.objects.all()
-    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
+    my_students = Student.objects.filter(form_teacher__user=request.user).order_by('user')
     resultsheet_filter = ResultSheetFilter2(request.GET, queryset=result) 
     result = resultsheet_filter.qs    
 
@@ -143,7 +143,7 @@ def printresult2(request):
 # Teacher seeing his/her students Second Term Result
 @login_required
 def self_student_results_secondterm(request):
-    my_students_results = ResultSheet2.objects.filter(student_detail__class_teacher__user=request.user).order_by('student_id')
+    my_students_results = ResultSheet2.objects.filter(student_detail__form_teacher__user=request.user).order_by('student_id')
 
     context = {
         'my_students_results': my_students_results
@@ -194,7 +194,7 @@ def self_student_results_secondterm(request):
 @login_required
 def printresult3(request):
     result = ResultSheet3.objects.all()
-    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
+    my_students = Student.objects.filter(form_teacher__user=request.user).order_by('user')
     resultsheet_filter = ResultSheetFilter2(request.GET, queryset=result) 
     result = resultsheet_filter.qs    
 
@@ -236,7 +236,7 @@ def printresult3(request):
 # Teacher seeing his/her students Third Term Result
 @login_required
 def self_student_results_thirdterm(request):
-    my_students_results = ResultSheet3.objects.filter(student_detail__class_teacher__user=request.user).order_by('student_id')
+    my_students_results = ResultSheet3.objects.filter(student_detail__form_teacher__user=request.user).order_by('student_id')
 
     context = {
         'my_students_results': my_students_results

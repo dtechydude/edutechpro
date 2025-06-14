@@ -38,7 +38,7 @@ def portal_home(request):
     teacher_num = Teacher.objects.count()    
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))
     students = Student.objects.filter().order_by('standard').values('standard__section').annotate(count=Count('standard__section'))
-    # my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
+    my_students = Student.objects.filter(form_teacher__user=request.user).order_by('first_name')
     # no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
     classrooms = Standard.objects.all()
 
@@ -75,7 +75,7 @@ def portal_home(request):
         'queryset': queryset,
         'events':events,
         'my_idcard':my_idcard,
-        # 'my_students':my_students,
+        'my_students':my_students,
         # 'no_inteacherclass': no_inteacherclass,
         'classrooms':classrooms
     }
@@ -94,6 +94,9 @@ def lock_screen(request):
 
 def success_submission(request):
     return render(request, 'pages/success_submission.html')
+
+def record_result(request):
+    return render(request, 'pages/record_result.html')
 
 
 

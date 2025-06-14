@@ -22,12 +22,13 @@
                     <div class="card-body">
                         <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height370">
                             <ul class="timeline">
+                             
                                 {% for subject in standards.subjects.all %}
                                 <li>
                                     <div class="timeline-badge primary"></div>
                                     <a class="timeline-panel text-muted" href="{% url 'curriculum:lesson_list' slug=subject.slug standard=standards.slug %}">
                                         
-                                        <h6 class="mb-0">{{ subject.name }} <strong class="text-primary">#</strong>.</h6>
+                                        <h6 class="mb-0">{{ subject.name }}<strong class="text-primary">#</strong>.</h6>
                                         <p><b>Description: </b>{{subject.description|truncatechars:20 }}<br /></p>
                                     </a>
                                 </li>

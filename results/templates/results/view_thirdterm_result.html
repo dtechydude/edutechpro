@@ -116,7 +116,7 @@
 																<img class="me-3 rounded" src="{{res.student_id.profile.image.url}}" alt="">
 																<div> -->
 																	<span class="fs-16 mb-0 text-nowrap">
-																	<a class="text-black" href="{% url 'results:third-result-update' res.pk %} ">{{ res.student_detail.full_name}}</span>
+																	<a class="text-black" href="{% url 'results:third-result-update' res.pk %} ">{{ res.student_detail.last_name}} {{ res.student_detail.first_name}} {% if res.student_detail.middle_name %} {{ res.student_detail.middle_name}} {% endif %}</span>
 																	<span class="text-primary fs-14">{{ res.student_detail.user.username}}</span></a>
 																</div>
 															</div>

@@ -47,6 +47,7 @@ admin.site.register(Standard, StandardAdmin)
 admin.site.register(ClassGroup, ClassGroupAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Lesson, LessonAdmin)
+admin.site.register(SchoolIdentity, SchoolIdentityAdmin)
 
 
 

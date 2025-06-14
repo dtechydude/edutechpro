@@ -93,7 +93,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=20)    
     standard = models.ForeignKey(Standard, on_delete=models.SET_NULL, null=True, blank=True, related_name='students')
     form_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True, null=True, related_name='teacher')
-    badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, null=True, default='not a prefect', verbose_name='Prefect Tittle (if is prefect)')
+    badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, default=1, verbose_name='Prefect')
     
     female = 'female'
     male = 'male'

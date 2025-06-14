@@ -99,11 +99,11 @@
 									</div>
 									<div class="profile-details">
 										<div class="profile-name px-3 pt-2">
-											<h4 class="text-primary mb-0">{{ student.full_name }} </h4>
+											<h4 class="text-primary mb-0">{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }} </h4>
 											<p>Full Name</p>
 										</div>
 										<div class="profile-email px-2 pt-2">
-											<h4 class="text-muted mb-0">{{ student.class_id}}</h4>
+											<h4 class="text-muted mb-0">{{ student.standard}}</h4>
 											<p>Current Class</p>
 										</div>
 										<div class="dropdown ms-auto">
@@ -257,7 +257,7 @@
                                                             <h5 class="f-w-500">Full Name <span class="pull-end">:</span>
                                                             </h5>                                                            
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ student.full_name }}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ student.first_name }} {% if student.middle_name %}{{ student.middle_name }}{% endif %} {{ student.last_name }}</span>
                                                         </div>
                                                            
                                                     </div>
@@ -273,7 +273,7 @@
                                                         <div class="col-sm-3 col-5">
                                                             <h5 class="f-w-500">Current Class <span class="pull-end">:</span></h5>
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ student.class_id }}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ student.standard }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-2">

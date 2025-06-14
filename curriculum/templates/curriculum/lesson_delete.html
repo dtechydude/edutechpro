@@ -1,9 +1,9 @@
-{% extends 'portal/portal-home.html' %}
+{% extends 'pages/portal_home.html' %}
 {% load static %}
 {% block title %}<title> Delete Lesson</title>{% endblock title%}
 
 {% block content_body %}
-{% if user.is_authenticated and user.is_superuser or user.staffprofile %}
+{% if user.is_authenticated and user.is_superuser or user.teacher %}
     </div>
 
     <body class="vh-100">    
