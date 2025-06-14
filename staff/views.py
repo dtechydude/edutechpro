@@ -11,11 +11,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 # from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from staff.models import Teacher, Staff, Assign
+from staff.models import Teacher, Staff
 from students.models import Student
 from curriculum.models import Standard
 from staff.forms import TeacherUpdateForm, StaffRegisterForm, StaffUpdateForm
-from attendance.models import AttendanceTotal, Attendance, AttendanceClass
+# from attendance.models import AttendanceTotal, Attendance, AttendanceClass
 
 
 

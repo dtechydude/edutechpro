@@ -10,9 +10,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 # from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from students.models import Student, StudentSubject, MarksClass
-from staff.models import Assign, Teacher
-from students.forms import StudentUpdateForm, AttendanceFormSet
+from students.models import Student
+from staff.models import Teacher
+from students.forms import StudentUpdateForm
 from users.forms import UserRegisterForm
 from curriculum.models import SchoolIdentity
 from curriculum.models import Standard
@@ -281,82 +281,3 @@ def my_class_teacher(request):
     my_teacher = Teacher.objects.get(class_in_charge=student.class_id)
     return render (request, 'students/my_teacher_detail.html', {'my_teacher':my_teacher})
 
-
-# My Logic For Student Attendance
-# Helper function to check if the user is a teacher
-def is_teacher(user):
-    return hasattr(user, 'teacher') # Checks if the User object has an associated Teacher object
-
-@login_required
-@user_passes_test(is_teacher) # Ensures only teachers can access this view
-def mark_attendance(request, classroom_id):
-    today = date.today()
-    teacher = request.user.teacher # Get the logged-in teacher object
-
-    classroom = get_object_or_404(Standard, id=classroom_id)
-
-    # Ensure the logged-in teacher is assigned to this classroom
-    if teacher not in classroom.teachers.all():
-        return render(request, 'error_page.html', {'message': 'You are not assigned to this classroom.'})
-
-    students = classroom.students.all().order_by('name')
-
-    # Get existing attendance records for today for these students
-    initial_data = []
-    for student in students:
-        attendance_record, created = Attendance.objects.get_or_create(
-            student=student,
-            date=today,
-            defaults={'status': 'A', 'marked_by': teacher} # Default to absent if no record, marked by this teacher
-        )
-        initial_data.append({'id': attendance_record.id, 'status': attendance_record.status})
-
-    if request.method == 'POST':
-        formset = AttendanceFormSet(request.POST, queryset=Attendance.objects.filter(student__in=students, date=today))
-        if formset.is_valid():
-            instances = formset.save(commit=False) # Get the instances from the formset
-            try:
-                with transaction.atomic():
-                    for instance in instances:
-                        instance.marked_by = teacher # Ensure the teacher is set
-                        instance.date = today # Ensure the date is today
-                        instance.save()
-                return redirect('attendance_success', classroom_id=classroom.id) # Redirect on success
-            except IntegrityError:
-                # This should ideally not happen due to get_or_create, but good for robustness
-                formset.add_error(None, "Could not save attendance due to a data conflict.")
-        else:
-            print(formset.errors) # Debugging formset errors
-    else:
-        # For GET request, populate formset with existing or default attendance
-        formset = AttendanceFormSet(queryset=Attendance.objects.filter(student__in=students, date=today))
-
-    context = {
-        'classroom': classroom,
-        'students': students,
-        'formset': formset,
-        'today': today,
-    }
-    return render(request, 'mark_attendance.html', context)
-
-@login_required
-@user_passes_test(is_teacher)
-def teacher_dashboard(request):
-    teacher = request.user.teacher
-    # assigned_classrooms = teacher.class_in_charge.all() # Get classrooms assigned to this teacher
-    assigned_classrooms = teacher.class_in_charge # Get classrooms assigned to this teacher
-
-    context = {
-        'teacher': teacher,
-        'assigned_classrooms': assigned_classrooms,
-    }
-    return render(request, 'students/teacher_dashboard.html', context)
-
-@login_required
-@user_passes_test(is_teacher)
-def attendance_success(request, classroom_id):
-    classroom = get_object_or_404(Class, id=classroom_id)
-    context = {
-        'classroom': classroom,
-    }
-    return render(request, 'attendance_success.html', context)

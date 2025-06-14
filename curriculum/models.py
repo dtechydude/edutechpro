@@ -10,7 +10,8 @@ from django_ckeditor_5.fields import CKEditor5Field
 from embed_video.fields import EmbedVideoField
 from django.core.exceptions import ValidationError
 from djrichtextfield.models import RichTextField
-
+from portal.models import Dept
+from staff.models import Teacher
 
 
 # Register School
@@ -82,6 +83,7 @@ class Dept(models.Model):
     def __str__(self):
         return self.name
 
+
 # academic subjects
 class Subject(models.Model):
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
@@ -104,17 +106,21 @@ class Subject(models.Model):
 
 class Standard(models.Model):
     # courses = models.ManyToManyField(Course, default=1)
-    id = models.CharField(primary_key='True', max_length=100)
+    # id = models.CharField(primary_key='True', max_length=100)
+    name = models.CharField(max_length=100)
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
     section = models.CharField(max_length=100)
     sem = models.IntegerField()
+    teachers = models.ManyToManyField(Teacher, related_name='classrooms')
 
     class Meta:
         verbose_name_plural = 'classes'
 
+    # def __str__(self):
+    #     d = Dept.objects.get(name=self.dept)
+    #     return '%s : %s %s' % (self.id, d.name, self.section)
     def __str__(self):
-        d = Dept.objects.get(name=self.dept)
-        return '%s : %s %s' % (self.id, d.name, self.section)
+        return self.name
     
 
 

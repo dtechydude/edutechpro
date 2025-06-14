@@ -783,7 +783,7 @@
 							{% elif user.student %}
 							{% for idcard in my_idcard %}							
 							<a href="{% url 'students:idcard-pdf-view' pk=idcard.pk  %}">My ID CARD</a>
-							{% endfor %}							
+							{% endfor %}												
 							<li><a href="{% url 'staff:my_teacher_view' %}">My Teacher</a></li>
 							<li><a href="{% url 'staff:teacher-list' %}">My Class Mates</a></li>
 							<li><a href="{% url 'staff:teacher-list' %}">My Hostel</a></li>												

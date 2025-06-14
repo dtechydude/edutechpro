@@ -4,8 +4,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from datetime import timedelta
-from curriculum.models import  Dept, Subject, Standard
+from portal.models import Dept
+# from curriculum.utils import Subject, Standard, Dept
 from django.template.defaultfilters import slugify
+# from portal.models import Standard, Dept
 
 
 
@@ -29,6 +31,7 @@ DAYS_OF_WEEK = (
     ('Friday', 'Friday'),
     ('Saturday', 'Saturday'),
 )
+
 
 
 # Staff Module
@@ -130,6 +133,21 @@ class Staff(models.Model):
     def __str__(self):
         return self.full_name
 
+# class Standard(models.Model):
+#     # courses = models.ManyToManyField(Course, default=1)
+#     id = models.CharField(primary_key='True', max_length=100)
+#     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+#     section = models.CharField(max_length=100)
+#     sem = models.IntegerField()
+#     teachers = models.ManyToManyField(Teacher, related_name='classrooms')
+
+#     class Meta:
+#         verbose_name_plural = 'classes'
+
+#     def __str__(self):
+#         d = Dept.objects.get(name=self.dept)
+#         return '%s : %s %s' % (self.id, d.name, self.section)
+
 
 # Teacher Module
 class Teacher(models.Model):
@@ -137,7 +155,7 @@ class Teacher(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     full_name = models.CharField(max_length=100, help_text='First_Name, Middle_Name, Last_Name')
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1, related_name='my_dept')
-    class_in_charge = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True, related_name='myclasses')
+    # class_in_charge = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True, related_name='myclasses')
     
 
     female = 'female'
@@ -208,22 +226,23 @@ class Teacher(models.Model):
 
 
 
-class Assign(models.Model):
-    class_id = models.ForeignKey(Standard, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+# class Assign(models.Model):
+#     class_id = models.ForeignKey(Standard, on_delete=models.CASCADE)
+#     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = (('subject', 'class_id', 'teacher'),)
+#     class Meta:
+#         unique_together = (('subject', 'class_id', 'teacher'),)
 
-    def __str__(self):
-        cl = Standard.objects.get(id=self.class_id_id)
-        cr = Subject.objects.get(id=self.subject_id)
-        te = Teacher.objects.get(id=self.teacher_id)
-        return '%s : %s : %s' % (te.full_name, cr.shortname, cl)
+#     def __str__(self):
+#         cl = Standard.objects.get(id=self.class_id_id)
+#         cr = Subject.objects.get(id=self.subject_id)
+#         te = Teacher.objects.get(id=self.teacher_id)
+#         return '%s : %s : %s' % (te.full_name, cr.shortname, cl)
     
 
-class AssignTime(models.Model):
-    assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
-    period = models.CharField(max_length=50, choices=time_slots, default='11:00 - 11:50')
-    day = models.CharField(max_length=15, choices=DAYS_OF_WEEK)
+# class AssignTime(models.Model):
+#     assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
+#     period = models.CharField(max_length=50, choices=time_slots, default='11:00 - 11:50')
+#     day = models.CharField(max_length=15, choices=DAYS_OF_WEEK)
+

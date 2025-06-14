@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.contrib.auth.models import User
 from students.models import Student
-from staff.models import Staff, Teacher, Assign
+from staff.models import Staff, Teacher
 from users.models import Profile
 from curriculum.models import Standard
+# from portal.models import Standard
 from payments.models import PaymentDetail1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
@@ -37,8 +38,8 @@ def portal_home(request):
     teacher_num = Teacher.objects.count()    
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))
     students = Student.objects.filter().order_by('class_id').values('class_id__section').annotate(count=Count('class_id__section'))
-    my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
-    no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
+    # my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
+    # no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
     classrooms = Standard.objects.all()
 
     try:
@@ -74,8 +75,8 @@ def portal_home(request):
         'queryset': queryset,
         'events':events,
         'my_idcard':my_idcard,
-        'my_students':my_students,
-        'no_inteacherclass': no_inteacherclass,
+        # 'my_students':my_students,
+        # 'no_inteacherclass': no_inteacherclass,
         'classrooms':classrooms
     }
         

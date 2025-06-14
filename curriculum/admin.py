@@ -1,5 +1,5 @@
 from django.contrib import admin
-from curriculum.models import SchoolIdentity, Lesson, Subject, Session
+from curriculum.models import SchoolIdentity, Lesson, Subject, Session, Standard, Dept
 from embed_video.admin import AdminVideoMixin
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
@@ -14,7 +14,22 @@ class SchoolIdentityAdmin(admin.ModelAdmin):
   
 class StandardAdmin(ImportExportModelAdmin, admin.ModelAdmin):
    
-    list_display=('name', 'description')
+    list_display=('id', 'section')
+    exclude = ['slug']
+
+class SessionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+   
+    list_display=('name', 'term')
+    exclude = ['slug']
+
+class DeptAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+   
+    list_display=('id', 'name')
+    exclude = ['slug']
+
+class SubjectAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+   
+    list_display=('id', 'shortname')
     exclude = ['slug']
 
 class ClassGroupAdmin(ImportExportModelAdmin, admin.ModelAdmin):
@@ -40,7 +55,7 @@ class LessonAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 # admin.site.register(Session, SessionAdmin)
 # admin.site.register(Standard, StandardAdmin)
 # admin.site.register(ClassGroup, ClassGroupAdmin)
-# admin.site.register(Subject, SubjectAdmin)
+
 
 
 
@@ -49,6 +64,11 @@ class LessonAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 # Register your models here.
 admin.site.register(SchoolIdentity, SchoolIdentityAdmin)
 admin.site.register(Lesson, LessonAdmin)
+admin.site.register(Standard, StandardAdmin)
+admin.site.register(Session, SessionAdmin)
+admin.site.register(Dept, DeptAdmin)
+admin.site.register(Subject, SubjectAdmin)
+
 
 class MyModelAdmin(AdminVideoMixin, admin.ModelAdmin):
     pass

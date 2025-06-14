@@ -104,7 +104,9 @@
     If found, please return to the school authority<br>
     Contact details as stated below;<br>
       {{ school_identity.address_line_1 }},<br>
-      {{ school_identity.address_line_2 }},<br>.<br>
+      {% if school_identity.address_line_2 %}
+      {{ school_identity.address_line_2 }},<br>
+      {% endif %}
         Phone:+234 {{ school_identity.phone1 }} </th>      
   </tr>  
   

@@ -43,9 +43,5 @@ urlpatterns = [
     #                                       filename='id_card.pdf'), name='id-card-pdf'),
 
 
-    # My Attendance Logic
-    path('teacher/dashboard/', students_views.teacher_dashboard, name='teacher_dashboard'),
-    path('teacher/attendance/<int:classroom_id>/', students_views.mark_attendance, name='mark_attendance'),
-    path('teacher/attendance/success/<int:classroom_id>/', students_views.attendance_success, name='attendance_success'),
      
 ]

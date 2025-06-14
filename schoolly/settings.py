@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'inventory.apps.InventoryConfig',
     'cbt.apps.CbtConfig',
     'transport.apps.TransportConfig',
+    'portal.apps.PortalConfig',
   
     # Installed Apps
     'django_ckeditor_5',
