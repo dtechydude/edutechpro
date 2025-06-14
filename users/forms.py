@@ -70,4 +70,4 @@ class TeacherEmploymentUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['full_name', 'qualification', 'year', 'marital_status', 'phone_home', 'professional_body', 'next_of_kin_name', 'next_of_kin_phone']
+        fields = ['first_name', 'qualification', 'year', 'marital_status', 'phone_home', 'professional_body', 'next_of_kin_name', 'next_of_kin_phone']

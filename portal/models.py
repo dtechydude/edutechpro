@@ -13,6 +13,7 @@ from djrichtextfield.models import RichTextField
 # from staff.models import Teacher
 
 
+
 # school departments e.g pre-nursery, nursery, junior sec, senior sec
 
 class Dept(models.Model):
@@ -21,31 +22,17 @@ class Dept(models.Model):
 
     def __str__(self):
         return self.name
-
-
-# class Standard(models.Model):
-#     # courses = models.ManyToManyField(Course, default=1)
-#     id = models.CharField(primary_key='True', max_length=100)
-#     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
-#     section = models.CharField(max_length=100)
-#     sem = models.IntegerField()
-#     teachers = models.ManyToManyField(Teacher, related_name='classrooms')
-
-#     class Meta:
-#         verbose_name_plural = 'classes'
-
-#     def __str__(self):
-#         d = Dept.objects.get(name=self.dept)
-#         return '%s : %s %s' % (self.id, d.name, self.section)
+    
 
 
 
 
-# # Teacher Module
+#  #Teacher Module
 # class Teacher(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-#     id = models.CharField(primary_key=True, max_length=100)
-#     full_name = models.CharField(max_length=100, help_text='First_Name, Middle_Name, Last_Name')
+#     first_name = models.CharField(max_length=20)
+#     middle_name = models.CharField(max_length=20, blank=True, null=True)
+#     last_name = models.CharField(max_length=20)   
 #     dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1, related_name='my_dept')
 #     class_in_charge = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True, related_name='myclasses')
     
@@ -114,5 +101,4 @@ class Dept(models.Model):
 
  
 #     def __str__(self):
-#         return self.full_name
-
+#         return self.first_name

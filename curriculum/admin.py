@@ -1,5 +1,5 @@
 from django.contrib import admin
-from curriculum.models import SchoolIdentity, Lesson, Subject, Session, Standard, Dept
+from curriculum.models import SchoolIdentity, Lesson, Subject, Session, Standard, Dept, ClassGroup
 from embed_video.admin import AdminVideoMixin
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
@@ -12,62 +12,45 @@ class SchoolIdentityAdmin(admin.ModelAdmin):
     list_display=('name', 'phone1', 'email')
     exclude = ['slug',]
   
-class StandardAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-   
-    list_display=('id', 'section')
-    exclude = ['slug']
-
 class SessionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
    
-    list_display=('name', 'term')
+    list_display=('name', 'term', 'start_date', 'end_date')
     exclude = ['slug']
 
-class DeptAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class StandardAdmin(ImportExportModelAdmin, admin.ModelAdmin):
    
-    list_display=('id', 'name')
-    exclude = ['slug']
-
-class SubjectAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-   
-    list_display=('id', 'shortname')
+    list_display=('name',)
     exclude = ['slug']
 
 class ClassGroupAdmin(ImportExportModelAdmin, admin.ModelAdmin):
        
-    list_display=('name', 'description',)
+    list_display=('name',)
     exclude = ['slug']
 
-# class SubjectAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+class SubjectAdmin(ImportExportModelAdmin, admin.ModelAdmin):
        
-#     list_display=('subject_id', 'name', 'standard')
-#     exclude = ['slug']
+    list_display=('subject_id', 'name', 'standard')
+    exclude = ['slug']
 
 class LessonAdmin(ImportExportModelAdmin, admin.ModelAdmin):
        
-    list_display=(  'class_id', 'subject', 'lesson_id', 'name' )
-    list_filter = ['class_id',]
-    search_fields = ('class_id__id', 'subject__name')
+    list_display=(  'standard', 'subject', 'lesson_id', 'name' )
+    list_filter = ['standard',]
+    search_fields = ('standard__name', 'subject__name')
     raw_id_fields = ['created_by',]
     exclude = ['slug']
 
 
 
-# admin.site.register(Session, SessionAdmin)
-# admin.site.register(Standard, StandardAdmin)
-# admin.site.register(ClassGroup, ClassGroupAdmin)
-
-
-
-
-
-
-# Register your models here.
-admin.site.register(SchoolIdentity, SchoolIdentityAdmin)
-admin.site.register(Lesson, LessonAdmin)
-admin.site.register(Standard, StandardAdmin)
 admin.site.register(Session, SessionAdmin)
-admin.site.register(Dept, DeptAdmin)
+admin.site.register(Standard, StandardAdmin)
+admin.site.register(ClassGroup, ClassGroupAdmin)
 admin.site.register(Subject, SubjectAdmin)
+admin.site.register(Lesson, LessonAdmin)
+
+
+
+
 
 
 class MyModelAdmin(AdminVideoMixin, admin.ModelAdmin):

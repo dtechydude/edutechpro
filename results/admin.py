@@ -36,7 +36,7 @@ class ResultSheet1Admin(ImportExportModelAdmin, admin.ModelAdmin):
     inlines = [MotorAbility1Inline, ResultImage1Inline] 
     exclude =['remark', 'student_id']
     list_display=('student_detail', 'exam',)
-    list_filter  = ['student_detail__class_id']
+    list_filter  = ['student_detail__standard']
     search_fields = ('student_detail__student_username', 'student_detail__full_name')
     raw_id_fields = ['student_id', 'student_detail',]
 
@@ -58,10 +58,10 @@ class ResultImage2Inline(admin.TabularInline):
 
 class ResultSheet2Admin(admin.ModelAdmin):
     inlines = [MotorAbility2Inline, ResultImage2Inline] 
-    exclude =['remark', 'student_id']
+    exclude =['remark', 'standard']
     list_display=('student_detail', 'exam',)
-    list_filter  = ['student_detail__class_id']
-    search_fields = ('student_detail__student_username', 'student_detail__full_name')
+    list_filter  = ['student_detail__standard']
+    search_fields = ('student_detail__student_username', 'student_detail__first_name')
     raw_id_fields = ['student_id', 'student_detail']
 
 
@@ -87,8 +87,8 @@ class ResultSheet3Admin(admin.ModelAdmin):
     inlines = [MotorAbility3Inline, ResultImage3Inline] 
     exclude =['remark', 'student_id']
     list_display=('student_detail', 'exam',)
-    list_filter  = ['student_detail__class_id']
-    search_fields = ('student_detail__student_username', 'student_detail__full_name')
+    list_filter  = ['student_detail__standard']
+    search_fields = ('student_detail__student_username', 'student_detail__first_name')
     raw_id_fields = ['student_id', 'student_detail', 'first_term', 'second_term']
 
 

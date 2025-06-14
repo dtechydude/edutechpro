@@ -10,7 +10,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from embed_video.fields import EmbedVideoField
 from django.core.exceptions import ValidationError
 from djrichtextfield.models import RichTextField
-from portal.models import Dept
+# from portal.models import Dept
 from staff.models import Teacher
 
 
@@ -84,13 +84,36 @@ class Dept(models.Model):
         return self.name
 
 
-# academic subjects
-class Subject(models.Model):
+# # academic subjects
+# class Subject(models.Model):
+#     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+#     id = models.CharField(primary_key='True', max_length=50)    
+#     name = models.CharField(max_length=50)
+#     shortname = models.CharField(max_length=50, default='X')
+#     slug = models.SlugField(null=True, blank=True)
+
+#     def __str__(self):
+#         return self.name
+    
+#     def save(self, *args, **kwargs):
+#         self.slug = slugify(self.name)
+#         super().save(*args, **kwargs)
+
+#     class Meta:
+#       verbose_name = 'Subjects'
+#       verbose_name_plural = 'Subjects'
+
+
+class Standard(models.Model):   
+    name = models.CharField(max_length=100)
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
-    id = models.CharField(primary_key='True', max_length=50)    
-    name = models.CharField(max_length=50)
-    shortname = models.CharField(max_length=50, default='X')
+    section = models.CharField(max_length=100, blank=True, null=True)
+    teachers = models.ManyToManyField(Teacher, related_name='classrooms')
     slug = models.SlugField(null=True, blank=True)
+
+
+    class Meta:
+        verbose_name_plural = 'classes'
 
     def __str__(self):
         return self.name
@@ -98,29 +121,6 @@ class Subject(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-
-    class Meta:
-      verbose_name = 'Subjects'
-      verbose_name_plural = 'Subjects'
-
-
-class Standard(models.Model):
-    # courses = models.ManyToManyField(Course, default=1)
-    # id = models.CharField(primary_key='True', max_length=100)
-    name = models.CharField(max_length=100)
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
-    section = models.CharField(max_length=100)
-    sem = models.IntegerField()
-    teachers = models.ManyToManyField(Teacher, related_name='classrooms')
-
-    class Meta:
-        verbose_name_plural = 'classes'
-
-    # def __str__(self):
-    #     d = Dept.objects.get(name=self.dept)
-    #     return '%s : %s %s' % (self.id, d.name, self.section)
-    def __str__(self):
-        return self.name
     
 
 
@@ -138,9 +138,64 @@ def save_lesson_files(instance, filename):
 
 
 
+class ClassGroup(models.Model):
+    name = models.CharField(max_length=50, blank=True)
+    description = models.CharField(max_length=120, blank=True)
+    slug = models.SlugField(null=True, blank=True)
+    
+    def __str__ (self):
+        return f'{self.name}'
+        
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
+
+def save_subject_image(instance, filename):
+    upload_to = 'Images/'
+    ext = filename.split('.')[-1]
+    # get file name
+    if instance.user.username:
+        filename = 'Subject_Pictures/{}.{}'.format(instance.subject_id, ext)
+    return os.path.join(upload_to, filename)
+
+
+class Subject(models.Model):
+    subject_id = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE, related_name='subjects')
+    # image = models.ImageField(upload_to=save_subject_image, blank=True, verbose_name='Subject Image')
+    description = models.TextField(max_length=500, blank=True)
+    slug = models.SlugField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.subject_id)
+        super().save(*args, **kwargs)
+
+    class Meta:
+      verbose_name = 'Subjects'
+      verbose_name_plural = 'Subjects'
+
+
+def save_lesson_files(instance, filename):
+    upload_to = 'Images/'
+    ext = filename.split('.')[-1]
+    # get file name
+    if instance.lesson_id:
+        filename = 'lesson_files/{}.{}'.format(instance.lesson_id,instance.lesson_id, ext)
+        if os.path.exists(filename):
+            new_name = str(instance.lesson_id) + str('1')
+            filename = 'lesson_images/{}/{}.{}'.format(instance.lesson_id,new_name, ext)
+    
+    return os.path.join(upload_to, filename)
+
 class Lesson(models.Model):
     lesson_id = models.CharField(max_length=100, unique=True)
-    class_id = models.ForeignKey(Standard, on_delete=models.CASCADE)
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='lessons')
     name = models.CharField(max_length=250)
     position = models.PositiveSmallIntegerField(verbose_name="Chapter no.")
@@ -150,8 +205,8 @@ class Lesson(models.Model):
     # video_url = EmbedVideoField(null=True,blank=True)
     # ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
     Notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
-    comment = RichTextField(blank=True, null=True)
-    # comment = CKEditor5Field('Text', config_name='extends')
+    #comment = RichTextField(blank=True, null=True)
+    comment = CKEditor5Field('Text', config_name='extends')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(null=True, blank=True)
@@ -173,6 +228,7 @@ class Lesson(models.Model):
     def html_stripped(self):
        
        return strip_tags(self.comment)
+            
             
 
 # comment module
@@ -203,3 +259,6 @@ class Reply(models.Model):
 
     def __str__(self):
         return "reply to" + str(self.comment_name.comm_name)
+    
+
+#
