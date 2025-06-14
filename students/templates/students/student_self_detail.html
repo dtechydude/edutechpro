@@ -99,7 +99,7 @@
 									</div>
 									<div class="profile-details">
 										<div class="profile-name px-3 pt-2">
-											<h4 class="text-primary mb-0">{{ student.full_name }} </h4>
+											<h4 class="text-primary mb-0">{{ student.first_name }} {{ student.last_name }} </h4>
 											<p>Full Name</p>
 										</div>
 										<div class="profile-email px-2 pt-2">
@@ -190,7 +190,11 @@
 											<h5 class="text-primary d-inline">Student's Bio</h5>
 											<img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100">
 											<h4><a href="post-details.html" class="text-black">{{ student.user.first_name }} {{ student.user.last_name}}</a></h4>
-											<p class="mb-0">{{ student.user.profile.bio }}</p>
+											{% if student.user.profile.bio %}
+                                            <p class="mb-0">{{ student.user.profile.bio }}</p>
+                                            {% else %}
+                                            <p class="mb-0">Profile has not been updated yet</p>
+                                            {% endif %}
 										</div>
 									</div>
 								</div>
@@ -252,7 +256,7 @@
                                                             <h5 class="f-w-500">Full Name <span class="pull-end">:</span>
                                                             </h5>                                                            
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ student.full_name }}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ student.first_name }} {{ student.last_name }}</span>
                                                         </div>
                                                            
                                                     </div>

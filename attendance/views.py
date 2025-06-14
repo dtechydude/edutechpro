@@ -290,7 +290,7 @@ def mark_attendance(request, standard_id):
     if teacher not in classroom.teachers.all():
         return render(request, 'attendance/error_page.html', {'message': 'You are not assigned to this classroom.'})
 
-    students = classroom.students.all().order_by('full_name')
+    students = classroom.students.all().order_by('last_name')
 
     # Get existing attendance records for today for these students
     initial_data = []

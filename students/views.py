@@ -35,7 +35,7 @@ from datetime import date
 #Displays all students
 def student_list(request):
     all_students = Student.objects.all().order_by('-date_admitted')
-    my_students = Student.objects.filter(class_teacher__user=request.user).order_by('user')
+    my_students = Student.objects.filter(form_teacher__user=request.user).order_by('user')
 
     
     context ={

@@ -222,4 +222,4 @@ class Attendance(models.Model):
         unique_together = ('student', 'date') # A student can only have one attendance record per day
 
     def __str__(self):
-        return f"{self.student.full_name} - {self.date} - {self.get_status_display()}"
+        return f"{self.student.first_name}  {self.student.last_name} - {self.date} - {self.get_status_display()}"

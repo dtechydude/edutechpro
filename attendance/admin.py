@@ -17,9 +17,7 @@ from .models import Attendance
 
 class AttendanceAdmin(admin.ModelAdmin):
  
-    list_display = ('student', 'date')
-    # search_fields = ('name', 'id')
-    # ordering = ['name']
-
+    list_display = ('student', 'date',  'status', 'marked_by' )
+  
 
 admin.site.register(Attendance, AttendanceAdmin)

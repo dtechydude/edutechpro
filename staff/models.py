@@ -62,7 +62,7 @@ class Staff(models.Model):
     ]
 
     marital_status = models.CharField(max_length=15, choices=marital_status, default=select)
-    phone_home = models.CharField(max_length=15, null=True, blank=True)
+    phone_home = models.CharField(max_length=11, null=True, blank=True)
 
     # Academic information
     qualification = models.CharField(max_length=150, default='OND')  
@@ -148,7 +148,7 @@ class Teacher(models.Model):
     ]
 
     marital_status = models.CharField(max_length=15, choices=marital_status, default=select)
-    phone_home = models.CharField(max_length=15, null=True, blank=True)
+    phone_home = models.CharField(max_length=11, null=True, blank=True)
 
     # Academic information
     qualification = models.CharField(max_length=150, default='OND')  

@@ -39,7 +39,7 @@ def my_teacher_view(request):
         student_profile = Student.objects.get(user=logged_in_user)
 
         # Get the teacher associated with this student
-        my_teacher = student_profile.class_teacher
+        my_teacher = student_profile.form_teacher
 
         context = {
             'student': student_profile,

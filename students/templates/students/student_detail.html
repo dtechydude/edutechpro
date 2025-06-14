@@ -190,7 +190,12 @@
 											<h5 class="text-primary d-inline">Student's Bio</h5>
 											<img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100">
 											<h4><a href="post-details.html" class="text-black">{{ student.user.first_name }} {{ student.user.last_name}}</a></h4>
-											<p class="mb-0">{{ student.user.profile.bio }}</p>
+											
+                                            {% if student.user.profile.bio %}
+                                            <p class="mb-0">{{ student.user.profile.bio }}</p>
+                                            {% else %}
+                                            <p class="mb-0">Profile has not been updated yet</p>
+                                            {% endif %}
 										</div>
 									</div>
 								</div>

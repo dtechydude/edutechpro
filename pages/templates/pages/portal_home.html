@@ -778,7 +778,7 @@
 							
 							{% elif user.teacher %}							
 							<li><a href="{% url 'students:student-list' %}">My Students</a></li>																
-							<li><a href="./app-calender.html">Calendar</a></li>
+							<li><a href="{% url 'attendance:teacher_dashboard' %}">Mark Attendance</a></li>
 							
 							{% elif user.student %}
 							{% for idcard in my_idcard %}							

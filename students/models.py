@@ -85,7 +85,7 @@ class Hostel(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, help_text='select user or add a new user')    
-    # # USN = models.CharField(primary_key='True', max_length=100, help_text='Unique Student Number, Must be same as username')
+    USN = models.CharField(primary_key='True', max_length=100, help_text='Unique Student Number, Must be same as username')
     # full_name = models.CharField(max_length=200, help_text='First_Name, Middle_name, Last_Name')
     # # class_id = models.ForeignKey(Standard, on_delete=models.CASCADE, default=1, related_name='students', help_text='The Student Current Class')
     first_name = models.CharField(max_length=20)
@@ -178,7 +178,7 @@ class Student(models.Model):
     student_status = models.CharField(max_length=15, choices=student_status, default=active)
 
     def __str__(self):
-        return self.full_name
+        return self.first_name
     
     class Meta:
         ordering = ['user']   

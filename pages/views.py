@@ -37,13 +37,13 @@ def portal_home(request):
     staff_num = Staff.objects.count()
     teacher_num = Teacher.objects.count()    
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))
-    students = Student.objects.filter().order_by('class_id').values('class_id__section').annotate(count=Count('class_id__section'))
+    students = Student.objects.filter().order_by('standard').values('standard__section').annotate(count=Count('standard__section'))
     # my_students = Assign.objects.filter(teacher__user=request.user).order_by('class_id')
     # no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
     classrooms = Standard.objects.all()
 
     try:
-        num_inclass = Student.objects.filter(class_id = request.user.student.class_id).count()
+        num_inclass = Student.objects.filter(standard = request.user.student.standard).count()
     except Student.DoesNotExist:
         num_inclass = Student.objects.filter()
     # Build a paginator with function based view

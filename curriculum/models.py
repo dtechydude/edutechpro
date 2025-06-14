@@ -106,7 +106,7 @@ class Dept(models.Model):
 
 class Standard(models.Model):   
     name = models.CharField(max_length=100)
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, blank=True, null=True)
     section = models.CharField(max_length=100, blank=True, null=True)
     teachers = models.ManyToManyField(Teacher, related_name='classrooms')
     slug = models.SlugField(null=True, blank=True)
