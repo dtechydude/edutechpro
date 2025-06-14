@@ -106,14 +106,15 @@
                             </div>
                             <div class="card-body">
                                 <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height370">
+                                    {% for s in school_contact %}
                                     <ul class="timeline">
+                                        
                                         <li>
-                                            <div class="timeline-badge primary"></div>
+                                           <div class="timeline-badge primary"></div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
-                                                <p class="mb-0"> Quisque a consequat ante Sit amet magna at volutapt...
-                                                    Quisque a consequat ante Sit amet magna at volutapt...
+                                                <span>School Full Name</span>
+                                                <h6 class="mb-0">{{ s.name }} <strong class="text-primary">#</strong>.</h6>
+                                                <p class="mb-0"> School's Name
                                                 </p>
                                             </a>
                                         </li>
@@ -121,44 +122,38 @@
                                             <div class="timeline-badge info">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-												<p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
+                                                <span>School's Phones</span>
+                                                <h6 class="mb-0">{{ s.phone1 }} <strong class="text-info">PHONE.</strong></h6>
+												<p class="mb-0">{{s.phone2}}</p>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="timeline-badge danger">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
+                                                <span>School's EMAIL</span>
+                                                <h6 class="mb-0">{{ s.email }} <strong class="text-warning">Sell $250</strong></h6>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="timeline-badge success">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
+                                                <span>School's Physical Address</span>
+                                                <h6 class="mb-0">{{ s.address_line_1 }} </h6>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="timeline-badge warning">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
+                                                <span>School's Address 2</span>
+                                                <h6 class="mb-0">{{ s.address_line_2 }}</h6>
                                             </a>
                                         </li>
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
+                                                                                                                 
                                     </ul>
+                                    {% endfor %}   
                                 </div>
                             </div>
                         </div>
@@ -174,51 +169,36 @@
                                         <li>
                                             <div class="timeline-badge primary"></div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
+                                                <span>Contact via mails</span>
+                                                <h6 class="mb-0">Email: schoollyapp@gmail.com <strong class="text-primary">24/7</strong>.</h6>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="timeline-badge info">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-												<p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
+                                                <span>Contact via Phone/WhatsApp</span>
+                                                <h6 class="mb-0">+234 8083542954 <strong class="text-info">Work Hours.</strong></h6>
+												<p class="mb-0">You can send text messages or drop a WhatsApp chat. Direct phone calls only during working hours</p>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="timeline-badge danger">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
+                                                <span>Social Media Connect</span>
+                                                <h6 class="mb-0">FACEBOOK, INSTAGRAM, X, YOUTUBE, TIKTOK <strong class="text-warning">@schoollyapp, or @schoollyedtech</strong></h6>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="timeline-badge success">
                                             </div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
+                                                <span>Visit our website</span>
+                                                <h6 class="mb-0">https://schoolly.com.ng </h6>
                                             </a>
                                         </li>
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
+                                       
                                     </ul>
                                 </div>
                             </div>

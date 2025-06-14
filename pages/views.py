@@ -14,6 +14,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import  DetailView
+from curriculum.models import SchoolIdentity
 
 
 # Create your views here.
@@ -87,7 +88,8 @@ def help_center(request):
     return render(request, 'pages/help_center.html')
 
 def support_info(request):
-    return render(request, 'pages/support_info.html')
+    school_contact = SchoolIdentity.objects.all()
+    return render(request, 'pages/support_info.html', {'school_contact':school_contact})
 
 def lock_screen(request):
     return render(request, 'pages/lockscreen.html')
@@ -95,7 +97,7 @@ def lock_screen(request):
 def success_submission(request):
     return render(request, 'pages/success_submission.html')
 
-def record_result(request):
+def record_result(request):    
     return render(request, 'pages/record_result.html')
 
 

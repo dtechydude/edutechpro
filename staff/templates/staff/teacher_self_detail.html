@@ -98,7 +98,7 @@
 									</div>
 									<div class="profile-details">
 										<div class="profile-name px-3 pt-2">
-											<h4 class="text-primary mb-0">{{ teacher.full_name }} </h4>
+											<h4 class="text-primary mb-0">{{ teacher.last_name }} {{ teacher.first_name }} {% if teacher.middle_name %} {{ teacher.middle_name }} {% endif %} </h4>
 											<p>Full Name</p>
 										</div>
 										<div class="profile-email px-2 pt-2">
@@ -107,10 +107,7 @@
 										</div>
 										<div class="dropdown ms-auto">
 											<a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
-											<ul class="dropdown-menu dropdown-menu-end">
-												<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
-												<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to </li>
-																								
+											
 											</ul>
 										</div>
 									</div>
@@ -195,9 +192,8 @@
 									<div class="card-body">
 										<div class="profile-blog">
 											<h5 class="text-primary d-inline">Teacher's Bio</h5>
-											<img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100">
-											<h4><a href="post-details.html" class="text-black">{{ teacher.user.first_name }} {{ teacher.user.last_name}}</a></h4>
-											<p class="mb-0">{{ teacher.user.profile.bio|slice:":150"  }}</p>
+											<h4><a href="#" class="text-black">{{ teacher.user.first_name }} {{ teacher.user.last_name}}</a></h4>
+											<p class="mb-0"> {% if teacher.user.profile.bio %}{{ teacher.user.profile.bio|slice:":150" }} {% else %} You've Not Updated Bio {% endif %}</p>
 										</div>
 									</div>
 								</div>
@@ -262,7 +258,7 @@
                                                             <h5 class="f-w-500">Full Name <span class="pull-end">:</span>
                                                             </h5>                                                            
                                                         </div>
-                                                        <div class="col-sm-9 col-7"><span>{{ teacher.full_name }}</span>
+                                                        <div class="col-sm-9 col-7"><span>{{ teacher.user.first_name }} {{ teacher.user.last_name}}</span>
                                                         </div>                                                           
                                                     </div>
                                                     <div class="row mb-2">
