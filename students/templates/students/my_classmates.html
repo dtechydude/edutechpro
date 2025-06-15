@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Classmates</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: auto; background: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #eef; margin-bottom: 8px; padding: 10px; border-radius: 4px; }
+        .no-classmates { color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Classmates</h1>
+
+        {% if student %}
+            <p>Hello, {{ student.user.username }}!</p>
+            {% if standard %}
+                <p>You are in classroom: <strong>{{ standard.name }}</strong></p>
+
+                {% if classmates %}
+                    <h2>Classmates:</h2>
+                    <ul>
+                        {% for classmate in classmates %}
+                            <li> {{ classmate.last_name }} {{ classmate.first_name }}</li>
+                            {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="no-classmates">No other classmates found in your classroom.</p>
+                {% endif %}
+            {% else %}
+                <p class="no-classmates">You are not currently assigned to a classroom.</p>
+            {% endif %}
+        {% else %}
+            <p>No student profile found for your account. Please contact support.</p>
+            <p><a href="{% url 'create_student_profile' %}">Create Student Profile</a></p> {# Example link to create profile #}
+        {% endif %}
+    </div>
+</body>
+</html>

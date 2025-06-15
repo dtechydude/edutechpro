@@ -80,7 +80,7 @@
         <tbody>
             <tr>
                 <td style="font-size: 14px; text-align: center;"> {{ my_receipt.student_detail.USN }} </td>
-                <td style="font-size: 13px; text-align: center;"> {{ my_receipt.student_detail.full_name }} </td>
+                <td style="font-size: 13px; text-align: center;"> {{ my_receipt.payee.student.last_name }} {{ my_receipt.student_detail.first_name }} {% my_receipt.student_detail.middle_name %}{{ my_receipt.student_detail.middle_name }} </td>
                 <td style="font-size: 12px; text-align: center;"> {{ my_receipt.student_detail.class_id }} <br>{{ my_receipt.payment_name.session }}    </td>
                 <td>
                   {% if discount > 0 and my_receipt.total_amount_paid == my_receipt.discounted_amount_due %}

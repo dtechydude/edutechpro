@@ -91,7 +91,7 @@ def profile_edit(request):
 
     return render(request, 'users/profile.html', context)
 
-# BASIC PROFILE UPDATE
+# BASIC PROFILE UPDATE For Staff
 @login_required
 def employment_edit(request):
     if request.method == 'POST':

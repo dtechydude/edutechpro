@@ -140,7 +140,7 @@
                                                     {% elif p.amount_paid_b and p.confirmed_b == False %}
                                                     <span style="color:red;">N{{ p.amount_paid_b |floatformat:2 }}</span>
                                                     {% elif not p.amount_paid_b %}
-                                                    <span style="color:red;"><a href="">Add</a></span>                                                  
+                                                    <span style="color:red;"><a href="{% url 'payments:add_second_payment' %}">Add</a></span>                                                  
                                                 {% endif %}
                                               </td>
                                                 <td>{% if p.amount_paid_c and p.confirmed_c %}
@@ -148,7 +148,7 @@
                                                     {% elif p.amount_paid_c and p.confirmed_c == False %}
                                                     <span style="color:red;">N{{ p.amount_paid_c |floatformat:2 }}</span>
                                                     {% elif not p.amount_paid_c %}
-                                                    <span style="color:red;"> <a href="">Add</a></span>
+                                                    <span style="color:red;"> <a href="{% url 'payments:add_second_payment' %}">Add</a></span>
                                                 {% endif %}</td> 
                                                 <td> {{ p.total_amount_paid }}</td>                                              
                                                 <td> {% if p.payment_date_a and not p.payment_date_b and not p.payment_date_c %}

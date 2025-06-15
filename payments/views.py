@@ -391,7 +391,7 @@ def payment_report(request):
 
 
     context = {
-        'paymentlist': PaymentDetail.objects.all(),
+        'paymentlist': PaymentDetail1.objects.all(),
         # 'paymentreport_filter': paymentreport_filter,
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
@@ -588,6 +588,9 @@ def payment_instruction(request):
 
 def online_payment(request):
     return render(request, 'payments/online_payment.html')
+
+def add_second_payment(request):
+    return render(request, 'payments/add_second_payment.html')
 
 
 

@@ -777,7 +777,8 @@
 							<li><a href="{% url 'students:student-in-class' %}">No. In Class</a></li>
 							
 							{% elif user.teacher %}							
-							<li><a href="{% url 'students:student-list' %}">My Students</a></li>																
+							<li><a href="{% url 'students:student-list' %}">My Students</a></li>
+							<li><a href="{% url 'attendance:teacher_dashboard' %}">My Assinged Classes</a></li>																
 							<li><a href="{% url 'attendance:teacher_dashboard' %}">Mark Attendance</a></li>
 							
 							{% elif user.student %}
@@ -785,7 +786,7 @@
 							<a href="{% url 'students:idcard-pdf-view' pk=idcard.pk  %}">My ID CARD</a>
 							{% endfor %}												
 							<li><a href="{% url 'staff:my_teacher_view' %}">My Teacher</a></li>
-							<li><a href="{% url 'staff:teacher-list' %}">My Class Mates</a></li>
+							<li><a href="{% url 'students:my_classmates' %}">My Class Mates</a></li>
 							<li><a href="{% url 'staff:teacher-list' %}">My Hostel</a></li>												
 							{% else %}
 							<li>No Access</a></li>
@@ -798,7 +799,7 @@
 							<span class="nav-text">Attendance</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="./form-element.html">Take Attendance</a></li>
+							<li><a href="/admin/attendance/attendance/">Take Attendance</a></li>
 							<li><a href="./form-wizard.html">Attendance Report</a></li>
 
 							

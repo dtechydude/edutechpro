@@ -99,7 +99,7 @@ def search(request):
 #count students in each class
 def student_in_class(request):
     students = Student.objects.all()
-    student_no = Student.objects.values('class_id').annotate(count=Count('class_id')).order_by('class_id')
+    student_no = Student.objects.values('standard').annotate(count=Count('standard')).order_by('standard')
 
     return render(request, 'students/student_no_in_class.html', {'students': students, 'student_no':student_no})
 
@@ -137,6 +137,8 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
         print(form.cleaned_data)
         return super().form_valid(form)
 
+     
+
 class StudentDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'students/student_delete.html'
     success_url = reverse_lazy('students:student-list')
@@ -145,96 +147,6 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Student, id=id_)
     
-
-
-
-# Students Marks
-@login_required()
-def marks_list(request, stud_id):
-    stud = Student.objects.get(USN=stud_id, )
-    ass_list = Assign.objects.filter(class_id_id=stud.class_id)
-    sc_list = []
-    for ass in ass_list:
-        try:
-            sc = StudentSubject.objects.get(student=stud, course=ass.course)
-        except StudentSubject.DoesNotExist:
-            sc = StudentSubject(student=stud, course=ass.course)
-            sc.save()
-            sc.marks_set.create(type='I', name='Internal test 1')
-            sc.marks_set.create(type='I', name='Internal test 2')
-            sc.marks_set.create(type='I', name='Internal test 3')
-            sc.marks_set.create(type='E', name='Event 1')
-            sc.marks_set.create(type='E', name='Event 2')
-            sc.marks_set.create(type='S', name='Semester End Exam')
-        sc_list.append(sc)
-
-    return render(request, 'students/marks_list.html', {'sc_list': sc_list})
-
-
-# teacher marks
-
-@login_required()
-def t_marks_list(request, assign_id):
-    ass = get_object_or_404(Assign, id=assign_id)
-    m_list = MarksClass.objects.filter(assign=ass)
-    return render(request, 'students/t_marks_list.html', {'m_list': m_list})
-
-
-@login_required()
-def t_marks_entry(request, marks_c_id):
-    mc = get_object_or_404(MarksClass, id=marks_c_id)
-    ass = mc.assign
-    c = ass.class_id
-    context = {
-        'ass': ass,
-        'c': c,
-        'mc': mc,
-    }
-    return render(request, 'students/t_marks_entry.html', context)
-
-
-@login_required()
-def marks_confirm(request, marks_c_id):
-    mc = get_object_or_404(MarksClass, id=marks_c_id)
-    ass = mc.assign
-    cr = ass.subject
-    cl = ass.class_id
-    for s in cl.student_set.all():
-        mark = request.POST[s.USN]
-        sc = StudentSubject.objects.get(subject=cr, student=s)
-        m = sc.marks_set.get(name=mc.name)
-        m.marks1 = mark
-        m.save()
-    mc.status = True
-    mc.save()
-
-    return HttpResponseRedirect(reverse('students:t_marks_list', args=(ass.id,)))
-
-
-@login_required()
-def edit_marks(request, marks_c_id):
-    mc = get_object_or_404(MarksClass, id=marks_c_id)
-    cr = mc.assign.subject
-    stud_list = mc.assign.class_id.student_set.all()
-    m_list = []
-    for stud in stud_list:
-        sc = StudentSubject.objects.get(subject=cr, student=stud)
-        m = sc.marks_set.get(name=mc.name)
-        m_list.append(m)
-    context = {
-        'mc': mc,
-        'm_list': m_list,
-    }
-    return render(request, 'students/edit_marks.html', context)
-
-
-@login_required()
-def student_marks(request, assign_id):
-    ass = Assign.objects.get(id=assign_id)
-    sc_list = StudentSubject.objects.filter(student__in=ass.class_id.student_set.all(), subject=ass.subject)
-    return render(request, 'students/t_student_marks.html', {'sc_list': sc_list})
-
-
 
 #generate IDCARD PDF
 @login_required
@@ -276,8 +188,33 @@ class MyTeacherDetailView(DetailView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Teacher, id=id_)
     
-def my_class_teacher(request):
-    student = Student.objects.filter(user = request.user)
-    my_teacher = Teacher.objects.get(class_in_charge=student.class_id)
-    return render (request, 'students/my_teacher_detail.html', {'my_teacher':my_teacher})
+# My Class Mates
+
+@login_required
+def my_classmates_view(request):
+    try:
+        # Get the logged-in user's student profile
+        student = request.user.student
+        
+        # Get the classroom the student belongs to
+        standard = student.standard
+
+        if standard:
+            # Get all other students in the same classroom, excluding the current student
+            classmates = Student.objects.filter(standard=standard).exclude(user=request.user)
+        else:
+            classmates = [] # No classroom assigned
+            
+        context = {
+            'student': student,
+            'standard': standard,
+            'classmates': classmates,
+        }
+        return render(request, 'students/my_classmates.html', context)
+    except Student.DoesNotExist:
+        # Handle cases where the logged-in user doesn't have a student profile
+        return render(request, 'students/no_student_profile.html', {})
+    except Exception as e:
+        # Generic error handling
+        return render(request, 'students/error.html', {'error_message': str(e)})
 

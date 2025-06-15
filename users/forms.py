@@ -57,16 +57,14 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 
-
 class UserTwoUpdateForm(forms.ModelForm):
    
     class Meta:
         model = User
-        fields = [ 'username', ]
+        fields = [ 'last_name', ]
 
 
-
-class TeacherEmploymentUpdateForm(forms.ModelForm):  
+class TeacherEmploymentUpdateForm(forms.ModelForm): 
 
     class Meta:
         model = Teacher

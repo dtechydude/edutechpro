@@ -349,3 +349,8 @@ def attendance_success(request, standard_id):
         'classroom': classroom,
     }
     return render(request, 'attendance/attendance_success.html', context)
+
+
+def attendance_report(request):
+    attendance_report = Attendance.objects.all()
+    return render(request, 'attendance/attendance_report.html', {'attendance_report':attendance_report})
