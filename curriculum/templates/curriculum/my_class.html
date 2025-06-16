@@ -10,8 +10,8 @@
             <div class="container-fluid">
 				<div class="row page-titles">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">E-LEARNING</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0)">My Current Class</a></li>
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Welcome!</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">E-LEARNING Class</a></li>
 					</ol>
                 </div>
                 <!-- row -->
@@ -20,7 +20,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <p class="">Click on the standard / your class name to explore the subjects for the e-learning</p>
+                                <p class="">Click on the standard / your class name or the computer icon to explore the subjects for the e-learning</p>
                               
                             </div>
                             
@@ -30,10 +30,10 @@
                                     <table class="table table-responsive-md">
                                         <thead>
                                             <tr>
-                                                <th style="width:80px;"><strong>ID</strong></th>
-                                                <th><strong>Standard Name</strong></th>
-                                                <th><strong>Description</strong></th>
-                                                <th><strong>STATUS</strong></th>
+                                                <th style="width:80px;"><strong></strong></th>
+                                                <th><strong>Standard</strong></th>
+                                                <th><strong>Dept.</strong></th>
+                                                <th><strong>Section</strong></th>
                                               
                                                 <th></th>
                                             </tr>
@@ -42,10 +42,10 @@
 											{% for standard in standards %} 
                                             <tr>
 												
-                                                <td><strong>{{ standard.id}}</strong></td>
+                                                <td><a href="{% url 'curriculum:subject_list' slug=standard.slug %}"><strong><i class="fa fa-desktop fa-3x" aria-hidden="true"></i></strong></a></td>
                                                 <td><a href="{% url 'curriculum:subject_list' slug=standard.slug %}"><h4>{{standard.name }}</h4></a></td>
-                                                <td>{{ standard.description }}</td>
-                                                <td>ACTIVE!</td>
+                                                <td>{% if standard.dept %}{{ standard.dept }}{% else %} Dept. Not Defined {% endif %}</td>
+                                                <td>{% if standard.section %}{{ standard.section }}{% else %} Section Not Defined {% endif %}</td>
                                                 <!-- <td><span class="badge light badge-success"><a href="{% url 'curriculum:subject_list' slug=standard.slug %}"><h4>EXPLORE</h4></a> </span></td> -->
                                                                                                 											
                                             </tr>

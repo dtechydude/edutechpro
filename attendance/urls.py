@@ -16,6 +16,12 @@ urlpatterns = [
     path('teacher/dashboard/', attendance_views.teacher_dashboard, name='teacher_dashboard'),
     path('teacher/attendance/<int:standard_id>/', attendance_views.mark_attendance, name='mark_attendance'),
     path('teacher/attendance/success/<int:standard_id>/', attendance_views.attendance_success, name='attendance_success'),
+    path('report/', attendance_views.attendance_report, name='attendance_report'),
+    path('students/', attendance_views.student_list, name='student_list'),
+    path('students/<str:USN>/attendance-summary/', attendance_views.student_attendance_summary, name='student_attendance_summary'),
+
 
 ]
+
+
 

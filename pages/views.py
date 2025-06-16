@@ -41,6 +41,8 @@ def portal_home(request):
     students = Student.objects.filter().order_by('standard').values('standard__section').annotate(count=Count('standard__section'))
     my_students = Student.objects.filter(form_teacher__user=request.user).order_by('first_name')
     # no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
+    # no_inteacherclass = Student.objects.filter(form_teacher=request.user).count()
+
     classrooms = Standard.objects.all()
 
     try:
@@ -58,6 +60,7 @@ def portal_home(request):
     except EmptyPage:
         events = paginator.page(paginator.num_pages)
     
+       
     context = {        
         'student_num': student_num,
         'boarder_std':boarder_std,
@@ -78,7 +81,9 @@ def portal_home(request):
         'my_idcard':my_idcard,
         'my_students':my_students,
         # 'no_inteacherclass': no_inteacherclass,
-        'classrooms':classrooms
+        'classrooms':classrooms,
+    
+
     }
         
     return render(request, 'pages/portal_home.html', context )    

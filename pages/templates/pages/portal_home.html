@@ -799,8 +799,9 @@
 							<span class="nav-text">Attendance</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="/admin/attendance/attendance/">Take Attendance</a></li>
-							<li><a href="./form-wizard.html">Attendance Report</a></li>
+							<li><a href="{% url 'attendance:teacher_dashboard' %}">Take Attendance</a></li>
+							<li><a href="{% url 'attendance:attendance_report' %}">Attendance Report</a></li>
+							<li><a href="{% url 'attendance:student_list' %}">Attendance SUMMARY</a></li>
 
 							
 						</ul>
@@ -1025,7 +1026,7 @@
 														<h5 class="mb-0 font-w600">{{ student_num }}</h5>
 														<p class="mb-0 text-nowrap ">Total Students</p>
 														{% elif user.is_authenticated and user.teacher %}
-														<h3 class="mb-0 font-w600">{{ no_inteacherclass }}</h3>
+														<h3 class="mb-0 font-w600">{{ total_students }}</h3>
 														<p class="mb-0 text-nowrap ">My Students</p>
 														{% elif user.is_authenticated and user.student %}
 														<h3 class="mb-0 font-w600">{{ num_inclass }}</h3>

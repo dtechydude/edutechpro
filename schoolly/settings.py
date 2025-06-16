@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django_filters',
     'embed_video',
     'djrichtextfield',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -196,5 +197,35 @@ DJRICHTEXTFIELD_CONFIG = {
         'plugins': 'link image',
         'toolbar': 'bold italic | link image | removeformat',
         'width': 700
+    }
+}
+
+
+TINYMCE = {
+    "default": {
+        "api_key": "3esfs97p8ehu9haq4lcn4xnoettt6z0qudwnz75g5rfddxrt", # <--- IMPORTANT: Replace with your actual TinyMCE API Key
+                                            # Get it from https://www.tiny.cloud/
+        "menubar": "file edit view insert format tools table help",
+        "plugins": (
+            "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
+            "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
+            "insertdatetime", "media", "table", "code", "paste", "help", "wordcount"
+        ),
+        "toolbar": (
+            "undo redo | blocks | fontfamily fontsize | "
+            "bold italic backcolor | alignleft aligncenter "
+            "alignright alignjustify | bullist numlist outdent indent | "
+            "removeformat | help"
+        ),
+        "height": 400,
+        "width": "100%",
+        "branding": False, # Set to True if you want TinyMCE branding (defaults to True)
+        "content_css": [ # Optional: Link to your site's CSS for consistent styling
+            "/static/css/tinymce-content.css", # Example path
+        ],
+        "browser_spellcheck": True,
+        "contextmenu": "link image table",
+        "custom_undo_redo_levels": 10,
+        "extended_valid_elements": "script[language|type|src|charset],img[*]", # Example: allow script and img attributes
     }
 }

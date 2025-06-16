@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Summary for {{ student.name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .summary-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+        .summary-box h2 { color: #333; }
+        .summary-box p { margin-bottom: 8px; }
+        .highlight { font-weight: bold; color: #007bff; }
+    </style>
+</head>
+<body>
+    <h1>Attendance Summary for {{ student.name }}</h1>
+
+    <div class="summary-box">
+        <h2>Report Period</h2>
+        <p>From: <span class="highlight">{{ start_date|date:"F j, Y" }}</span></p>
+        <p>To: <span class="highlight">{{ end_date|date:"F j, Y" }}</span></p>
+
+        <h3>Total Present Days: <span class="highlight">{{ total_present_days }}</span></h3>
+    </div>
+
+    <p style="margin-top: 20px;">
+        <a href="{% url 'attendance:student_list' %}">Back to Student List</a>
+    </p>
+</body>
+</html>

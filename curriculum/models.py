@@ -10,6 +10,8 @@ from django_ckeditor_5.fields import CKEditor5Field
 from embed_video.fields import EmbedVideoField
 from django.core.exceptions import ValidationError
 from djrichtextfield.models import RichTextField
+
+from tinymce.models import HTMLField
 # from portal.models import Dept
 from staff.models import Teacher
 
@@ -204,13 +206,10 @@ class Lesson(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='lessons')
     name = models.CharField(max_length=250)
     position = models.PositiveSmallIntegerField(verbose_name="Chapter no.")
-    # video = models.FileField(upload_to=save_lesson_files, verbose_name="video", blank=True, null=True)
     video = EmbedVideoField(blank=True, null=True)
-    # video = models.CharField(max_length=500, blank=True)
-    # video_url = EmbedVideoField(null=True,blank=True)
-    # ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
-    Notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
-    comment = RichTextField(blank=True, null=True)
+    notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
+    # comment = RichTextField(blank=True, null=True)
+    comment = HTMLField(blank=True, null=True)
     # comment = CKEditor5Field('Text', config_name='extends')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -21,7 +21,9 @@ urlpatterns = [
     path('cbt/', include('cbt.urls', namespace='cbt')),
     path('transport/', include('transport.urls', namespace='transport')),  
 
-    path('djrichtextfield/', include('djrichtextfield.urls'))
+    path('djrichtextfield/', include('djrichtextfield.urls')),
+
+    path('tinymce/', include('tinymce.urls')),
   
 ]
 
