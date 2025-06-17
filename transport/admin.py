@@ -17,7 +17,7 @@ class BusFeeAdmin(admin.ModelAdmin):
 
 
 class StudentBusPaymentAdmin(admin.ModelAdmin):
-    list_display = ('payee_id', 'route', 'payment')
+    list_display = ('payee_id', 'route', 'payment', 'amount_paid_a', 'confirmed_a')
     search_fields = ('route', 'payment')
     ordering = ['route',]
 

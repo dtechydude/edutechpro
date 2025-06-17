@@ -112,12 +112,12 @@
                                                 <td>{{ forloop.counter }}</td>
 												<td><strong>{{rt.payee_id}}</strong></td>
                                                 {% if rt.payee_id.student %}
-                                                <td>{{ rt.payee_id.student.full_name }}</td>
+                                                <td> <strong>{{ rt.payee_id.student.last_name }} </strong>{{ rt.payee_id.student.first_name }} {% if rt.payee_id.student.middle_name %} {{ rt.payee_id.student.middle_name }} {% endif %}</td>
                                                 {% else %}
                                                 <td>Not A Student</td>
                                                 {% endif %}
                                                 {% if rt.payee_id.student %}
-                                                <td>{{rt.payee_id.student.class_id }}</td>
+                                                <td>{{rt.payee_id.student.standard }}</td>
                                                 {% else %}
                                                 <td>N/A</td>
                                                 {% endif %}

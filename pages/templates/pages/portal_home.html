@@ -746,6 +746,8 @@
 							<li><a href="/admin/curriculum/schoolidentity/">Add/Edit School Info</a></li>
 							<li><a href="{% url 'users:all_users' %}">All Registered Users</a></li>
 							<li><a href="{% url 'students:student_search_list' %}">Search Students</a></li>
+							<li><a href="{% url 'pages:email_list' %}">Email List</a></li>
+							<li><a href="{% url 'pages:phone_list' %}">Phone List</a></li>
 							{% endif %}
 							{% if user.student or user.teacher or user.staff %}
 							<li><a href="{% url 'pages:portal-home' %}">Dashboard Home</a></li>
@@ -800,7 +802,7 @@
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{% url 'attendance:teacher_dashboard' %}">Take Attendance</a></li>
-							<li><a href="{% url 'attendance:attendance_report' %}">Attendance Report</a></li>
+							<li><a href="{% url 'attendance:attendance_report' %}">Attendance Daily Report</a></li>
 							<li><a href="{% url 'attendance:student_list' %}">Attendance SUMMARY</a></li>
 
 							
@@ -818,7 +820,7 @@
 							<li><a href="/admin/staff/staff/">Onboard Staff</a></li>						
 							<li><a href="{% url 'staff:staff-list' %}">Staff List</a></li>
 							<li><a href="{% url 'staff:teacher-list' %}">Teachers List</a></li>
-							<li><a href="{% url 'staff:assign-list' %}">Assign List</a></li>
+							<li><a href="{% url 'staff:cbv_all_teachers_student_counts' %}">Student's Count</a></li>
 					
 						</ul>
 					</li>
@@ -831,7 +833,7 @@
 						<ul aria-expanded="false">
 							{% if user.is_superuser or user.is_staff %}
 							<li><a href="{% url 'payments:payment_report' %}">Payment List</a></li>
-							<li><a href="#">Confirmed Payment</a></li>
+							<li><a href="{% url 'payments:confirmed_payment' %}">Confirmed Payment</a></li>
 							<li><a href="{% url 'payments:payment_summary' %}">Payment Summary</a></li>
 							<li><a href="{% url 'payments:debtor_list' %}">Debtors List</a></li>
 							<li><a href="{% url 'payments:bank-create' %}">Add Bank Info</a></li>
@@ -923,7 +925,7 @@
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
 							{% elif user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
-							<li><a href="/admin">Add Subjects & Lessons (Curriculum) </a></li>
+							<li><a href="/admin">Add Subjects & Lessons </a></li>
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>										
 																
 							{% endif %}

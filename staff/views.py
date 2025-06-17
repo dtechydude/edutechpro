@@ -226,3 +226,15 @@ def classroom_students(request, class_id):
         
     }
     return render(request, 'staff/classroom_students.html', context)
+
+
+class TeacherStudentCountListView(ListView):
+    model = Teacher
+    template_name = 'staff/all_teachers_student_counts.html'
+    context_object_name = 'teachers' # Renames the default 'object_list' to 'teachers'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for teacher in context['teachers']:
+            teacher.student_count = teacher.teacher.count() # Add student_count as an attribute
+        return context

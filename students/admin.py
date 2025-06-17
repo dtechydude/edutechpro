@@ -5,7 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 
 
 class HostelAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'hostel_master')
     search_fields = ('name',)
     ordering = ['name',]
     exclude = ('slug',)

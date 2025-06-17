@@ -13,8 +13,8 @@ from django.core.validators import MinLengthValidator, MaxValueValidator, MinVal
 
 
 class Route(models.Model):
+    route_id = models.CharField(max_length=8,null=True, blank=True, help_text='Could be Bus Number')
     name = models.CharField(max_length=200, blank=True )
-    route_id = models.CharField(max_length=8,null=True, blank=True)
     direction = models.CharField(max_length=200, blank=True)
     staff_in_charge = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True, related_name='official_staff')
     driver = models.ForeignKey(Staff, on_delete=models.CASCADE, default=None, null=True, related_name='bus_driver')
@@ -29,10 +29,10 @@ class Route(models.Model):
 
 
 class BusFee(models.Model):
-    amount_due = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Bus Fare', verbose_name='Bus Fare')
     route = models.ForeignKey(Route, on_delete=models.CASCADE, default= None, related_name='route_name')
     session = models.ForeignKey(Session, on_delete=models.CASCADE, default= None, related_name='academic_session')
     term = models.ForeignKey(Session, on_delete=models.CASCADE, default= None, related_name='term_name')
+    amount_due = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Bus Fare', verbose_name='Bus Fare')
 
     class Meta:
         ordering = ['-amount_due' ]        
@@ -49,12 +49,12 @@ class StudentBusPayment(models.Model):
     route = models.ForeignKey(Route, on_delete=models.CASCADE, default= None, related_name='routes')
     payment = models.ForeignKey(BusFee, on_delete=models.CASCADE, default= None, related_name='payments')
 
-    amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='First Payment Amount')
+    amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='First Payment')
     bank_name_a = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_name_a')   
     payment_date_a = models.DateField()
     remark_a = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Second Payment Amount')
+    amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Second Payment')
     bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='bank_name_b')   
     payment_date_b = models.DateField(blank=True, null=True)
     remark_b = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
@@ -66,9 +66,9 @@ class StudentBusPayment(models.Model):
 
     discount = models.DecimalField(help_text='enter in (%) leave empty if no discoun is given', max_digits=3, decimal_places=0, blank=True, null=True, verbose_name='TOTAL DISCOUNT(if any)', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
     # payment confirmation
-    confirmed_a = models.BooleanField(default=False) 
-    confirmed_b = models.BooleanField(default=False) 
-    confirmed_c = models.BooleanField(default=False) 
+    confirmed_a = models.BooleanField(default=False, verbose_name='Confirmed_1') 
+    confirmed_b = models.BooleanField(default=False, verbose_name='Confirmed_3') 
+    confirmed_c = models.BooleanField(default=False, verbose_name='Confirmed_3') 
 
     payment_updated_date = models.DateField(auto_now_add=True)     
 

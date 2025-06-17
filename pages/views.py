@@ -123,7 +123,7 @@ class StudentCardDetailView(LoginRequiredMixin, DetailView):
 
 # phone list
 def phone_list(request):
-    users = User.objects.all()
+    users = Profile.objects.all()
     return render(request, 'pages/phone_list.html', {'users':users})
 
 # email list

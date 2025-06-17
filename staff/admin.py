@@ -8,6 +8,7 @@ class StaffPositionAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
     search_fields = ('name',)
     ordering = ['name',]
+    exclude = ('slug',)
 
 class StaffAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('first_name', 'dept', 'phone_home', 'qualification', 'date_employed')

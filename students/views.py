@@ -91,7 +91,7 @@ def search(request):
         if query == '':
             query = 'None'
 
-        results = Student.objects.filter(Q(full_name__icontains=query) | Q(class_id__id__icontains=query) | Q(guardian_name__icontains=query) | Q(user__username__icontains=query) | Q(USN__icontains=query))
+        results = Student.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(standard__name__icontains=query) | Q(guardian_name__icontains=query) | Q(user__username__icontains=query) | Q(USN__icontains=query))
         # results = Student.objects.filter(Q(full_name__icontains=query))
         
     return render(request, 'students/search.html', {'query': query, 'results': results})
