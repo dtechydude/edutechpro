@@ -153,43 +153,7 @@ def self_student_results_secondterm(request):
     return render (request, 'results/my_students_2results.html', context)
  
  
-#  # View Third Term Results-ADMIN
-# @login_required
-# def printresult3(request):
-#     result = ResultSheet3.objects.all()
-#     resultsheet_filter = ResultSheetFilter3(request.GET, queryset=result) 
-#     result = resultsheet_filter.qs
-    
 
-#      # PAGINATOR METHOD
-#     page = request.GET.get('page', 1)
-#     paginator = Paginator(result, 50)
-#     try:
-#         result = paginator.page(page)
-#     except PageNotAnInteger:
-#         result = paginator.page(1)
-#     except EmptyPage:
-#         result = paginator.page(paginator.num_pages)
-
-#     try:     
-#         # result = ResultSheet.objects.filter(student_id=StudentDetail.objects.get(user_id=request.user))
-    
-#         context = {
-#             # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
-#             'result':result,
-#             'resultsheet_filter' : resultsheet_filter,
-            
-#         }
-
-#         return render(request, 'results/view_thirdterm_result.html', context)
-
-#     except Student.DoesNotExist:
-#         return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
-#                             '<p>Please <a href="#">register</a> as a student</p>'
-#                             '</div>'
-  
-  
-#                             )
     
 @login_required
 def printresult3(request):

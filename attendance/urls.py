@@ -4,8 +4,6 @@ from attendance import views as attendance_views
 
 
 
-
-
 app_name ='attendance'
 
 urlpatterns = [
