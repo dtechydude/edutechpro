@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-=)m82c+ayl!9343wg2eppgdopdv&^_#!jp%cj6i#=0s8gplv&d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1:8000']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'embed_video',
     'djrichtextfield',
     'tinymce',
+   
 ]
 
 MIDDLEWARE = [
@@ -162,8 +163,11 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'pages:portal-home'
-LOGIN_URL = 'users:login'
+# LOGIN_REDIRECT_URL = 'pages:portal-home'
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+# LOGIN_URL = 'users:login'
+LOGIN_URL = '/users/login/'
 
 
 # # Email Settings

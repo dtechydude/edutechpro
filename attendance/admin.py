@@ -4,8 +4,9 @@ from .models import Attendance
 
 
 class AttendanceAdmin(admin.ModelAdmin):
+   
  
-    list_display = ('student', 'date',  'status', 'marked_by' )
+    list_display = ('student', 'date',  'present' )
   
 
 admin.site.register(Attendance, AttendanceAdmin)

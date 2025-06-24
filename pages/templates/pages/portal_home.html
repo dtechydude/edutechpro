@@ -780,8 +780,9 @@
 							
 							{% elif user.teacher %}							
 							<li><a href="{% url 'students:student-list' %}">My Students</a></li>
-							<li><a href="{% url 'attendance:teacher_dashboard' %}">My Assinged Classes</a></li>																
-							<li><a href="{% url 'attendance:teacher_dashboard' %}">Mark Attendance</a></li>
+							{% comment %}<li><a href="{% url 'attendance:teacher_dashboard' %}">My Assinged Classes</a></li>{% endcomment %}																
+							<li><a href="{% url 'attendance:take_daily_attendance' %}">Mark Attendance</a></li>
+							<li><a href="{% url 'attendance:attendance_report' %}">Attendance Report</a></li>
 							
 							{% elif user.student %}
 							{% for idcard in my_idcard %}							
@@ -801,9 +802,9 @@
 							<span class="nav-text">Attendance</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="{% url 'attendance:teacher_dashboard' %}">Take Attendance</a></li>
-							<li><a href="{% url 'attendance:attendance_report' %}">Attendance Daily Report</a></li>
-							<li><a href="{% url 'attendance:student_list' %}">Attendance SUMMARY</a></li>
+							{% comment %}<li><a href="{% url 'attendance:teacher_dashboard' %}">Take Attendance</a></li>{% endcomment %}
+						<li><a href="{% url 'attendance:take_daily_attendance' %}">Attendance Daily Report</a></li>
+							{% comment %}<li><a href="{% url 'attendance:student_list' %}">Attendance SUMMARY</a></li>{% endcomment %}
 
 							
 						</ul>
@@ -1083,7 +1084,7 @@
 													</span>
 													<div class="ms-4">
 														{% if user.is_superuser or user.is_staff %}
-														<h5 class="mb-0 font-w600">{{ student_num }}</h5>
+														<h5 class="mb-0 font-w600">{{ num_of_classes }}</h5>
 														<p class="mb-0 text-nowrap ">No. Of Class</p>
 
 														{% elif user.is_authenticated and user.teacher %}

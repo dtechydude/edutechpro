@@ -6,6 +6,7 @@ from users.forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, Stu
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 
@@ -114,24 +115,40 @@ def employment_edit(request):
     return render(request, 'users/employment_profile.html', context)
 
 
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+
+#         user = authenticate(username=username, password=password)
+
+#         if user:
+#             if user.is_active:
+#                 login(request,user)
+#                 return HttpResponseRedirect(reverse('users:profile'))
+#             else:
+#                 return HttpResponse("ACCOUNT IS DEACTIVATED")
+
+#         else:
+#             return HttpResponse("Please use correct id and password")
+#     else:
+#         return render(request, 'users/login.html')
+    
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username, password=password)
-
-        if user:
-            if user.is_active:
-                login(request,user)
-                return HttpResponseRedirect(reverse('users:profile'))
-            else:
-                return HttpResponse("ACCOUNT IS DEACTIVATED")
-
-        else:
-            return HttpResponse("Please use correct id and password")
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            # Handle 'next' parameter for redirection after login
+            next_url = request.POST.get('next') or request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+            return redirect('/dashboard/') # Redirect to a default page if no 'next'
     else:
-        return render(request, 'users/login.html')
+        form = AuthenticationForm()
+    return render(request, 'users/login.html', {'form': form})
+
 
 @login_required
 def user_logout(request):

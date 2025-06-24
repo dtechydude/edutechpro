@@ -184,6 +184,9 @@ class Student(models.Model):
     class Meta:
         ordering = ['user']   
     
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+    
     def get_absolute_url(self):
         return reverse('students:student-detail', kwargs={'USN':self.USN})
     

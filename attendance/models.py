@@ -8,26 +8,43 @@ from curriculum.models import Subject
 from students.models import Student
 from staff.models import Teacher
 from datetime import date
+from django.utils import timezone
 
 
 
-#My Own Attendance
+# #My Own Attendance
+
+# class Attendance(models.Model):
+#     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='attendance_records')
+#     date = models.DateField(default=date.today)
+#     STATUS_CHOICES = [
+#         ('P', 'Present'),
+#         ('A', 'Absent'),
+#         ('L', 'Late'), # Optional: if you want more granular status
+#         ('E', 'Excused'), # Optional
+#     ]
+#     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
+#     marked_by = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
+#     # Add any other relevant fields like remarks
+
+#     class Meta:
+#         unique_together = ('student', 'date') # A student can only have one attendance record per day
+
+#     def __str__(self):
+#         return f"{self.student.first_name}  {self.student.last_name} - {self.date} - {self.get_status_display()}"
+
+
 
 class Attendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='attendance_records')
-    date = models.DateField(default=date.today)
-    STATUS_CHOICES = [
-        ('P', 'Present'),
-        ('A', 'Absent'),
-        ('L', 'Late'), # Optional: if you want more granular status
-        ('E', 'Excused'), # Optional
-    ]
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
-    marked_by = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
-    # Add any other relevant fields like remarks
+    date = models.DateField(default=timezone.now)
+    present = models.BooleanField(default=False)
+    # Add other attendance-specific fields if needed (e.g., status: 'P', 'A', 'L')
 
     class Meta:
-        unique_together = ('student', 'date') # A student can only have one attendance record per day
+        # Ensures that a student can only have one attendance record per day
+        unique_together = ('student', 'date')
+        ordering = ['-date', 'student__first_name'] # Order by date (desc) and student name
 
     def __str__(self):
-        return f"{self.student.first_name}  {self.student.last_name} - {self.date} - {self.get_status_display()}"
+        return f"{self.student.name} - {self.date} - {'Present' if self.present else 'Absent'}"

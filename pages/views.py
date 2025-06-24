@@ -26,6 +26,7 @@ def schoolly_home(request):
 def portal_home(request):  
     users_num = User.objects.count()
     student_num = Student.objects.count()
+    num_of_classes = Standard.objects.count()
     boarder_std = Student.objects.filter(student_type='boarder').count()
     day_std = Student.objects.filter(student_type='day_student').count()
     num_student_inclass = Student.objects.filter().count()
@@ -38,7 +39,7 @@ def portal_home(request):
     staff_num = Staff.objects.count()
     teacher_num = Teacher.objects.count()    
     my_idcard = Student.objects.filter(user=User.objects.get(username=request.user))
-    students = Student.objects.filter().order_by('standard').values('standard__section').annotate(count=Count('standard__section'))
+    students = Student.objects.filter().order_by('standard').values('standard__name').annotate(count=Count('standard__name'))
     my_students = Student.objects.filter(form_teacher__user=request.user).order_by('first_name')
     # no_inteacherclass = Assign.objects.filter(teacher__user=request.user).count()
     # no_inteacherclass = Student.objects.filter(form_teacher=request.user).count()
@@ -82,6 +83,7 @@ def portal_home(request):
         'my_students':my_students,
         # 'no_inteacherclass': no_inteacherclass,
         'classrooms':classrooms,
+        'num_of_classes':num_of_classes,
     
 
     }
@@ -107,19 +109,19 @@ def record_result(request):
 
 
 
-class StudentCardDetailView(LoginRequiredMixin, DetailView):
-    model = Student
-    context_object_name = 'my_idcard'
-    template_name = 'students/student_id_card.html'
+# class StudentCardDetailView(LoginRequiredMixin, DetailView):
+#     model = Student
+#     context_object_name = 'my_idcard'
+#     template_name = 'students/student_id_card.html'
 
-    def get_object(self, queryset=None):
-        if queryset is None:
-            queryset = self.get_queryset()
-        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+#     def get_object(self, queryset=None):
+#         if queryset is None:
+#             queryset = self.get_queryset()
+#         new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
 
-        queryset = queryset.filter(pk=new_str)
-        obj = queryset.get()
-        return obj
+#         queryset = queryset.filter(pk=new_str)
+#         obj = queryset.get()
+#         return obj
 
 # phone list
 def phone_list(request):
@@ -135,3 +137,6 @@ def email_list(request):
 def birthday_list(request):
     users = User.objects.all()
     return render(request, 'pages/birthday_list.html', {'users':users})
+
+def schoolly_home(request):
+    return render(request, 'pages/schoollyedtech.html')

@@ -99,9 +99,14 @@ def search(request):
 #count students in each class
 def student_in_class(request):
     students = Student.objects.all()
-    student_no = Student.objects.values('standard').annotate(count=Count('standard')).order_by('standard')
+    student_no = Student.objects.filter().order_by('standard').values('standard__name').annotate(count=Count('standard__name'))
 
-    return render(request, 'students/student_no_in_class.html', {'students': students, 'student_no':student_no})
+    try:
+        num_inclass = Student.objects.filter(standard__name = request.user.student.standard).count()
+    except Student.DoesNotExist:
+        num_inclass = Student.objects.filter()
+
+    return render(request, 'students/student_no_in_class.html', {'students': students, 'student_no':student_no, 'num_inclass':num_inclass})
 
 
 class StudentDetailView(DetailView):

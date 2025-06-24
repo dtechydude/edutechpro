@@ -7,8 +7,8 @@ app_name ='pages'
 
 urlpatterns = [
 
-     # path('', page_views.schoolly_home, name='schoolly-home'),
-     path('', page_views.portal_home, name='portal-home'),
+     path('', page_views.schoolly_home, name='schoolly-home'),    
+     path('dashboard/', page_views.portal_home, name='portal-home'),
      path('help-center/', page_views.help_center, name='help-center'),
      path('support-info/', page_views.support_info, name='support_info'),
      path('lock-screen/', page_views.lock_screen, name='lock-screen'),
@@ -19,6 +19,6 @@ urlpatterns = [
      path('email-list/', page_views.email_list, name='email_list'),
 
 
-     path('<str:pk>/', views.StudentCardDetailView.as_view(), name='my_idcard'),
+     # path('<str:pk>/', views.StudentCardDetailView.as_view(), name='my_idcard'),
 
 ]
