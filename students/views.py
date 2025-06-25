@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 # from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from students.models import Student
+from students.models import Student, Hostel
 from staff.models import Teacher
 from students.forms import StudentUpdateForm
 from users.forms import UserRegisterForm
@@ -62,6 +62,18 @@ def student_boarder_list(request):
         return render(request, 'students/student_boarder_list.html', context)
     else:
          return render(request, 'pages/portal_home.html')
+    
+
+ # Hostel List
+def hostel_list(request):
+    hostel_list = Hostel.objects.all()
+    # boarder_student = Student.objects.all().order_by('-date_admitted')
+
+    context ={
+        'hostel_list': hostel_list,
+    }         
+    
+    return render(request, 'students/hostel_list.html', context)
     
 
 

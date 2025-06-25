@@ -12,6 +12,7 @@ urlpatterns = [
     path('boarder_list/', students_views.student_boarder_list, name='boarder-list'),
     path('student_in_class/', students_views.student_in_class, name='student-in-class'),
     path('my-classmates/', students_views.my_classmates_view, name='my_classmates'),
+    path('hostel_list/', students_views.hostel_list, name='hostel_list'),
     # path('create-student-profile/', views.create_student_profile, name='create_student_profile'), # Example
 
     # Search student detail app
