@@ -23,7 +23,7 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display=('user', 'first_name', 'standard','date_admitted', 'guardian_phone')
     list_filter = ['standard']
     search_fields = ('first_name', 'user__username')
-    raw_id_fields = ['user', 'form_teacher', 'badge']
+    raw_id_fields = ['user', 'form_teacher', 'badge', 'standard', 'class_on_admission', 'hostel_name']
 
 
 class BadgeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
